@@ -1,0 +1,6 @@
+Django
+psycopg2
+bs4
+selenium
+webdriver_manager
+lxml
