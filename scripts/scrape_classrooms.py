@@ -137,7 +137,13 @@ def main():
     # Scrapes and saves the classroom data to csv
 
     # Get building code input from user in order to scrape both general and restricted classrooms belonging to building
-    building_code = input("Enter the four letter code of the classrooms to scrape: ")
+    input = input("Enter the four letter code of the classrooms to scrape: ")
+
+    try:
+        building_code = BuildingCode[input].name
+    except ValueError:
+        print("An invalid building code was entered\n")
+        return
 
     # Navigate to UBC Online Timetable main page
     driver = get_driver()
