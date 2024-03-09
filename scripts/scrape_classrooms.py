@@ -2,6 +2,8 @@
 Scrapes the classroom schedules from UBC Online Timetable and outputs the raw data in csv format
 """
 
+
+import re
 from enum import Enum
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -35,7 +37,7 @@ def get_driver():
     return driver
 
 
-def get_classroom_type_button_id(classroom_type):
+def get_classroom_type_button_id(classroom_type : ClassroomType) -> str:
     # Returns a string representing the button id for the given classroom type
     match classroom_type:
         case ClassroomType.GENERAL:
@@ -47,7 +49,7 @@ def get_classroom_type_button_id(classroom_type):
             return ""
     
 
-def get_timetable_options():
+def get_timetable_options() -> dict:
     # Returns a dictionary with the timetable options mapped to the most comprehensive values
     options = {
                 'lbWeeks': '1-53',                                      # Week Range - All Weeks
@@ -58,12 +60,12 @@ def get_timetable_options():
     return options
 
 
-def get_classrooms_element_id():
+def get_classrooms_element_id() -> str:
     # Returns the id of the element containing the classrooms
     return "dlObject"
 
 
-def set_timetable_options(driver, options):
+def set_timetable_options(driver, options : dict) -> None:
     # Sets each timetable option's selected element
 
     for id in options:
@@ -80,31 +82,46 @@ def set_timetable_options(driver, options):
             driver.execute_script("option.selected = true")
             
 
-def check_building_match(building_name, classroom_name):
+def check_building_match(building_name : str, classroom_name : str) -> bool:
     # Returns true if the building name can be found in the classroom name, false otherwise
     # classroom_name is in the format: "[building name] - [room number]"
-    # NOTE: First Wayne & William White Engineering Design Centre entry is exception - no dash
+    
+    # Checks for building name in the first part of the classroom name
+    return re.match(building_name, classroom_name) != None
 
-    # TODO: use regex matching to implement
-    return False # stub
+def should_add_classroom(building_name : str, classroom_name : str) -> bool:
+    # Returns true if the classroom should be added (i.e. it matches the building and its timetable is not empty), false otherwise
+        
+    # NOTE: Entry with classroom name "Wayne & William White Engineering Design Centre" has an empty timetable, should be skipped
+    if building_name == BuildingCode.EDC.name & re.fullmatch(building_name, classroom_name) != None:
+        return False
+    
+    return check_building_match(building_name, classroom_name)
 
 
-
-def get_classrooms(driver, building_code, classroom_type):
-    # Returns a list of classrooms represented by numeric values, where:
+def get_matching_classrooms(driver, building_code : BuildingCode, classroom_type : ClassroomType) -> list[str]:
+    # Returns a list of numeric values in string format representing classrooms, where:
     #   - each classroom belongs to the building represented by the building code
     #   - each classroom belongs to the classroom type
 
-    # TODO: implement by calling get_building_match, 
-    #       check for case where classroom name is exactly Wayne & William White Engineering Design Centre and return immediately if so,
+    # TODO: implement by calling get_building_match
     #       otherwise add value attribute of classroom element to list
-    classrooms = []
+    matching_classrooms = []
+    all_classrooms = driver.find_elements(By.XPATH, f"//select[@id={get_classrooms_element_id()}]/option")    # Gets list of all classrooms
+    building_name = BuildingCode[building_code].value # Gets building name from code
 
-    return classrooms # stub
+    for classroom in all_classrooms:
+        classroom_name = classroom.get_attribute("innerHTML")
+
+        if should_add_classroom(building_name, classroom_name):
+            classroom_value = classroom.get_attribute("value")
+            matching_classrooms.append(classroom_value)
+        
+    return matching_classrooms
 
             
-def scrape(driver, building_code, classroom_type):
-    # Parses and saves all classrooms for a given type to the appropriate csv for their building
+def scrape(driver, building_code : BuildingCode, classroom_type : ClassroomType) -> None:
+    # Parses and saves all classrooms for a given building and classroom type to csv
 
     # Get chosen timetable options
     options = get_timetable_options()
@@ -112,24 +129,28 @@ def scrape(driver, building_code, classroom_type):
     # Sets the chosen timetable options to be selected
     set_timetable_options(driver, options)
 
-    # TODO call get_classrooms
+    # Gets classrooms matching building code and classroom type
+    classrooms = get_matching_classrooms(driver, building_code, classroom_type)
     
 
 def main():
     # Scrapes and saves the classroom data to csv
+
+    # Get building code input from user in order to scrape both general and restricted classrooms belonging to building
+    building_code = input("Enter the four letter code of the classrooms to scrape: ")
 
     # Navigate to UBC Online Timetable main page
     driver = get_driver()
     driver.get(url)
 
     # Navigate to general or restricted classrooms page
-    # for type in ClassroomType:
-    #     button_id = get_classroom_type_button_id(type)
+    for classroom_type in ClassroomType:
+        button_id = get_classroom_type_button_id(classroom_type)
 
-    #     driver.find_element(By.ID, button_id).click()
+        driver.find_element(By.ID, button_id).click()
 
-    #     # Scrape each classroom belonging to the classroom type and save to csv
-    #     scrape(driver, type)
+        # Scrape each classroom belonging to the classroom type and save to csv
+        scrape(driver, building_code, classroom_type)
 
-    # TODO: get building code input from user in order to scrape both general and restricted classrooms belonging to building
+
 
