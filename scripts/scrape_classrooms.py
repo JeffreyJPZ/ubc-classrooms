@@ -4,6 +4,7 @@ Scrapes the classroom schedules from UBC Online Timetable and outputs the raw da
 
 
 import re
+import pandas as pd
 from enum import Enum
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -16,7 +17,7 @@ from scripts.models import BuildingCode
 
 
 url = 'https://sws-van.as.it.ubc.ca/sws_2023/'
-
+campus = "UBCV"
 
 class ClassroomType(Enum):
     # Types of classrooms - 0 is for general teaching spaces that are open to all faculties, 
@@ -64,20 +65,24 @@ def get_classrooms_element_id() -> str:
     # Returns the id of the element containing the classrooms
     return "dlObject"
 
+def get_view_timetable_id() -> str:
+    # Returns the id of the element that enables viewing of a timetable
+    return "bGetTimetable"
 
-def set_timetable_options(driver, options : dict) -> None:
-    # Sets each timetable option's selected element
+
+def set_options_selected(driver, options : dict) -> None:
+    # Sets the given timetable options to be selected
 
     for id in options:
         option = driver.find_element(By.XPATH, f"//select[@id={id}]/option[@selected='selected']")
 
-        # Checks if default selected element's value is not the most comprehensive value
+        # Checks if default selected element's value is not the correct value
         if (option.get_attribute("value") != options[id]):
 
             # Clears selected element
             driver.execute_script("option.selected = false")
 
-            # Finds most comprehensive option and sets it as selected
+            # Finds correct option and sets it as selected
             option = driver.find_element(By.XPATH, f"//select[@id={id}]/option[@value={options[id]}]")
             driver.execute_script("option.selected = true")
             
@@ -99,13 +104,11 @@ def should_add_classroom(building_name : str, classroom_name : str) -> bool:
     return check_building_match(building_name, classroom_name)
 
 
-def get_matching_classrooms(driver, building_code : BuildingCode, classroom_type : ClassroomType) -> list[str]:
-    # Returns a list of numeric values in string format representing classrooms, where:
+def get_matching_classrooms(driver, building_code : BuildingCode) -> list[str]:
+    # For a given classroom type, returns a list of numeric values in string format representing classrooms, where:
     #   - each classroom belongs to the building represented by the building code
     #   - each classroom belongs to the classroom type
 
-    # TODO: implement by calling get_building_match
-    #       otherwise add value attribute of classroom element to list
     matching_classrooms = []
     all_classrooms = driver.find_elements(By.XPATH, f"//select[@id={get_classrooms_element_id()}]/option")    # Gets list of all classrooms
     building_name = BuildingCode[building_code].value # Gets building name from code
@@ -119,19 +122,58 @@ def get_matching_classrooms(driver, building_code : BuildingCode, classroom_type
         
     return matching_classrooms
 
-            
-def scrape(driver, building_code : BuildingCode, classroom_type : ClassroomType) -> None:
+
+def get_table_headers() -> list[str]:
+    # Return a list of attributes for a classroom booking within an academic year
+    # Campus:                   UBCV
+    # Year:                     Academic year in format 20XX-XX
+    # Building:                 3-5 letter code representing a building
+    # Room:                     3-4 digit classroom number
+    # Date:                     ISO-8601 compliant date in format YYYY-MM-DD
+    # Week:                     Numeric value from 1-(52|53) where 1 represents the first week after the end of the previous academic year's summer session 
+    # Day:                      Numeric value from 1-7 where 1 represents Monday, 2 represents Tuesday, ... , 7 represents Sunday
+    # Starttime:                Time in 24-hour format representing the beginning of a booking
+    # Endtime:                  Time in 24-hour format representing the end of a booking
+    # Type:                     Code representing the purpose of a booking (e.g. LEC, SEM, LAB)
+    # Booking:                  Name of the booking
+    # Professor (optional):     Name of the professor associated with the booking
+    return ["Campus", "Year", "Building", "Room", "Date", "Week", "Day", "Starttime", "Endtime", "Type", "Booking", "Professor"]
+
+
+def scrape_classroom(driver) -> None:
+    # Inserts all bookings for each week as entries in a table, then saves the table as csv
+
+    # Initialize table
+    df = pd.DataFrame(columns=get_table_headers())
+
+    # TODO: implement scraping
+
+
+
+def scrape_classrooms(driver, building_code : BuildingCode, classroom_type : ClassroomType) -> None:
     # Parses and saves all classrooms for a given building and classroom type to csv
 
     # Get chosen timetable options
     options = get_timetable_options()
 
     # Sets the chosen timetable options to be selected
-    set_timetable_options(driver, options)
+    set_options_selected(driver, options)
 
-    # Gets classrooms matching building code and classroom type
-    classrooms = get_matching_classrooms(driver, building_code, classroom_type)
-    
+    # Gets classroom values matching building code and classroom type
+    classrooms = get_matching_classrooms(driver, building_code)
+
+    # Iterate through each classroom
+    for classroom in classrooms:
+        # set classroom as selected
+        set_options_selected(driver, {get_classrooms_element_id(): classroom})
+        # click view timetable button
+        driver.find_element(By.ID, get_view_timetable_id()).click()
+        # navigate to timetable
+        driver.get(url + 'showTimetable.aspx')
+        # scrape
+        scrape_classroom(driver)
+
+
 
 def main():
     # Scrapes and saves the classroom data to csv
@@ -156,7 +198,7 @@ def main():
         driver.find_element(By.ID, button_id).click()
 
         # Scrape each classroom belonging to the classroom type and save to csv
-        scrape(driver, building_code, classroom_type)
+        scrape_classrooms(driver, building_code, classroom_type)
 
 
 
