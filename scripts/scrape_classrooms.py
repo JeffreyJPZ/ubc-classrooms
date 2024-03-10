@@ -173,6 +173,8 @@ def scrape_classrooms(driver, building_code : BuildingCode, classroom_type : Cla
         driver.get(url + 'showtimetable.aspx')
         # scrape
         scrape_classroom(driver)
+        # return to classrooms page
+        driver.get(url)
 
 
 def main():
