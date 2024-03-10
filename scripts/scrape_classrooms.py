@@ -65,6 +65,7 @@ def get_classrooms_element_id() -> str:
     # Returns the id of the element containing the classrooms
     return "dlObject"
 
+
 def get_view_timetable_id() -> str:
     # Returns the id of the element that enables viewing of a timetable
     return "bGetTimetable"
@@ -93,6 +94,7 @@ def check_building_match(building_name : str, classroom_name : str) -> bool:
     
     # Checks for building name in the first part of the classroom name
     return re.match(building_name, classroom_name) != None
+
 
 def should_add_classroom(building_name : str, classroom_name : str) -> bool:
     # Returns true if the classroom should be added (i.e. it matches the building and its timetable is not empty), false otherwise
@@ -149,7 +151,6 @@ def scrape_classroom(driver) -> None:
     # TODO: implement scraping
 
 
-
 def scrape_classrooms(driver, building_code : BuildingCode, classroom_type : ClassroomType) -> None:
     # Parses and saves all classrooms for a given building and classroom type to csv
 
@@ -169,10 +170,9 @@ def scrape_classrooms(driver, building_code : BuildingCode, classroom_type : Cla
         # click view timetable button
         driver.find_element(By.ID, get_view_timetable_id()).click()
         # navigate to timetable
-        driver.get(url + 'showTimetable.aspx')
+        driver.get(url + 'showtimetable.aspx')
         # scrape
         scrape_classroom(driver)
-
 
 
 def main():
