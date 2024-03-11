@@ -187,10 +187,9 @@ def scrape_classrooms(driver) -> None:
     # Inserts all bookings for each week as entries in a table, then saves the table as csv
 
     # Initialize table
-    # df = pd.DataFrame(columns=get_table_headers())
+    df = pd.DataFrame(columns=get_table_headers())
 
     # TODO: implement scraping
-    print(driver.page_source) # stub
 
 
 
