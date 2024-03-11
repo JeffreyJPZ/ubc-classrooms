@@ -2,6 +2,9 @@ Django
 psycopg2
 bs4
 selenium
-pandas
 webdriver_manager
 lxml
+pandas
+json
+re
+pathlib
