@@ -56,13 +56,14 @@ def get_classroom_type_button_id(classroom_type : ClassroomType) -> str:
     
 
 
-def get_timetable_options() -> dict[str, list[str]]:
-    # Returns a dictionary with the timetable options mapped to the most comprehensive values
+def get_timetable_options(classrooms : list[str], weeks : list[str], days : list[str], period : list[str], report_type : list[str]) -> dict[str, list[str]]:
+    # Returns a dictionary with the timetable select element ids mapped to the given values
     options = {
-                'lbWeeks': ['1-53'],                                        # Week Range - All Weeks
-                'lbDays': ['1-7'],                                          # Day Range - All Days
-                'dlPeriod': ['0-10'],                                       # Time Range - All Day 07:00-22:00
-                'dlType': ['individual;swsurl;UBCSWSLocationIndividual']    # Type of Report - Single (Basic)
+                'dlObject': classrooms,                                     # Classrooms
+                'lbWeeks': weeks,                                           # Week Range
+                'lbDays': days,                                             # Day Range
+                'dlPeriod': period,                                         # Time Range
+                'dlType': report_type                                       # Type of Report
             }
     return options
 
@@ -170,21 +171,21 @@ def get_table_headers() -> list[str]:
     # Building:                 3-5 letter code representing a building
     # Room:                     3-4 digit classroom number
     # RoomType:                 String representing whether the room the booking is in is a general teaching space or a restricted space
-    # Capacity:                 Numeric value representing the number of seats in the room
     # Date:                     ISO-8601 compliant date in format YYYY-MM-DD
     # Week:                     Numeric value from 1-(52|53) where 1 represents the first week after the end of the previous academic year's summer session 
     # Day:                      Numeric value from 1-7 where 1 represents Monday, 2 represents Tuesday, ... , 7 represents Sunday
     # Start:                    Time in 24-hour format representing the beginning of a booking
     # End:                      Time in 24-hour format representing the end of a booking
     # Type:                     Code representing the purpose of a booking (e.g. LEC, SEM, LAB)
+    # Department:               Code representing the department that the booking was made under
     # Booking:                  Name of the booking
     # Professor (optional):     Name of the professor associated with the booking
-    return ["Campus", "Year", "Building", "Room", "RoomType", "Capacity", "Date", "Week", "Day", "Start", "End", "Type", "Booking", "Professor"]
+    return ["Campus", "Year", "Building", "Room", "RoomType", "Capacity", "Date", "Week", "Day", "Start", "End", "Type", "Department", "Booking", "Professor"]
 
 
 
-def scrape_classrooms(driver) -> None:
-    # Inserts all bookings for each week as entries in a table, then saves the table as csv
+def scrape_classrooms(driver) -> pd.DataFrame:
+    # Inserts all bookings for each week as entries in a table, then saves to csv
 
     # Initialize table
     df = pd.DataFrame(columns=get_table_headers())
@@ -193,31 +194,36 @@ def scrape_classrooms(driver) -> None:
 
 
 
+def view_timetable(driver) -> None:
+    # Clicks on the button to view timetable and navigates to the timetable
+
+    # Click view timetable button
+    driver.find_element(By.ID, get_view_timetable_id()).click()
+
+    # Navigate to timetable
+    driver.get(url + 'showtimetable.aspx')
+
+
+
 def scrape(driver, building_code : BuildingCode, classroom_type : ClassroomType) -> None:
     # Parses and saves all classrooms for a given building and classroom type to csv
-
-    # Get chosen timetable options excluding classrooms
-    options = get_timetable_options()
-
-    # Sets the chosen timetable options excluding classrooms to be selected
-    set_options_selected(driver, options)
 
     # Gets classroom values matching building code and classroom type
     classrooms = get_matching_classrooms(driver, building_code)
 
-    # set all classrooms as selected
-    set_options_selected(driver, {get_classrooms_element_id(): classrooms})
+    # Get chosen timetable options including classrooms
+    options = get_timetable_options(classrooms=classrooms, weeks=['1-53'], days=['1-7'], period=['0-10'], report_type=['textspreadsheet;swsurl;UBCSWSActivities_TS'])
 
-    # click view timetable button
-    driver.find_element(By.ID, get_view_timetable_id()).click()
+    # Sets the chosen timetable options to be selected
+    set_options_selected(driver, options)
 
-    # navigate to timetable
-    driver.get(url + 'showtimetable.aspx')
+    # Navigate to timetable
+    view_timetable(driver)
 
-    # scrape
+    # Scrape
     scrape_classrooms(driver)
 
-    # return to classrooms page
+    # Return to classrooms page
     driver.get(url)
         
 
