@@ -6,6 +6,7 @@ import json
 import re
 import pandas as pd
 from enum import Enum
+from datetime import datetime, timedelta
 from pathlib import Path
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -66,18 +67,6 @@ def get_timetable_options(classrooms : list[str], weeks : list[str], days : list
                 'dlType': report_type                                       # Type of Report
             }
     return options
-
-
-
-def get_classrooms_element_id() -> str:
-    # Returns the id of the element containing the classrooms
-    return "dlObject"
-
-
-
-def get_view_timetable_id() -> str:
-    # Returns the id of the element that enables viewing of a timetable
-    return "bGetTimetable"
 
 
 
@@ -180,6 +169,20 @@ def get_matching_classrooms(driver, building_code : BuildingCode) -> dict[str, s
 
 
 
+def get_view_timetable_id() -> str:
+    # Returns the id of the element that enables viewing of a timetable
+    return "bGetTimetable"
+
+
+
+def view_timetable(driver) -> None:
+    # Clicks on the button to view timetable and navigates to the timetable
+
+    driver.find_element(By.ID, get_view_timetable_id()).click()
+    driver.get(url + 'showtimetable.aspx')
+
+    
+
 def get_table_headers() -> list[str]:
     # Return a list of attributes for a classroom booking within an academic year
     # Campus:                   UBCV
@@ -198,23 +201,36 @@ def get_table_headers() -> list[str]:
 
 
 
+def get_date(start_date : str, week : int, day : int) -> str:
+    # Given a starting date, a week number, and a day number representing the day of the week, returns the appropriate date string in format YYYY-MM-DD
+    # Assumes start date is in the format MM/DD/YYYY
+    # Assumes week number is between 1-53, and day number is between 1-7 (ISO-8601)
+    # Assumes week begins on a Monday
+
+    start_datetime = datetime.strptime(start_date, "%m/%d/%Y")
+
+    # Subtract 1 from week number and day number to obtain week delta and day delta
+    delta = timedelta(weeks=week-1, days=day-1)
+
+    # Obtain date by adding delta to the start date
+    date = start_datetime + delta
+
+    return date.strftime("%Y-%m-%d")
+
+
+
 def scrape_classrooms(driver, classrooms : dict[str, str]) -> None:
-    # For each booking, if the booking's location matches one of the given classrooms:
+    # For each booking, if the booking's location matches one of the given classrooms, and if no entries already exist for the location:
     # - Creates a date for each day and week specified under the booking
     # - Creates a table entry for the booking under each date
     # - Outputs the table in csv format
     
     # Initialize table
     df = pd.DataFrame(columns=get_table_headers())
-    
 
+    # Get start date
 
-
-def view_timetable(driver) -> None:
-    # Clicks on the button to view timetable and navigates to the timetable
-
-    driver.find_element(By.ID, get_view_timetable_id()).click()
-    driver.get(url + 'showtimetable.aspx')
+    # Iterate through bookings
 
 
 
