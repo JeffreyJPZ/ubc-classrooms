@@ -180,7 +180,7 @@ def get_table_headers() -> list[str]:
     # Department:               Code representing the department that the booking was made under
     # Booking:                  Name of the booking
     # Professor (optional):     Name of the professor associated with the booking
-    return ["Campus", "Year", "Building", "Room", "RoomType", "Capacity", "Date", "Week", "Day", "Start", "End", "Type", "Department", "Booking", "Professor"]
+    return ["Campus", "Year", "Building", "Room", "RoomType", "Date", "Week", "Day", "Start", "End", "Type", "Department", "Booking", "Professor"]
 
 
 
