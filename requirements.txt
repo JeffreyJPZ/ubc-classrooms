@@ -5,6 +5,5 @@ selenium
 webdriver_manager
 lxml
 pandas
-json
 re
 pathlib
