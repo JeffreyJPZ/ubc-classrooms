@@ -20,7 +20,7 @@ from models import BuildingCode
 
 
 
-url = 'https://sws-van.as.it.ubc.ca/sws_2023/'
+url = 'https://sws-van.as.it.ubc.ca/sws_2023/' # Change date to get updated timetable
 campus = "UBCV"
 
 
@@ -201,22 +201,22 @@ def get_table_headers() -> list[str]:
 
 
 def scrape_classrooms(driver, classrooms : dict[str, str]) -> None:
-    # Inserts all bookings for each week as entries in a table, then saves to csv
+    # For each booking, if the booking's location matches one of the given classrooms:
+    # - Creates a date for each day and week specified under the booking
+    # - Creates a table entry for the booking under each date
+    # - Outputs the table in csv format
     
     # Initialize table
     df = pd.DataFrame(columns=get_table_headers())
 
-    # TODO: implement scraping
+    print(driver.page_source)
 
 
 
 def view_timetable(driver) -> None:
     # Clicks on the button to view timetable and navigates to the timetable
 
-    # Click view timetable button
     driver.find_element(By.ID, get_view_timetable_id()).click()
-
-    # Navigate to timetable
     driver.get(url + 'showtimetable.aspx')
 
 
