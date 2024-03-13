@@ -70,6 +70,18 @@ def get_timetable_options(classrooms : list[str], weeks : list[str], days : list
 
 
 
+def get_classrooms_element_id() -> str:
+    # Returns the id of the element containing the classrooms
+    return "dlObject"
+
+
+
+def get_view_timetable_id() -> str:
+    # Returns the id of the element that enables viewing of a timetable
+    return "bGetTimetable"
+
+
+
 def set_option_selected(driver, value : str, selected : bool) -> None:
     # Sets the option element with the given value as the value specified under selected
     # Assumes value is valid
@@ -169,20 +181,6 @@ def get_matching_classrooms(driver, building_code : BuildingCode) -> dict[str, s
 
 
 
-def get_view_timetable_id() -> str:
-    # Returns the id of the element that enables viewing of a timetable
-    return "bGetTimetable"
-
-
-
-def view_timetable(driver) -> None:
-    # Clicks on the button to view timetable and navigates to the timetable
-
-    driver.find_element(By.ID, get_view_timetable_id()).click()
-    driver.get(url + 'showtimetable.aspx')
-
-    
-
 def get_table_headers() -> list[str]:
     # Return a list of attributes for a classroom booking within an academic year
     # Campus:                   UBCV
@@ -231,6 +229,14 @@ def scrape_classrooms(driver, classrooms : dict[str, str]) -> None:
     # Get start date
 
     # Iterate through bookings
+
+
+
+def view_timetable(driver) -> None:
+    # Clicks on the button to view timetable and navigates to the timetable
+
+    driver.find_element(By.ID, get_view_timetable_id()).click()
+    driver.get(url + 'showtimetable.aspx')
 
 
 
