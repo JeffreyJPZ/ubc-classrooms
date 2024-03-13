@@ -184,7 +184,7 @@ def get_table_headers() -> list[str]:
 
 
 
-def scrape_classrooms(driver) -> pd.DataFrame:
+def scrape_classrooms(driver) -> None:
     # Inserts all bookings for each week as entries in a table, then saves to csv
 
     # Initialize table
