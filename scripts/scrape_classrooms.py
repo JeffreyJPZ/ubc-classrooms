@@ -190,15 +190,13 @@ def get_table_headers() -> list[str]:
     # Room:                     3-4 digit classroom number
     # RoomType:                 String representing whether the room the booking is in is a general teaching space or a restricted space
     # Date:                     ISO-8601 compliant date in format YYYY-MM-DD
-    # Week:                     Numeric value from 1-(52|53) where 1 represents the first week after the end of the previous academic year's summer session 
-    # Day:                      Numeric value from 1-7 where 1 represents Monday, 2 represents Tuesday, ... , 7 represents Sunday
     # Start:                    Time in 24-hour format representing the beginning of a booking
     # End:                      Time in 24-hour format representing the end of a booking
     # Type:                     Code representing the purpose of a booking (e.g. LEC, SEM, LAB)
     # Department:               Code representing the department that the booking was made under
     # Booking:                  Name of the booking
     # Professor (optional):     Name of the professor associated with the booking
-    return ["Campus", "Year", "Building", "Room", "RoomType", "Date", "Week", "Day", "Start", "End", "Type", "Department", "Booking", "Professor"]
+    return ["Campus", "Year", "Building", "Room", "RoomType", "Date", "Start", "End", "Type", "Department", "Booking", "Professor"]
 
 
 
