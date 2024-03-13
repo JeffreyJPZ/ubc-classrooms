@@ -149,9 +149,8 @@ def format_name(building_code : str, classroom_name : str) -> str:
     # Returns the classroom name in the format: "[building code] [room number]"
     # Assumes the given classroom name is in the format: "[building name] - Room [room number]"
 
-    # Partitions string to extract building name and room number
+    # Partitions string to extract room number
     partition = classroom_name.partition(" - Room ")    # Returns tuple with 3 elements
-
     room_number = partition[2]
 
     return f"{building_code} {room_number}"
