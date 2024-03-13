@@ -125,7 +125,7 @@ def set_options_selected(driver, options : dict[str, list[str]]) -> None:
 
 
 def check_building_match(building_name : str, classroom_name : str) -> bool:
-    # Returns true if the building name can be found in the classroom name, false otherwise
+    # Returns true if the full building name can be found in the classroom name, false otherwise
     # classroom_name is in the format: "[building name] - Room [room number]"
     
     # Checks for building name in the first part of the classroom name
@@ -144,14 +144,13 @@ def should_add_classroom(building_name : str, classroom_name : str) -> bool:
 
 
 
-def format_name(classroom_name : str) -> str:
+def format_name(building_code : str, classroom_name : str) -> str:
     # Returns the classroom name in the format: "[building code] [room number]"
     # Assumes the given classroom name is in the format: "[building name] - Room [room number]"
 
     # Partitions string to extract building name and room number
     partition = classroom_name.partition(" - Room ")    # Returns tuple with 3 elements
 
-    building_code = BuildingCode[partition[0]].name
     room_number = partition[2]
 
     return f"{building_code} {room_number}"
@@ -167,16 +166,15 @@ def get_matching_classrooms(driver, building_code : BuildingCode) -> dict[str, s
 
     matching_classrooms = {}
     all_classrooms = driver.find_elements(By.XPATH, f"//select[@id='{get_classrooms_element_id()}']/option")    # Gets list of all classrooms
-    building_name = building_code.value # Gets building name from code
 
     for classroom in all_classrooms:
         classroom_name = classroom.get_attribute("innerHTML")
 
-        if should_add_classroom(building_name, classroom_name):
+        if should_add_classroom(building_code.value, classroom_name): # Uses full building name
             classroom_value = classroom.get_attribute("value")
 
             # Formats classroom name and assigns it to its value
-            matching_classrooms[format_name(classroom_name)] = classroom_value
+            matching_classrooms[format_name(building_code.name, classroom_name)] = classroom_value
         
     return matching_classrooms
 
@@ -208,8 +206,7 @@ def scrape_classrooms(driver, classrooms : dict[str, str]) -> None:
     
     # Initialize table
     df = pd.DataFrame(columns=get_table_headers())
-
-    print(driver.page_source)
+    
 
 
 
@@ -255,9 +252,9 @@ def main() -> None:
         building_code_data = json.load(f)
 
         # Validate building codes
-        for value in building_code_data['buildingCodes']:
+        for building_code in building_code_data['buildingCodes']:
             try:
-                assert value == BuildingCode[value].value
+                assert building_code == BuildingCode[building_code].name
             except AssertionError:
                 print("An invalid building code was entered\n")
                 return
@@ -276,7 +273,7 @@ def main() -> None:
                 driver.find_element(By.ID, button_id).click()
 
                 # Scrape each classroom belonging to the classroom type and save to csv
-                scrape(driver, building_code, classroom_type)
+                scrape(driver, BuildingCode[building_code], classroom_type)
 
 
 
