@@ -126,7 +126,7 @@ def set_options_selected(driver, options : dict[str, list[str]]) -> None:
 
 def check_building_match(building_name : str, classroom_name : str) -> bool:
     # Returns true if the building name can be found in the classroom name, false otherwise
-    # classroom_name is in the format: "[building name] - [room number]"
+    # classroom_name is in the format: "[building name] - Room [room number]"
     
     # Checks for building name in the first part of the classroom name
     return re.match(building_name, classroom_name) != None
@@ -144,12 +144,28 @@ def should_add_classroom(building_name : str, classroom_name : str) -> bool:
 
 
 
-def get_matching_classrooms(driver, building_code : BuildingCode) -> list[str]:
-    # For a given classroom type, returns a list of numeric values in string format representing classrooms, where:
+def format_name(classroom_name : str) -> str:
+    # Returns the classroom name in the format: "[building code] [room number]"
+    # Assumes the given classroom name is in the format: "[building name] - Room [room number]"
+
+    # Partitions string to extract building name and room number
+    partition = classroom_name.partition(" - Room ")    # Returns tuple with 3 elements
+
+    building_code = BuildingCode[partition[0]].name
+    room_number = partition[2]
+
+    return f"{building_code} {room_number}"
+
+
+
+def get_matching_classrooms(driver, building_code : BuildingCode) -> dict[str, str]:
+    # For a given classroom type, returns classroom names mapped to numeric values in string format, where:
+    #   - each classroom name is unique
     #   - each classroom belongs to the building represented by the building code
     #   - each classroom belongs to the classroom type
+    #   - classroom name is in the format: "[building code] [room number]"
 
-    matching_classrooms = []
+    matching_classrooms = {}
     all_classrooms = driver.find_elements(By.XPATH, f"//select[@id='{get_classrooms_element_id()}']/option")    # Gets list of all classrooms
     building_name = building_code.value # Gets building name from code
 
@@ -158,7 +174,9 @@ def get_matching_classrooms(driver, building_code : BuildingCode) -> list[str]:
 
         if should_add_classroom(building_name, classroom_name):
             classroom_value = classroom.get_attribute("value")
-            matching_classrooms.append(classroom_value)
+
+            # Formats classroom name and assigns it to its value
+            matching_classrooms[format_name(classroom_name)] = classroom_value
         
     return matching_classrooms
 
@@ -184,9 +202,9 @@ def get_table_headers() -> list[str]:
 
 
 
-def scrape_classrooms(driver) -> None:
+def scrape_classrooms(driver, classrooms : dict[str, str]) -> None:
     # Inserts all bookings for each week as entries in a table, then saves to csv
-
+    
     # Initialize table
     df = pd.DataFrame(columns=get_table_headers())
 
@@ -208,11 +226,12 @@ def view_timetable(driver) -> None:
 def scrape(driver, building_code : BuildingCode, classroom_type : ClassroomType) -> None:
     # Parses and saves all classrooms for a given building and classroom type to csv
 
-    # Gets classroom values matching building code and classroom type
+    # Gets classroom values and names matching building code and classroom type
     classrooms = get_matching_classrooms(driver, building_code)
 
     # Get chosen timetable options including classrooms
-    options = get_timetable_options(classrooms=classrooms, weeks=['1-53'], days=['1-7'], period=['0-10'], report_type=['textspreadsheet;swsurl;UBCSWSActivities_TS'])
+    # Unpacking is faster for small collections
+    options = get_timetable_options(classrooms=[*classrooms.values()], weeks=['1-53'], days=['1-7'], period=['0-10'], report_type=['textspreadsheet;swsurl;UBCSWSActivities_TS'])
 
     # Sets the chosen timetable options to be selected
     set_options_selected(driver, options)
@@ -220,8 +239,8 @@ def scrape(driver, building_code : BuildingCode, classroom_type : ClassroomType)
     # Navigate to timetable
     view_timetable(driver)
 
-    # Scrape
-    scrape_classrooms(driver)
+    # Scrape timetable using the given classrooms
+    scrape_classrooms(driver, classrooms)
 
     # Return to classrooms page
     driver.get(url)
