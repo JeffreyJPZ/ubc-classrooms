@@ -192,9 +192,11 @@ def get_table_headers() -> list[str]:
     # End:                      Time in 24-hour format representing the end of a booking
     # Type:                     Code representing the purpose of a booking (e.g. LEC, SEM, LAB)
     # Department:               Code representing the department that the booking was made under
-    # Booking:                  Name of the booking
-    # Professor (optional):     Name of the professor associated with the booking
-    return ["Campus", "Year", "Building", "Room", "RoomType", "Date", "Start", "End", "Type", "Department", "Booking", "Professor"]
+    # Booking:                  Full name of the booking
+    # Module (optional):        Code representing the course name of a booking (if the booking is part of a course)
+    # Section (optional):       Code representing the section number of a booking (if the booking is part of a course)
+    # Professor (optional):     Name of the professor associated with the booking (if the booking is part of a course)
+    return ["Campus", "Year", "Building", "Room", "RoomType", "Date", "Start", "End", "Type", "Department", "Booking", "Module", "Section", "Professor"]
 
 
 
@@ -216,6 +218,20 @@ def get_date(start_date : str, week : int, day : int) -> str:
 
 
 
+def get_day_numbers() -> dict[str, int]:
+    # Returns a mapping of abbreviated weekdays to their day numbers according to ISO-8601
+    return {
+        "Mon": 1,
+        "Tue": 2,
+        "Wed": 3,
+        "Thu": 4,
+        "Fri": 5,
+        "Sat": 6,
+        "Sun": 7
+    }
+
+
+
 def scrape_classrooms(driver, classrooms : dict[str, str]) -> None:
     # For each booking, if the booking's location matches one of the given classrooms, and if no entries already exist for the location:
     # - Creates a date for each day and week specified under the booking
@@ -226,8 +242,17 @@ def scrape_classrooms(driver, classrooms : dict[str, str]) -> None:
     df = pd.DataFrame(columns=get_table_headers())
 
     # Get start date
+    # use classname=header-0-0-3
+    start_date = driver.find_element(By.CLASS_NAME, "header-0-0-3").get_attribute("innerHTML")
+
+    # Replace abbreviated year in start date with full year
+    formatted_start_date = start_date[:-2] + "20" + start_date[-2:]
+
+    # Get day numbers for weekdays
+    day_numbers = get_day_numbers()
 
     # Iterate through bookings
+    timetables = driver.find_elements(By.CLASS_NAME, "spreadsheet")
 
 
 
@@ -289,8 +314,8 @@ def main() -> None:
 
             # Navigate to general or restricted classrooms page
             for classroom_type in ClassroomType:
+                
                 button_id = get_classroom_type_button_id(classroom_type)
-
                 driver.find_element(By.ID, button_id).click()
 
                 # Scrape each classroom belonging to the classroom type and save to csv
