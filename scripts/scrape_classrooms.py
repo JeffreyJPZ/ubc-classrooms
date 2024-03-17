@@ -21,8 +21,8 @@ from models import BuildingCode
 
 
 
-url = 'https://sws-van.as.it.ubc.ca/sws_2023/' # Change date to get updated timetable
-campus = "UBCV"
+URL = 'https://sws-van.as.it.ubc.ca/sws_2023/' # Change date to get updated timetable
+CAMPUS = "UBCV"
 
 
 
@@ -235,7 +235,7 @@ def view_timetable(driver) -> None:
     # Clicks on the button to view timetable and navigates to the timetable
 
     driver.find_element(By.ID, get_view_timetable_id()).click()
-    driver.get(url + 'showtimetable.aspx')
+    driver.get(URL + 'showtimetable.aspx')
 
 
 
@@ -259,7 +259,7 @@ def scrape(driver, building_code : BuildingCode, classroom_type : ClassroomType)
     scrape_classrooms(driver, classrooms)
 
     # Return to classrooms page
-    driver.get(url)
+    driver.get(URL)
         
 
 
@@ -282,7 +282,7 @@ def main() -> None:
 
         # Navigate to UBC Online Timetable main page
         driver = get_driver()
-        driver.get(url)
+        driver.get(URL)
 
         # Scrape all classrooms in each building
         for building_code in building_code_data['buildingCodes']:
