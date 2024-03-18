@@ -58,7 +58,7 @@ def get_classroom_type_button_id(classroom_type : ClassroomType) -> str:
 
 
 def get_timetable_options(classrooms : list[str], weeks : list[str], days : list[str], period : list[str], report_type : list[str]) -> dict[str, list[str]]:
-    # Returns a dictionary with the timetable select element ids mapped to the given values
+    # Returns a dictionary with the timetable select element ids mapped to the desired selections
     options = {
                 'dlObject': classrooms,                                     # Classrooms
                 'lbWeeks': weeks,                                           # Week Range
@@ -181,7 +181,7 @@ def get_matching_classrooms(driver, building_code : BuildingCode) -> dict[str, s
 
 
 def get_table_headers() -> list[str]:
-    # Return a list of attributes for a classroom booking within an academic year
+    # Return a list of attributes for a classroom booking within an academic year in the following order:
     # Campus:                   UBCV
     # Year:                     Academic year in format 20XX-XX
     # Building:                 3-5 letter code representing a building
@@ -195,8 +195,8 @@ def get_table_headers() -> list[str]:
     # Booking:                  Full name of the booking
     # Module (optional):        Code representing the course name of a booking (if the booking is part of a course)
     # Section (optional):       Code representing the section number of a booking (if the booking is part of a course)
-    # Professor (optional):     Name of the professor associated with the booking (if the booking is part of a course)
-    return ["Campus", "Year", "Building", "Room", "RoomType", "Date", "Start", "End", "Type", "Department", "Booking", "Module", "Section", "Professor"]
+    # Staff (optional):         Name of the staff associated with the booking (if the booking is part of a course)
+    return ["Campus", "Year", "Building", "Room", "RoomType", "Date", "Start", "End", "Type", "Department", "Booking", "Module", "Section", "Staff"]
 
 
 
@@ -218,7 +218,19 @@ def get_date(start_date : str, week : int, day : int) -> str:
 
 
 
-def get_day_numbers() -> dict[str, int]:
+def get_start_date(soup) -> str:
+    # Returns the start date for all timetables in format MM/DD/YYYY
+
+    start_date = soup.find(class_="header-0-0-3").get_text()
+
+    # Replace abbreviated year in start date with full year
+    formatted_start_date = start_date[:-2] + "20" + start_date[-2:]
+
+    return formatted_start_date
+
+
+
+def get_weekdays_to_day_numbers() -> dict[str, int]:
     # Returns a mapping of abbreviated weekdays to their day numbers according to ISO-8601
     return {
         "Mon": 1,
@@ -232,28 +244,59 @@ def get_day_numbers() -> dict[str, int]:
 
 
 
-def scrape_classrooms(driver, classrooms : dict[str, str]) -> None:
+def get_column_indices_to_table_headers() -> dict[int, str]:
+    # Returns a mapping of column indices for a timetable to table headers for the scraped table
+    # If there is a one-to-many correspondance between a column in the timetable and table headers,
+    # then the table header ordering specified by get_table_headers determines the ordering of the table headers
+    # NOTE: Weeks and Day are combined into one Date column in the scraped table
+
+    return {
+        0: ["Booking"],             # Corresponds to "Name" column
+        1: ["Section"],             # Corresponds to "Section ID" column
+        2: ["Type"],                # Corresponds to "Type" column
+        3: ["Department"],          # Corresponds to "Name of Department" column
+        4: ["Date"],                # Corresponds to "Weeks" column
+        5: ["Building", "Room"],    # Corresponds to "Location" column
+        6: ["Staff"],               # Corresponds to "Staff" column
+        7: ["Module"],              # Corresponds to "Module" column
+        8: ["Date"],                # Corresponds to "Day" column
+        9: ["Start"],               # Corresponds to "Start Time" column
+        10: ["End"]                 # Corresponds to "End Time" column
+    }
+
+
+
+def scrape_classrooms(soup, classrooms : dict[str, str], classroom_type : ClassroomType) -> None:
+    # Goes through all timetables for the selected classrooms, and:
     # For each booking, if the booking's location matches one of the given classrooms, and if no entries already exist for the location:
-    # - Creates a date for each day and week specified under the booking
+    # - Creates a date for each day and week specified under the booking using the start date
     # - Creates a table entry for the booking under each date
     # - Outputs the table in csv format
     
-    # Initialize table
+    # Initialize scraped table
     df = pd.DataFrame(columns=get_table_headers())
 
-    # Get start date
-    # use classname=header-0-0-3
-    start_date = driver.find_element(By.CLASS_NAME, "header-0-0-3").get_attribute("innerHTML")
+    # Get utilities
+    start_date = get_start_date(soup)
+    weekdays_to_day_numbers = get_weekdays_to_day_numbers()
+    column_indices_to_table_headers = get_column_indices_to_table_headers()
 
-    # Replace abbreviated year in start date with full year
-    formatted_start_date = start_date[:-2] + "20" + start_date[-2:]
+    # Get parent elements of timetable bookings
+    timetables = map(lambda e : e.find("tbody", recursive=False), soup.find_all(class_="spreadsheet"))
 
-    # Get day numbers for weekdays
-    day_numbers = get_day_numbers()
+    # Get weekdays associated with each timetable
+    # NOTE: the i-th element of timetables is the timetable for the weekday given by the i-th element of timetable_weekdays 
+    timetable_weekdays = map(lambda e : e.get_text(), soup.find_all(class_="labelone"))
 
-    # Iterate through bookings
-    timetables = driver.find_elements(By.CLASS_NAME, "spreadsheet")
+    # Go through each timetable
+    # for timetable in timetables:
+        
+        # print(timetable)
 
+        # Go through each timetable row (room bookings for a given weekday and given week(s)), excluding the column titles as the first row
+        # for i in range(1, len(timetable)):
+        #     # Create one entry for each week and weekday
+            
 
 
 def view_timetable(driver) -> None:
@@ -280,8 +323,12 @@ def scrape(driver, building_code : BuildingCode, classroom_type : ClassroomType)
     # Navigate to timetable
     view_timetable(driver)
 
+    # Gets parse tree for timetable page
+    soup = BeautifulSoup(driver.page_source, 'lxml')
+
     # Scrape timetable using the given classrooms
-    scrape_classrooms(driver, classrooms)
+    # Using parse tree is much faster than selenium which uses JSON wire protocol for each request (i.e. for each command)
+    scrape_classrooms(soup, classrooms, classroom_type)
 
     # Return to classrooms page
     driver.get(URL)
