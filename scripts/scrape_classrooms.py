@@ -414,7 +414,11 @@ def scrape_classrooms(soup, classrooms : dict[str, str], classroom_type : Classr
     
     # Initialize scraped table
     df = pd.DataFrame(data=data, columns=columns)
-    
+
+    # Filter out bookings that are duplicates (date, time, and location all overlap)
+    # Keep the first instances
+    df = df.drop_duplicates(subset=["Building", "Room", "Date", "Start", "End"], ignore_index=True)
+
     # TODO: save scraped table to csv
             
 
