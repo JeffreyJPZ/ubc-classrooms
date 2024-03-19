@@ -18,20 +18,12 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import NoSuchElementException
 
 from models import BuildingCode
-
+from models import ClassroomType
 
 
 URL = 'https://sws-van.as.it.ubc.ca/sws_2023/' # Change date to get updated timetable
 CAMPUS = "UBCV"
 ACADEMIC_YEAR = "2023-2024"
-
-
-
-class ClassroomType(Enum):
-    # Types of classrooms - "General Teaching Space" is for general teaching spaces that are open to all faculties, 
-    #                       "Restricted Space" is for restricted spaces primarily reserved for a respective faculty
-    GENERAL = "General Teaching Space"
-    RESTRICTED = "Restricted Space"
 
 
 
