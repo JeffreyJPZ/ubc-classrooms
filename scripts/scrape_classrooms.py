@@ -371,7 +371,7 @@ def create_table_rows(bookings, start_date : str, day : int, classroom_type : Cl
 
 
 
-def scrape_classrooms(soup, classrooms : dict[str, str], classroom_type : ClassroomType) -> None:
+def scrape_classrooms(soup, classroom_type : ClassroomType) -> None:
     # Goes through all timetables for the selected classrooms, and:
     # For each booking, if the booking's location matches one of the given classrooms, and if no entries already exist for the location:
     # - Creates a date for each day and week specified under the booking using the start date
@@ -450,9 +450,9 @@ def scrape(driver, building_code : BuildingCode, classroom_type : ClassroomType)
     # Gets parse tree for timetable page
     soup = BeautifulSoup(driver.page_source, 'lxml')
 
-    # Scrape timetable using the given classrooms
+    # Scrape timetable for the given classrooms
     # Using parse tree is much faster than selenium which uses JSON wire protocol for each request (i.e. for each command)
-    scrape_classrooms(soup, classrooms, classroom_type)
+    scrape_classrooms(soup, classroom_type)
 
     # Return to classrooms page
     driver.get(URL)
