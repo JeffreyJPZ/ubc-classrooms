@@ -319,7 +319,7 @@ def create_table_row(booking_data : dict[str, str], start_date : str, week : int
 
     # PROCESSING:
     # Separate location into building code and room number
-    partition = booking_data["Location"].partition("-")
+    partition = booking_data["Location"].partition(" ")
     processed_booking_data["Building"] = partition[0]
     processed_booking_data["Room"] = partition[2]
 
