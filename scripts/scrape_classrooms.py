@@ -23,6 +23,7 @@ from models import BuildingCode
 
 URL = 'https://sws-van.as.it.ubc.ca/sws_2023/' # Change date to get updated timetable
 CAMPUS = "UBCV"
+ACADEMIC_YEAR = "2023-2024"
 
 
 
@@ -180,33 +181,48 @@ def get_matching_classrooms(driver, building_code : BuildingCode) -> dict[str, s
 
 
 
-def get_table_headers() -> list[str]:
-    # Return a list of attributes for a classroom booking within an academic year in the following order:
+def get_table_headers() -> dict[str, int]:
+    # Return a mapping of attributes for a classroom booking within an academic year to their column index in the scraped table:
     # Campus:                   UBCV
-    # Year:                     Academic year in format 20XX-XX
+    # Year:                     Academic year in format YYYY-YYYY
     # Building:                 3-5 letter code representing a building
     # Room:                     3-4 digit classroom number
     # RoomType:                 String representing whether the room the booking is in is a general teaching space or a restricted space
     # Date:                     ISO-8601 compliant date in format YYYY-MM-DD
     # Start:                    Time in 24-hour format representing the beginning of a booking
     # End:                      Time in 24-hour format representing the end of a booking
-    # Type:                     Code representing the purpose of a booking (e.g. LEC, SEM, LAB)
+    # BookingType:              Code representing the purpose of a booking (e.g. LEC, SEM, LAB)
     # Department:               Code representing the department that the booking was made under
     # Booking:                  Full name of the booking
     # Module (optional):        Code representing the course name of a booking (if the booking is part of a course)
     # Section (optional):       Code representing the section number of a booking (if the booking is part of a course)
     # Staff (optional):         Name of the staff associated with the booking (if the booking is part of a course)
-    return ["Campus", "Year", "Building", "Room", "RoomType", "Date", "Start", "End", "Type", "Department", "Booking", "Module", "Section", "Staff"]
+    return {
+        "Campus": 0, 
+        "Year": 1,
+        "Building": 2, 
+        "Room": 3, 
+        "RoomType": 4,
+        "Date": 5,
+        "Start": 6,
+        "End": 7,
+        "BookingType": 8,
+        "Department": 9,
+        "Booking": 10,
+        "Module": 11,
+        "Section": 12,
+        "Staff": 13
+    }
 
 
 
 def get_date(start_date : str, week : int, day : int) -> str:
-    # Given a starting date, a week number, and a day number representing the day of the week, returns the appropriate date string in format YYYY-MM-DD
-    # Assumes start date is in the format MM/DD/YYYY
+    # Given a starting date, a week number, and a day number representing the day of the week, returns the appropriate date string in format YYYY-MM-DD (ISO-8601)
+    # Assumes start date is in the format YYYY-MM-DD
     # Assumes week number is between 1-53, and day number is between 1-7 (ISO-8601)
     # Assumes week begins on a Monday
 
-    start_datetime = datetime.strptime(start_date, "%m/%d/%Y")
+    start_datetime = datetime.strptime(start_date, "%Y-%m-%d")
 
     # Subtract 1 from week number and day number to obtain week delta and day delta
     delta = timedelta(weeks=week-1, days=day-1)
@@ -219,14 +235,17 @@ def get_date(start_date : str, week : int, day : int) -> str:
 
 
 def get_start_date(soup) -> str:
-    # Returns the start date for all timetables in format MM/DD/YYYY
+    # Returns the start date for all timetables in format YYYY-MM-DD (ISO-8601)
 
     start_date = soup.find(class_="header-0-0-3").get_text()
 
     # Replace abbreviated year in start date with full year
-    formatted_start_date = start_date[:-2] + "20" + start_date[-2:]
+    # Full start date is in format MM/DD/YYYY
+    full_start_date = start_date[:-2] + "20" + start_date[-2:]
 
-    return formatted_start_date
+    date = datetime.strptime(full_start_date, "%m/%d/%Y")
+
+    return date.strftime("%Y-%m-%d")
 
 
 
@@ -244,25 +263,119 @@ def get_weekdays_to_day_numbers() -> dict[str, int]:
 
 
 
-def get_column_indices_to_table_headers() -> dict[int, str]:
-    # Returns a mapping of column indices for a timetable to table headers for the scraped table
-    # If there is a one-to-many correspondance between a column in the timetable and table headers,
-    # then the table header ordering specified by get_table_headers determines the ordering of the table headers
-    # NOTE: Weeks and Day are combined into one Date column in the scraped table
+def get_table_headers_to_column_titles() -> dict[str, str]:
+    # Returns a one-to-one mapping of a subset of table headers for the scraped table to column titles in a timetable
 
     return {
-        0: ["Booking"],             # Corresponds to "Name" column
-        1: ["Section"],             # Corresponds to "Section ID" column
-        2: ["Type"],                # Corresponds to "Type" column
-        3: ["Department"],          # Corresponds to "Name of Department" column
-        4: ["Date"],                # Corresponds to "Weeks" column
-        5: ["Building", "Room"],    # Corresponds to "Location" column
-        6: ["Staff"],               # Corresponds to "Staff" column
-        7: ["Module"],              # Corresponds to "Module" column
-        8: ["Date"],                # Corresponds to "Day" column
-        9: ["Start"],               # Corresponds to "Start Time" column
-        10: ["End"]                 # Corresponds to "End Time" column
+        "Booking": "Name",                          # Corresponds to "Name" column title in timetable
+        "Section": "Section ID",                    # Corresponds to "Section ID" column
+        "BookingType": "Type",                      # Corresponds to "Type" column
+        "Department": "Name of Department",         # Corresponds to "Name of Department" column
+        "Staff": "Staff",                           # Corresponds to "Staff" column
+        "Module": "Module",                         # Corresponds to "Module" column
+        "Start": "Start Time",                      # Corresponds to "Start Time" column
+        "End": "End Time"                           # Corresponds to "End Time" column
     }
+
+
+
+def get_weeks(weeks : str) -> list[int]:
+    # Given a string of week numbers separated by commas and hyphens, returns all the week numbers in the string's total range
+    # E.g. for a string "24, 28-31, 33", the result should be [24, 28, 29, 30, 31, 33]
+
+    week_numbers = []
+    week_ranges = weeks.split(", ")
+
+    for weeks in week_ranges:
+        # Check if each week range contains a hyphen
+        if re.search("-", weeks) != None:
+            weeks_partition = weeks.partition("-")
+
+            min_week = int(weeks_partition[0])
+            max_week = int(weeks_partition[2])
+
+            # Creates list of all week numbers from min to max inclusive
+            min_max_range = list(range(min_week, max_week + 1))
+
+            week_numbers.extend(min_max_range)
+        else:
+            week_numbers.append(int(weeks))
+
+    return week_numbers
+
+
+
+def create_table_row(booking_data : dict[str, str], start_date : str, week : int, day : int, classroom_type : ClassroomType) -> list[str]:
+    # Given the booking cell data for a given week number and weekday, process and return a booking that includes the appropriate date, with data in the order specified by get_table_headers
+    # Need to guarantee the order of the booking data matches table header order
+
+    # Get utilities
+    table_headers = get_table_headers()
+    table_headers_to_column_titles = get_table_headers_to_column_titles()
+
+    # Initialize row size
+    row = [None] * len(table_headers)
+
+    # Create object to store processed booking data (must have same keys as specified by get_table_headers)
+    processed_booking_data = {}
+
+
+    # Set constant and given values in advance
+    processed_booking_data["Campus"] = CAMPUS
+    processed_booking_data["Year"] = ACADEMIC_YEAR
+    processed_booking_data["RoomType"] = classroom_type.value
+
+    # PROCESSING:
+    # Separate location into building code and room number
+    partition = booking_data["Location"].partition("-")
+    processed_booking_data["Building"] = partition[0]
+    processed_booking_data["Room"] = partition[2]
+
+    # Calculate date of the booking
+    processed_booking_data["Date"] = get_date(start_date, week, day)
+
+
+    # Copy over booking cell data that was not set/processed (already had a one-to-one correspondence with scraped table)
+    for header in table_headers_to_column_titles:
+        processed_booking_data[header] = booking_data[table_headers_to_column_titles[header]]
+            
+
+    # Append processed booking cell data in the correct order
+    for header in table_headers:
+        row[table_headers[header]] = processed_booking_data[header]
+
+    return row
+
+
+
+def create_table_rows(bookings, start_date : str, day : int, classroom_type : ClassroomType) -> list[list[str]]:
+    # For each row (booking) in the timetable, return the booking as multiple individual bookings, one for each date
+
+    rows = []
+
+    # Get column titles for the timetable - see get_column_titles_to_table_headers for the exact titles
+    # NOTE: i-th element of column titles corresponds to the i-th booking cell for each booking
+    column_titles = map(lambda e : e.get_text(), bookings[0].find_all("td", recursive=False))
+
+    # Go through each timetable row (room booking for a given weekday and a number of weeks), excluding the column titles as the first row
+    for i in range(1, len(bookings)):
+
+        # List of table data elements
+        booking_cells = bookings[i].find_all("td", recursive=False)
+
+        # Map column titles for each data cell to the data within the cell
+        booking_data = {}
+        for j in range(0, len(booking_cells)):
+            booking_data[column_titles[j]] = booking_cells[j].get_text()
+
+        # Get all week numbers for a booking
+        weeks = get_weeks(booking_data["Weeks"])
+
+        # Create one row for each week on the given weekday
+        for week in weeks:
+            rows.append(create_table_row(booking_data, start_date, week, day, classroom_type))
+
+    return rows
 
 
 
@@ -271,31 +384,45 @@ def scrape_classrooms(soup, classrooms : dict[str, str], classroom_type : Classr
     # For each booking, if the booking's location matches one of the given classrooms, and if no entries already exist for the location:
     # - Creates a date for each day and week specified under the booking using the start date
     # - Creates a table entry for the booking under each date
-    # - Outputs the table in csv format
+    # Outputs the table in csv format
     
+    # Ensure that scraped table columns are in the correct order
+    table_headers = get_table_headers()
+    # Initialize number of columns
+    columns = [None] * len(table_headers)
+    for header in table_headers:
+        # Inserts the header at the correct index
+        columns[table_headers[header]] = header
+
     # Initialize scraped table
-    df = pd.DataFrame(columns=get_table_headers())
+    df = pd.DataFrame(columns=columns)
 
     # Get utilities
     start_date = get_start_date(soup)
     weekdays_to_day_numbers = get_weekdays_to_day_numbers()
-    column_indices_to_table_headers = get_column_indices_to_table_headers()
 
     # Get parent elements of timetable bookings
     timetables = map(lambda e : e.find("tbody", recursive=False), soup.find_all(class_="spreadsheet"))
 
-    # Get weekdays associated with each timetable
+    # Get abbreviated weekdays associated with each timetable
     # NOTE: the i-th element of timetables is the timetable for the weekday given by the i-th element of timetable_weekdays 
     timetable_weekdays = map(lambda e : e.get_text(), soup.find_all(class_="labelone"))
 
-    # Go through each timetable
-    # for timetable in timetables:
+    # Go through each timetable and create table rows for each of the bookings
+    for i in range(0, len(timetables)):
         
-        # print(timetable)
+        bookings = timetables[i].find_all("tr", recursive=False)
 
-        # Go through each timetable row (room bookings for a given weekday and given week(s)), excluding the column titles as the first row
-        # for i in range(1, len(timetable)):
-        #     # Create one entry for each week and weekday
+        # Get day number for abbreviated weekday associated with timetable
+        day = weekdays_to_day_numbers[timetable_weekdays[i]]
+
+        # Create temporary table to store created rows
+        temp_df = pd.DataFrame(data=create_table_rows(bookings, start_date, day, classroom_type), columns=columns)
+
+        # Join the temporary table with the scraped table
+        df.append(temp_df)
+    
+    # TODO: save scraped table to csv
             
 
 
