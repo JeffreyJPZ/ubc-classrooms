@@ -347,7 +347,7 @@ def create_table_rows(bookings, start_date : str, day : int, classroom_type : Cl
 
     # Get column titles for the timetable - see get_column_titles_to_table_headers for the exact titles
     # NOTE: i-th element of column titles corresponds to the i-th booking cell for each booking
-    column_titles = map(lambda e : e.get_text(), bookings[0].find_all("td", recursive=False))
+    column_titles = list(map(lambda e : e.get_text(), bookings[0].find_all("td", recursive=False)))
 
     # Go through each timetable row (room booking for a given weekday and a number of weeks), excluding the column titles as the first row
     for i in range(1, len(bookings)):
@@ -394,15 +394,19 @@ def scrape_classrooms(soup, classroom_type : ClassroomType) -> None:
     weekdays_to_day_numbers = get_weekdays_to_day_numbers()
 
     # Get parent elements of timetable bookings
-    timetables = map(lambda e : e.find("tbody", recursive=False), soup.find_all(class_="spreadsheet"))
-
+    timetables = list(map(lambda e : e.find("tbody", recursive=False), soup.find_all(class_="spreadsheet")))
+        
     # Get abbreviated weekdays associated with each timetable
     # NOTE: the i-th element of timetables is the timetable for the weekday given by the i-th element of timetable_weekdays 
-    timetable_weekdays = map(lambda e : e.get_text(), soup.find_all(class_="labelone"))
+    timetable_weekdays = list(map(lambda e : e.get_text(), soup.find_all(class_="labelone")))
 
     # Go through each timetable and create table rows for each of the bookings
     for i in range(0, len(timetables)):
         
+        # Skips timetable if it is empty
+        if timetables[i] == None:
+            continue
+         
         bookings = timetables[i].find_all("tr", recursive=False)
 
         # Get day number for abbreviated weekday associated with timetable
