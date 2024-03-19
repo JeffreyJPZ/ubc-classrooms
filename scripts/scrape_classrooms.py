@@ -386,8 +386,8 @@ def scrape_classrooms(soup, classrooms : dict[str, str], classroom_type : Classr
         # Inserts the header at the correct index
         columns[table_headers[header]] = header
 
-    # Initialize scraped table
-    df = pd.DataFrame(columns=columns)
+    # List of all timetable bookings for a building
+    data = []
 
     # Get utilities
     start_date = get_start_date(soup)
@@ -408,11 +408,12 @@ def scrape_classrooms(soup, classrooms : dict[str, str], classroom_type : Classr
         # Get day number for abbreviated weekday associated with timetable
         day = weekdays_to_day_numbers[timetable_weekdays[i]]
 
-        # Create temporary table to store created rows
-        temp_df = pd.DataFrame(data=create_table_rows(bookings, start_date, day, classroom_type), columns=columns)
-
-        # Join the temporary table with the scraped table
-        df.append(temp_df)
+        # Store created rows
+        rows = create_table_rows(bookings, start_date, day, classroom_type)
+        data.extend(rows)
+    
+    # Initialize scraped table
+    df = pd.DataFrame(data=data, columns=columns)
     
     # TODO: save scraped table to csv
             
