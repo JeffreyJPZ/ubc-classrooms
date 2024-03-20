@@ -20,8 +20,13 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     depends_on:
       - db
-  scripts:
-    build: ./
+  scrape-classrooms:
+    build: .
     volumes:
       - ./data/raw_booking_data:/raw_booking_data
     command: python scripts/scrape_classrooms.py
+  compute-timeslots:
+    build: .
+    volumes:
+      - ./data/timeslot_data:/timeslot_data
+    command: python scripts/compute_timeslots.py

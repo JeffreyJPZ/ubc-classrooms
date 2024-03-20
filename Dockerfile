@@ -3,6 +3,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 WORKDIR /src
 RUN mkdir /raw_booking_data
+RUN mkdir /timeslot_data
 COPY requirements.txt /src/
 RUN pip install -r requirements.txt
 RUN apt-get update && apt-get install -y wget unzip && \
