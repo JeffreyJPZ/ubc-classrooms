@@ -23,7 +23,7 @@ from models import ClassroomType
 
 
 
-TARGET_DIR = '/raw-booking-data' # Directory to write files to
+TARGET_DIR = '/raw_booking_data' # Directory to write files to
 
 
 

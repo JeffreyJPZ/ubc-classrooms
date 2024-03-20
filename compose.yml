@@ -23,5 +23,5 @@ services:
   scripts:
     build: ./
     volumes:
-      - ./data/raw-booking-data:/raw-booking-data
+      - ./data/raw_booking_data:/raw_booking_data
     command: python scripts/scrape_classrooms.py
