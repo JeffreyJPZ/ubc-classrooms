@@ -24,11 +24,10 @@ class BuildingCode(Enum):
     CBH = "Centre for Brain Health" # Restricted
     CHAN = "Chan Ctr Performing Arts" # Restricted
     CHBE = "Chemical and Biological Eng" # Restricted
-    CHBE2 = "Chemical and Biological Engineering" # Restricted # Alternative to Chemical and Biological Eng used for one entry
     CHEM = "Chemistry"
     CIRS = "CIRS"
     CEME = "Civil and Mechanical Eng."
-    CEMEL = "Civil and Mechanical Eng. Labs" # Restricted
+    CEML = "Civil and Mechanical Eng. Labs" # Restricted
     CHOI = "CK Choi" # Restricted
     MINL = "Coal and Mineral Processing" # Restricted
     DLAM = "David Lam Building" # Restricted
@@ -43,7 +42,7 @@ class BuildingCode(Enum):
     KAIS = "Fred Kaiser" # Restricted
     FRWO = "Frederic Wood Theatre" # Restricted
     FRDM = "Friedman"
-    GREN = "Greenhouse(Horticultural Bldg)" # Restricted
+    HORT = "Greenhouse(Horticultural Bldg)" # Restricted
     GEOG = "Geography"
     HEBB = "Hebb"
     HENN = "Hennings"
@@ -59,13 +58,13 @@ class BuildingCode(Enum):
     LSC = "Life Sciences Centre" # Restricted
     LIU = "Liu Institute" # Restricted
     LMRS = "Lower Mall Research Station" # Restricted
-    JBM = "Macdonald" # Restricted
+    MCDN = "Macdonald" # Restricted
     MCLD = "MacLeod Building"
     MCLM = "MacMillan"
     MATH = "Mathematics"
     MATX = "Mathematics Annex"
-    MBC = "Medical Block C" # Restricted
-    MEM = "Memorial Gymnasium" # Restricted
+    MEDC = "Medical Block C" # Restricted
+    MGYM = "Memorial Gymnasium" # Restricted
     MSL = "Michael Smith Laboratories" # Restricted
     MUSC = "Music" # Restricted
     SCRF = "Neville Scarfe"
@@ -75,9 +74,9 @@ class BuildingCode(Enum):
     PONE = "Ponderosa Annex E"
     PCN = "Ponderosa Commons North"
     PCE = "Ponderosa Commons East Audain Art" # Restricted
-    RUH = "Ritsumeikan-UBC House" # Restricted
+    RITS = "Ritsumeikan-UBC House" # Restricted
     SPPH = "School Populatn & Publc Hlth" # Restricted
-    SING = "Sing Tao School of Journalism" # Restricted
+    STAO = "Sing Tao School of Journalism" # Restricted
     TFPB = "Theatre-Film Production Building"# Restricted
     TFS = "Totem Field Studios" # Restricted
     UCEN = "Leon & Thea Koerner University Centre"
@@ -86,3 +85,11 @@ class BuildingCode(Enum):
     WESB = "Wesbrook"
     SWNG = "West Mall Swing Space"
     IRC = "Woodward IRC"
+
+
+
+class ClassroomType(Enum):
+    # Types of classrooms - "General" is for general teaching spaces that are open to all faculties, 
+    #                       "Restricted" is for restricted spaces primarily reserved for a respective faculty
+    GENERAL = "General"
+    RESTRICTED = "Restricted"
