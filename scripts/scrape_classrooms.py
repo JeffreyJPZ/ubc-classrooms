@@ -24,7 +24,7 @@ from models import ClassroomType
 
 URL = 'https://sws-van.as.it.ubc.ca/sws_2023/' # Change date to get updated timetable
 CAMPUS = "UBCV"
-ACADEMIC_YEAR = "2023-2024"
+ACADEMIC_YEAR = "2023-2024" # Change academic year for updated timetable
 
 TARGET_DIR = '/raw-booking-data' # Directory to write files to
 
