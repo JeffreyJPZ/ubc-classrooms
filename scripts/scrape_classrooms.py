@@ -17,14 +17,11 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from selenium.common.exceptions import NoSuchElementException
 
+from models import TimetableSettings
 from models import BuildingCode
 from models import ClassroomType
 
 
-
-URL = 'https://sws-van.as.it.ubc.ca/sws_2023/' # Change date to get updated timetable
-CAMPUS = "UBCV"
-ACADEMIC_YEAR = "2023-2024" # Change academic year for updated timetable
 
 TARGET_DIR = '/raw-booking-data' # Directory to write files to
 
@@ -229,21 +226,6 @@ def get_date(start_date : str, week : int, day : int) -> str:
 
 
 
-def get_start_date(soup) -> str:
-    # Returns the start date for all timetables in format YYYY-MM-DD (ISO-8601)
-
-    start_date = soup.find(class_="header-0-0-3").get_text()
-
-    # Replace abbreviated year in start date with full year
-    # Full start date is in format MM/DD/YYYY
-    full_start_date = start_date[:-2] + "20" + start_date[-2:]
-
-    date = datetime.strptime(full_start_date, "%m/%d/%Y")
-
-    return date.strftime("%Y-%m-%d")
-
-
-
 def get_weekdays_to_day_numbers() -> dict[str, int]:
     # Returns a mapping of abbreviated weekdays to their day numbers according to ISO-8601
     return {
@@ -300,7 +282,7 @@ def get_weeks(weeks : str) -> list[int]:
 
 
 
-def create_table_row(booking_data : dict[str, str], start_date : str, week : int, day : int, classroom_type : ClassroomType) -> list[str]:
+def create_table_row(booking_data : dict[str, str], week : int, day : int, classroom_type : ClassroomType) -> list[str]:
     # Given the booking cell data for a given week number and weekday, process and return a booking that includes the appropriate date, with data in the order specified by get_table_headers
     # Need to guarantee the order of the booking data matches table header order
 
@@ -316,8 +298,8 @@ def create_table_row(booking_data : dict[str, str], start_date : str, week : int
 
 
     # Set constant and given values in advance
-    processed_booking_data["Campus"] = CAMPUS
-    processed_booking_data["Year"] = ACADEMIC_YEAR
+    processed_booking_data["Campus"] = TimetableSettings.CAMPUS
+    processed_booking_data["Year"] = TimetableSettings.ACADEMIC_YEAR
     processed_booking_data["RoomType"] = classroom_type.value
 
     # PROCESSING:
@@ -327,7 +309,7 @@ def create_table_row(booking_data : dict[str, str], start_date : str, week : int
     processed_booking_data["Room"] = partition[2]
 
     # Calculate date of the booking
-    processed_booking_data["Date"] = get_date(start_date, week, day)
+    processed_booking_data["Date"] = get_date(TimetableSettings.START_DATE, week, day)
 
 
     # Copy over booking cell data that was not set/processed (already had a one-to-one correspondence with scraped table)
@@ -343,7 +325,7 @@ def create_table_row(booking_data : dict[str, str], start_date : str, week : int
 
 
 
-def create_table_rows(bookings, start_date : str, day : int, classroom_type : ClassroomType) -> list[list[str]]:
+def create_table_rows(bookings, day : int, classroom_type : ClassroomType) -> list[list[str]]:
     # For each row (booking) in the timetable, return the booking as multiple individual bookings, one for each date
 
     rows = []
@@ -368,7 +350,7 @@ def create_table_rows(bookings, start_date : str, day : int, classroom_type : Cl
 
         # Create one row for each week on the given weekday
         for week in weeks:
-            rows.append(create_table_row(booking_data, start_date, week, day, classroom_type))
+            rows.append(create_table_row(booking_data, week, day, classroom_type))
 
     return rows
 
@@ -385,7 +367,6 @@ def scrape_classrooms(soup, classroom_type : ClassroomType) -> list[list[str]]:
     data = []
 
     # Get utilities
-    start_date = get_start_date(soup)
     weekdays_to_day_numbers = get_weekdays_to_day_numbers()
 
     # Get parent elements of timetable bookings
@@ -408,7 +389,7 @@ def scrape_classrooms(soup, classroom_type : ClassroomType) -> list[list[str]]:
         day = weekdays_to_day_numbers[timetable_weekdays[i]]
 
         # Store created rows
-        rows = create_table_rows(bookings, start_date, day, classroom_type)
+        rows = create_table_rows(bookings, day, classroom_type)
         data.extend(rows)
 
     return data
@@ -419,7 +400,7 @@ def view_timetable(driver) -> None:
     # Clicks on the button to view timetable and navigates to the timetable
 
     driver.find_element(By.ID, get_view_timetable_id()).click()
-    driver.get(URL + 'showtimetable.aspx')
+    driver.get(TimetableSettings.URL + 'showtimetable.aspx')
 
 
 
@@ -447,7 +428,7 @@ def scrape_classroom_type(driver, building_code : BuildingCode, classroom_type :
     classroom_type_data = scrape_classrooms(soup, classroom_type)
 
     # Return to classrooms page
-    driver.get(URL)
+    driver.get(TimetableSettings.URL)
 
     return classroom_type_data
         
@@ -486,7 +467,7 @@ def scrape(driver, building_code : BuildingCode) -> None:
     df = df.drop_duplicates(subset=["Building", "Room", "Date", "Start", "End"], ignore_index=True)
 
     # Make path and create parent directories if they do not exist
-    path = Path.cwd() / f'{TARGET_DIR}' / f'{CAMPUS}' / f'{ACADEMIC_YEAR}' / f'{CAMPUS}_{ACADEMIC_YEAR}_{building_code.name}.csv'
+    path = Path.cwd() / f'{TARGET_DIR}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{building_code.name}.csv'
     path.parent.mkdir(parents=True, exist_ok=True)
 
     # Save scraped table to file for building in target directory
@@ -513,7 +494,7 @@ def main() -> None:
 
         # Navigate to UBC Online Timetable main page
         driver = get_driver()
-        driver.get(URL)
+        driver.get(TimetableSettings.URL)
 
         # Scrape all classrooms in each building
         for building_code in building_code_data['buildingCodes']:

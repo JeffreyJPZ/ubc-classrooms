@@ -4,6 +4,18 @@
 from enum import Enum
 
 
+
+class TimetableSettings():
+    # UBC Online Timetable information for a given academic year
+
+    CAMPUS = "UBCV"                                 
+    ACADEMIC_YEAR = "2023-2024"                     # Change academic year for updated timetable
+    URL = 'https://sws-van.as.it.ubc.ca/sws_2023/'  # Change date to get updated timetable
+    START_DATE = "2023-08-21"                       # First day in the timetable range in ISO-8601 format
+    END_DATE = "2024-08-25"                         # Last day in the timetable range in ISO-8601 format
+
+
+
 # - Most building codes were taken from wiki.ubc.ca
 # - If there were conflicting values with UBC Online Timetable, (e.g. abbreviations), 
 #   then UBC Online Timetable name was preferred
