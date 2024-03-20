@@ -21,9 +21,12 @@ from models import BuildingCode
 from models import ClassroomType
 
 
+
 URL = 'https://sws-van.as.it.ubc.ca/sws_2023/' # Change date to get updated timetable
 CAMPUS = "UBCV"
 ACADEMIC_YEAR = "2023-2024"
+
+TARGET_DIR = '/raw-booking-data' # Directory to write files to
 
 
 
@@ -371,20 +374,12 @@ def create_table_rows(bookings, start_date : str, day : int, classroom_type : Cl
 
 
 
-def scrape_classrooms(soup, classroom_type : ClassroomType) -> None:
+def scrape_classrooms(soup, classroom_type : ClassroomType) -> list[list[str]]:
     # Goes through all timetables for the selected classrooms, and:
     # For each booking, if the booking's location matches one of the given classrooms, and if no entries already exist for the location:
     # - Creates a date for each day and week specified under the booking using the start date
-    # - Creates a table entry for the booking under each date
-    # Outputs the table in csv format
-    
-    # Ensure that scraped table columns are in the correct order
-    table_headers = get_table_headers()
-    # Initialize number of columns
-    columns = [None] * len(table_headers)
-    for header in table_headers:
-        # Inserts the header at the correct index
-        columns[table_headers[header]] = header
+    # - Creates a list entry for the booking under each date
+    # Returns the bookings
 
     # List of all timetable bookings for a building
     data = []
@@ -415,15 +410,8 @@ def scrape_classrooms(soup, classroom_type : ClassroomType) -> None:
         # Store created rows
         rows = create_table_rows(bookings, start_date, day, classroom_type)
         data.extend(rows)
-    
-    # Initialize scraped table
-    df = pd.DataFrame(data=data, columns=columns)
 
-    # Filter out bookings that are duplicates (date, time, and location all overlap)
-    # Keep the first instances
-    df = df.drop_duplicates(subset=["Building", "Room", "Date", "Start", "End"], ignore_index=True)
-
-    # TODO: save scraped table to csv
+    return data
             
 
 
@@ -435,8 +423,8 @@ def view_timetable(driver) -> None:
 
 
 
-def scrape(driver, building_code : BuildingCode, classroom_type : ClassroomType) -> None:
-    # Parses and saves all classrooms for a given building and classroom type to csv
+def scrape_classroom_type(driver, building_code : BuildingCode, classroom_type : ClassroomType) -> list[list[str]]:
+    # Sets all classrooms for a given building and classroom type as selected and returns the scraped bookings
 
     # Gets classroom values and names matching building code and classroom type
     classrooms = get_matching_classrooms(driver, building_code)
@@ -456,11 +444,54 @@ def scrape(driver, building_code : BuildingCode, classroom_type : ClassroomType)
 
     # Scrape timetable for the given classrooms
     # Using parse tree is much faster than selenium which uses JSON wire protocol for each request (i.e. for each command)
-    scrape_classrooms(soup, classroom_type)
+    classroom_type_data = scrape_classrooms(soup, classroom_type)
 
     # Return to classrooms page
     driver.get(URL)
+
+    return classroom_type_data
         
+
+
+def scrape(driver, building_code : BuildingCode) -> None:
+    # Scrapes all classroom bookings for a building and writes the data to csv
+
+    # Ensure that scraped table columns are in the correct order
+    table_headers = get_table_headers()
+    # Initialize number of columns
+    columns = [None] * len(table_headers)
+    for header in table_headers:
+        # Inserts the header at the correct index
+        columns[table_headers[header]] = header
+
+    # List of all timetable bookings for a building
+    data = []
+
+    # Navigate to general or restricted classrooms page
+    for classroom_type in ClassroomType:
+        
+        button_id = get_classroom_type_button_id(classroom_type)
+        driver.find_element(By.ID, button_id).click()
+
+        # Get a subtable of all the classroom bookings for a classroom type
+        classroom_type_data = scrape_classroom_type(driver, building_code, classroom_type)
+
+        data.extend(classroom_type_data)
+
+    # Initialize scraped table
+    df = pd.DataFrame(data=data, columns=columns)
+
+    # Filter out bookings that are duplicates (date, time, and location all overlap)
+    # Keep the first instances
+    df = df.drop_duplicates(subset=["Building", "Room", "Date", "Start", "End"], ignore_index=True)
+
+    # Make path and create parent directories if they do not exist
+    path = Path.cwd() / f'{TARGET_DIR}' / f'{CAMPUS}' / f'{ACADEMIC_YEAR}' / f'{CAMPUS}_{ACADEMIC_YEAR}_{building_code.name}.csv'
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    # Save scraped table to file for building in target directory
+    df.to_csv(path, index=False, mode="w")
+
 
 
 def main() -> None:
@@ -486,15 +517,7 @@ def main() -> None:
 
         # Scrape all classrooms in each building
         for building_code in building_code_data['buildingCodes']:
-
-            # Navigate to general or restricted classrooms page
-            for classroom_type in ClassroomType:
-                
-                button_id = get_classroom_type_button_id(classroom_type)
-                driver.find_element(By.ID, button_id).click()
-
-                # Scrape each classroom belonging to the classroom type and save to csv
-                scrape(driver, BuildingCode[building_code], classroom_type)
+            scrape(driver, BuildingCode[building_code])
 
 
 

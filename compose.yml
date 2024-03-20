@@ -22,4 +22,6 @@ services:
       - db
   scripts:
     build: ./
+    volumes:
+      - ./data/raw-booking-data:/raw-booking-data
     command: python scripts/scrape_classrooms.py
