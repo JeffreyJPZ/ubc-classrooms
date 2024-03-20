@@ -24,7 +24,6 @@ class BuildingCode(Enum):
     CBH = "Centre for Brain Health" # Restricted
     CHAN = "Chan Ctr Performing Arts" # Restricted
     CHBE = "Chemical and Biological Eng" # Restricted
-    CHBE2 = "Chemical and Biological Engineering" # Restricted # Alternative to Chemical and Biological Eng used for one entry
     CHEM = "Chemistry"
     CIRS = "CIRS"
     CEME = "Civil and Mechanical Eng."
