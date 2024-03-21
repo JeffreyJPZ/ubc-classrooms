@@ -20,6 +20,8 @@ class TimetableSettings():
     URL = 'https://sws-van.as.it.ubc.ca/sws_2023/'  # Change date to get updated timetable
     START_DATE = "2023-08-21"                       # First day in the timetable range in ISO-8601 format
     END_DATE = "2024-08-25"                         # Last day in the timetable range in ISO-8601 format
+    START_TIME = "07:00"                            # Earliest time provided by the timetable in 24-hour format
+    END_TIME = "22:00"                              # Latest time provided by the timetable in 24-hour format
 
 
 
