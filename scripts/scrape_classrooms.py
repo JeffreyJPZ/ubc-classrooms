@@ -480,6 +480,7 @@ def scrape(driver, building_code : BuildingCode) -> None:
     write_to_file(data)
 
 
+
 def main() -> None:
     # Scrapes and writes the classroom booking data to file
 
