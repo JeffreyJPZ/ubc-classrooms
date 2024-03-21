@@ -433,8 +433,8 @@ def scrape_classroom_type(driver, building_code : BuildingCode, classroom_type :
         
 
 
-def scrape(driver, building_code : BuildingCode) -> None:
-    # Scrapes all classroom bookings for a building and writes the data to file
+def write_to_file(data : list[list[str]]) -> None:
+    # Writes the given data to file
 
     # Ensure that scraped table columns are in the correct order
     table_headers = get_table_headers()
@@ -443,6 +443,25 @@ def scrape(driver, building_code : BuildingCode) -> None:
     for header in table_headers:
         # Inserts the header at the correct index
         columns[table_headers[header]] = header
+
+    # Initialize table for booking data
+    df = pd.DataFrame(data=data, columns=columns)
+
+    # Filter out bookings that are duplicates (date, time, and location all overlap)
+    # Keep the first instances
+    df = df.drop_duplicates(subset=["Building", "Room", "Date", "Start", "End"], ignore_index=True)
+
+    # Make path and create parent directories if they do not exist
+    path = Path.cwd() / f'{TARGET_DIR}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{building_code.name}.csv'
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    # Write booking data to file for building in target directory
+    df.to_csv(path, index=False, mode="w")
+
+
+
+def scrape(driver, building_code : BuildingCode) -> None:
+    # Scrapes all classroom bookings for a building and writes the data to file
 
     # List of all timetable bookings for a building
     data = []
@@ -458,19 +477,7 @@ def scrape(driver, building_code : BuildingCode) -> None:
 
         data.extend(classroom_type_data)
 
-    # Initialize table for booking data
-    df = pd.DataFrame(data=data, columns=columns)
-
-    # Filter out bookings that are duplicates (date, time, and location all overlap)
-    # Keep the first instances
-    df = df.drop_duplicates(subset=["Building", "Room", "Date", "Start", "End"], ignore_index=True)
-
-    # Make path and create parent directories if they do not exist
-    path = Path.cwd() / f'{TARGET_DIR}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{building_code.name}.csv'
-    path.parent.mkdir(parents=True, exist_ok=True)
-
-    # Write booking data to file for building in target directory
-    df.to_csv(path, index=False, mode="w")
+    write_to_file(data)
 
 
 
