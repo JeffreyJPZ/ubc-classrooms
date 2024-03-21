@@ -446,7 +446,7 @@ def write_to_file(data : list[list[str]], building_code : BuildingCode) -> None:
 
     # Filter out bookings that are duplicates (date, time, and location all overlap)
     # Keep the first instances
-    df = df.drop_duplicates(subset=["Building", "Room", "Date", "Start", "End"], ignore_index=True)
+    df = df.drop_duplicates(subset=['Building', 'Room', 'Date', 'Start', 'End'], ignore_index=True)
 
     # Make path and create parent directories if they do not exist
     path = Path.cwd() / f'{Targets.RAW_BOOKING_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{building_code.name}.csv'
