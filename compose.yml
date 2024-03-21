@@ -28,5 +28,6 @@ services:
   compute-timeslots:
     build: .
     volumes:
+      - ./data/raw_booking_data:/raw_booking_data
       - ./data/timeslot_data:/timeslot_data
     command: python scripts/compute_timeslots.py
