@@ -70,17 +70,10 @@ def create_timeslot(timeslot_data : dict[str, str], start : str, end : str) -> l
 
 
 
-def compute_timeslots_by_room_and_date(room_date_dataframe : pd.DataFrame, date : datetime) -> list[list[str]]:
+def compute_timeslots_by_room_and_date(room_date_dataframe : pd.DataFrame, shared_timeslot_data : dict[str, str], date : datetime) -> list[list[str]]:
     # Create timeslots for a given room and date, from the start time to the end time given by the timetable
 
     room_date_timeslots = []
-
-    # Populate object with data that is common to all timeslots (one-to-one correspondence with booking data table)
-    shared_timeslot_data = {}
-    headers = get_timeslot_headers_to_booking_headers()
-    for header in headers:
-        # Use the data from the first row
-        shared_timeslot_data[header] = room_date_dataframe[header].head(1)
 
     # Sort bookings in increasing order by start time (as they are non-overlapping), and transpose in order to iterate over columns (efficient)
     sorted_room_date_dataframe = room_date_dataframe.sort_values(by=['Start']).T
@@ -88,7 +81,6 @@ def compute_timeslots_by_room_and_date(room_date_dataframe : pd.DataFrame, date 
     # Creates ISO-8601 datetimes for start and end datetimes
     start = datetime.strptime(date.strftime("%Y-%m-%d") + " " + TimetableSettings.START_TIME, "%Y-%m-%d %H:%M")
     end = datetime.strptime(date.strftime("%Y-%m-%d") + " " + TimetableSettings.END_TIME, "%Y-%m-%d %H:%M")
-    
 
     # Sets datetime to keep track of start of current timeslot
     curr = start
@@ -107,7 +99,7 @@ def compute_timeslots_by_room_and_date(room_date_dataframe : pd.DataFrame, date 
 
         # Check if current time is not the beginning of a booking - if so, create a timeslot spanning the current time to the beginning of the next booking
         if curr != booking_start:
-            room_date_timeslots.append(create_timeslot(shared_timeslot_data, curr.strftime("%Y-%m-%d %H:%m"), booking_start.strftime("%Y-%m-%d %H:%m")))
+            room_date_timeslots.append(create_timeslot(shared_timeslot_data, curr.strftime("%Y-%m-%d %H:%M"), booking_start.strftime("%Y-%m-%d %H:%M")))
 
         # Jump to the end of the booking
         curr = booking_end
@@ -115,7 +107,7 @@ def compute_timeslots_by_room_and_date(room_date_dataframe : pd.DataFrame, date 
 
     # Guard for the case where there are no bookings for the given room and date, or if the last booking's end time is not the latest time possible
     if curr != end:
-        room_date_timeslots.append(create_timeslot(shared_timeslot_data, curr.strftime("%Y-%m-%d %H:%m"), end.strftime("%Y-%m-%d %H:%m")))
+        room_date_timeslots.append(create_timeslot(shared_timeslot_data, curr.strftime("%Y-%m-%d %H:%M"), end.strftime("%Y-%m-%d %H:%M")))
         
     return room_date_timeslots
 
@@ -144,16 +136,22 @@ def compute_timeslots_by_room(room_dataframe : pd.DataFrame) -> list[list[str]]:
     # Generate a series of dates from the timetable's start date to end date
     dates = generate_dates(TimetableSettings.START_DATE, TimetableSettings.END_DATE)
 
+    # Populate object with data that is common to all timeslots (one-to-one correspondence with booking data table)
+    shared_timeslot_data = {}
+    headers = get_timeslot_headers_to_booking_headers()
+    for header in headers:
+        # Use the data from the first row
+        shared_timeslot_data[header] = room_dataframe.at[room_dataframe.index[0], header]
+
     for date in dates:
         # Query for bookings that match the given date
-        room_date_dataframe = room_dataframe[room_dataframe['Start'].date() == date]
+        room_date_dataframe = room_dataframe[room_dataframe['Date'] == date]
 
         # Compute timeslots for the room on the given date
-        date_timeslots = compute_timeslots_by_room_and_date(room_date_dataframe, date)
+        room_date_timeslots = compute_timeslots_by_room_and_date(room_date_dataframe, shared_timeslot_data, date)
 
-        room_timeslots.extend(date_timeslots)
+        room_timeslots.extend(room_date_timeslots)
 
-    # Go through all dates
     return room_timeslots
 
 
@@ -164,12 +162,12 @@ def compute_timeslots_by_building(building_dataframe : pd.DataFrame) -> list[lis
     building_timeslots = []
 
     # Get all unique rooms
-    unique_rooms = pd.unique(building_dataframe['Rooms'])
+    unique_rooms = pd.unique(building_dataframe['Room'])
 
     # Go through each room and create timeslots for the entire academic year
     for room in unique_rooms:
         # Get only bookings that match the room
-        room_dataframe = building_dataframe[building_dataframe['Rooms'] == room]
+        room_dataframe = building_dataframe[building_dataframe['Room'] == room]
 
         # Compute the timeslots for the room
         room_timeslots = compute_timeslots_by_room(room_dataframe)
@@ -186,10 +184,11 @@ def read_from_file(building_code : BuildingCode) -> pd.DataFrame:
     # Get path to booking data file
     read_path = Path.cwd() / f'{Targets.RAW_BOOKING_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{building_code.name}.csv'
 
-    # Read file into dataframe and combine datestrings and timestrings into ISO-8601 datetimes
+    # Read file into dataframe and convert datestrings and timestrings into ISO-8601 datetimes
     df = pd.read_csv(read_path, index_col=False)
     df['Start'] = pd.to_datetime(df['Date'] + ' ' + df['Start'], format="%Y-%m-%d %H:%M")
     df['End'] = pd.to_datetime(df['Date'] + ' ' + df['End'], format="%Y-%m-%d %H:%M")
+    df['Date'] = pd.to_datetime(df['Date'], format="%Y-%m-%d")
 
     return df
 
