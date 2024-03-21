@@ -433,8 +433,8 @@ def scrape_classroom_type(driver, building_code : BuildingCode, classroom_type :
         
 
 
-def scrape(driver, building_code : BuildingCode) -> None:
-    # Scrapes all classroom bookings for a building and writes the data to file
+def write_to_file(data : list[list[str]]) -> None:
+    # Writes the given data to file
 
     # Ensure that scraped table columns are in the correct order
     table_headers = get_table_headers()
@@ -443,20 +443,6 @@ def scrape(driver, building_code : BuildingCode) -> None:
     for header in table_headers:
         # Inserts the header at the correct index
         columns[table_headers[header]] = header
-
-    # List of all timetable bookings for a building
-    data = []
-
-    # Navigate to general or restricted classrooms page
-    for classroom_type in ClassroomType:
-        
-        button_id = get_classroom_type_button_id(classroom_type)
-        driver.find_element(By.ID, button_id).click()
-
-        # Get a subtable of all the classroom bookings for a classroom type
-        classroom_type_data = scrape_classroom_type(driver, building_code, classroom_type)
-
-        data.extend(classroom_type_data)
 
     # Initialize table for booking data
     df = pd.DataFrame(data=data, columns=columns)
@@ -472,6 +458,26 @@ def scrape(driver, building_code : BuildingCode) -> None:
     # Write booking data to file for building in target directory
     df.to_csv(path, index=False, mode="w")
 
+
+
+def scrape(driver, building_code : BuildingCode) -> None:
+    # Scrapes all classroom bookings for a building and writes the data to file
+
+    # List of all timetable bookings for a building
+    data = []
+
+    # Navigate to general or restricted classrooms page
+    for classroom_type in ClassroomType:
+        
+        button_id = get_classroom_type_button_id(classroom_type)
+        driver.find_element(By.ID, button_id).click()
+
+        # Get a subtable of all the classroom bookings for a classroom type
+        classroom_type_data = scrape_classroom_type(driver, building_code, classroom_type)
+
+        data.extend(classroom_type_data)
+
+    write_to_file(data)
 
 
 def main() -> None:
