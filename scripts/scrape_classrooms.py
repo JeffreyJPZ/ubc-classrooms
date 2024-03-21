@@ -18,12 +18,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import NoSuchElementException
 
 from models import TimetableSettings
+from models import Targets
 from models import BuildingCode
 from models import ClassroomType
-
-
-
-TARGET_DIR = '/raw_booking_data' # Directory to write files to
 
 
 
@@ -452,7 +449,7 @@ def write_to_file(data : list[list[str]], building_code : BuildingCode) -> None:
     df = df.drop_duplicates(subset=["Building", "Room", "Date", "Start", "End"], ignore_index=True)
 
     # Make path and create parent directories if they do not exist
-    path = Path.cwd() / f'{TARGET_DIR}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{building_code.name}.csv'
+    path = Path.cwd() / f'{Targets.RAW_BOOKING_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{building_code.name}.csv'
     path.parent.mkdir(parents=True, exist_ok=True)
 
     # Write booking data to file for building in target directory
