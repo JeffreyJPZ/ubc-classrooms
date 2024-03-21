@@ -433,7 +433,7 @@ def scrape_classroom_type(driver, building_code : BuildingCode, classroom_type :
         
 
 
-def write_to_file(data : list[list[str]]) -> None:
+def write_to_file(data : list[list[str]], building_code : BuildingCode) -> None:
     # Writes the given data to file
 
     # Ensure that scraped table columns are in the correct order
@@ -477,7 +477,7 @@ def scrape(driver, building_code : BuildingCode) -> None:
 
         data.extend(classroom_type_data)
 
-    write_to_file(data)
+    write_to_file(data, building_code)
 
 
 
