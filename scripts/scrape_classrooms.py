@@ -28,7 +28,7 @@ TARGET_DIR = '/raw_booking_data' # Directory to write files to
 
 
 def get_driver():
-    # Creates and returns the Chrome web driver
+    # Creates and returns the web driver
 
     options = Options()
     options.add_argument('--no-sandbox')
@@ -284,7 +284,6 @@ def get_weeks(weeks : str) -> list[int]:
 
 def create_table_row(booking_data : dict[str, str], week : int, day : int, classroom_type : ClassroomType) -> list[str]:
     # Given the booking cell data for a given week number and weekday, process and return a booking that includes the appropriate date, with data in the order specified by get_table_headers
-    # Need to guarantee the order of the booking data matches table header order
 
     # Get utilities
     table_headers = get_table_headers()
@@ -435,7 +434,7 @@ def scrape_classroom_type(driver, building_code : BuildingCode, classroom_type :
 
 
 def scrape(driver, building_code : BuildingCode) -> None:
-    # Scrapes all classroom bookings for a building and writes the data to csv
+    # Scrapes all classroom bookings for a building and writes the data to file
 
     # Ensure that scraped table columns are in the correct order
     table_headers = get_table_headers()
@@ -459,7 +458,7 @@ def scrape(driver, building_code : BuildingCode) -> None:
 
         data.extend(classroom_type_data)
 
-    # Initialize scraped table
+    # Initialize table for booking data
     df = pd.DataFrame(data=data, columns=columns)
 
     # Filter out bookings that are duplicates (date, time, and location all overlap)
@@ -470,13 +469,13 @@ def scrape(driver, building_code : BuildingCode) -> None:
     path = Path.cwd() / f'{TARGET_DIR}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{building_code.name}.csv'
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    # Save scraped table to file for building in target directory
+    # Write booking data to file for building in target directory
     df.to_csv(path, index=False, mode="w")
 
 
 
 def main() -> None:
-    # Scrapes and saves the classroom data to csv
+    # Scrapes and writes the classroom booking data to file
 
     # TODO: replace with scrape_classrooms_config.json for prod
     configPath = 'config/scrape_classrooms_config_test.json'
