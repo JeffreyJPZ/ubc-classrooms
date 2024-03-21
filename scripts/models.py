@@ -5,6 +5,13 @@ from enum import Enum
 
 
 
+class Targets():
+    # Paths to target directories for scripts
+    RAW_BOOKING_DATA = '/raw_booking_data'
+    TIMESLOT_DATA = '/timeslot_data'
+
+
+
 class TimetableSettings():
     # UBC Online Timetable information for a given academic year
 

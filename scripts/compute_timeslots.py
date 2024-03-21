@@ -1,5 +1,6 @@
 """
 Uses the raw booking data to calculate available timeslots for classrooms throughout the academic year
+Assumes that the raw booking directory for the academic year in TimetableSettings has already been populated with the buildings specified in the config file
 """
 import json
 import pandas as pd
@@ -8,17 +9,15 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 from models import TimetableSettings
+from models import Targets
 from models import BuildingCode
-
-
-
-TARGET_DIR = '/timeslot_data' # Directory to write files to
 
 
 
 def compute_timeslots(building_code : BuildingCode) -> None:
     # Reads booking data from file for a building, gets the available timeslots for the entire academic year, and writes the timeslots to file
 
+    path = Path.cwd() / f'{Targets.RAW_BOOKING_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{building_code.name}.csv'
     return 0 # stub
 
 
