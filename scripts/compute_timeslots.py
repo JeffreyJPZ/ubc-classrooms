@@ -5,7 +5,6 @@ Assumes that the raw booking directory for the academic year in TimetableSetting
 import json
 import pandas as pd
 from typing import Iterator
-from enum import Enum
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -79,8 +78,8 @@ def compute_timeslots_by_room_and_date(room_date_dataframe : pd.DataFrame, share
     sorted_room_date_dataframe = room_date_dataframe.sort_values(by=['Start']).T
 
     # Creates ISO-8601 datetimes for start and end datetimes
-    start = datetime.strptime(date.strftime("%Y-%m-%d") + " " + TimetableSettings.START_TIME, "%Y-%m-%d %H:%M")
-    end = datetime.strptime(date.strftime("%Y-%m-%d") + " " + TimetableSettings.END_TIME, "%Y-%m-%d %H:%M")
+    start = datetime.strptime(date.strftime(TimetableSettings.FORMAT_DATE) + " " + TimetableSettings.START_TIME, TimetableSettings.FORMAT_DATETIME)
+    end = datetime.strptime(date.strftime(TimetableSettings.FORMAT_DATE) + " " + TimetableSettings.END_TIME, TimetableSettings.FORMAT_DATETIME)
 
     # Sets datetime to keep track of start of current timeslot
     curr = start
@@ -99,7 +98,7 @@ def compute_timeslots_by_room_and_date(room_date_dataframe : pd.DataFrame, share
 
         # Check if current time is not the beginning of a booking - if so, create a timeslot spanning the current time to the beginning of the next booking
         if curr != booking_start:
-            room_date_timeslots.append(create_timeslot(shared_timeslot_data, curr.strftime("%Y-%m-%d %H:%M"), booking_start.strftime("%Y-%m-%d %H:%M")))
+            room_date_timeslots.append(create_timeslot(shared_timeslot_data, curr.strftime(TimetableSettings.FORMAT_DATETIME), booking_start.strftime(TimetableSettings.FORMAT_DATETIME)))
 
         # Jump to the end of the booking
         curr = booking_end
@@ -107,7 +106,7 @@ def compute_timeslots_by_room_and_date(room_date_dataframe : pd.DataFrame, share
 
     # Guard for the case where there are no bookings for the given room and date, or if the last booking's end time is not the latest time possible
     if curr != end:
-        room_date_timeslots.append(create_timeslot(shared_timeslot_data, curr.strftime("%Y-%m-%d %H:%M"), end.strftime("%Y-%m-%d %H:%M")))
+        room_date_timeslots.append(create_timeslot(shared_timeslot_data, curr.strftime(TimetableSettings.FORMAT_DATETIME), end.strftime(TimetableSettings.FORMAT_DATETIME)))
         
     return room_date_timeslots
 
@@ -117,8 +116,8 @@ def generate_dates(start : str, end : str) -> Iterator[datetime]:
     # Returns all the dates between the given start and end dates, inclusive
     # Credit to https://stackoverflow.com/a/70426202
 
-    start_date = datetime.strptime(start, "%Y-%m-%d")
-    end_date = datetime.strptime(end, "%Y-%m-%d")
+    start_date = datetime.strptime(start, TimetableSettings.FORMAT_DATE)
+    end_date = datetime.strptime(end, TimetableSettings.FORMAT_DATE)
 
     curr_date = start_date
 
@@ -182,13 +181,14 @@ def read_from_file(building_code : BuildingCode) -> pd.DataFrame:
     # Reads the booking data for the building from file and returns a dataframe with the booking data
 
     # Get path to booking data file
-    read_path = Path.cwd() / f'{Targets.RAW_BOOKING_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{building_code.name}.csv'
+    # TODO: change directory
+    read_path = Path.cwd() / f'{Targets.RAW_BOOKING_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.START_DATE}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{TimetableSettings.START_DATE}_{building_code.name}.csv'
 
     # Read file into dataframe and convert datestrings and timestrings into ISO-8601 datetimes
     df = pd.read_csv(read_path, index_col=False)
-    df['Start'] = pd.to_datetime(df['Date'] + ' ' + df['Start'], format="%Y-%m-%d %H:%M")
-    df['End'] = pd.to_datetime(df['Date'] + ' ' + df['End'], format="%Y-%m-%d %H:%M")
-    df['Date'] = pd.to_datetime(df['Date'], format="%Y-%m-%d")
+    df['Start'] = pd.to_datetime(df['Date'] + ' ' + df['Start'], format=TimetableSettings.FORMAT_DATETIME)
+    df['End'] = pd.to_datetime(df['Date'] + ' ' + df['End'], format=TimetableSettings.FORMAT_DATETIME)
+    df['Date'] = pd.to_datetime(df['Date'], format=TimetableSettings.FORMAT_DATE)
 
     return df
 
@@ -209,7 +209,8 @@ def write_to_file(data : list[list[str]], building_code : BuildingCode) -> None:
     df = pd.DataFrame(data=data, columns=columns)
 
     # Make path and create parent directories if they do not exist
-    path = Path.cwd() / f'{Targets.TIMESLOT_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{building_code.name}.csv'
+    # TODO: change directory
+    path = Path.cwd() / f'{Targets.TIMESLOT_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.START_DATE}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{TimetableSettings.START_DATE}_{building_code.name}.csv'
     path.parent.mkdir(parents=True, exist_ok=True)
 
     # Write timeslot data to file for building in target directory

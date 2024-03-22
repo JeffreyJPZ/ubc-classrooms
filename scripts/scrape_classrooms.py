@@ -207,11 +207,11 @@ def get_table_headers() -> dict[str, int]:
 
 def get_date(start_date : str, week : int, day : int) -> str:
     # Given a starting date, a week number, and a day number representing the day of the week, returns the appropriate date string in format YYYY-MM-DD (ISO-8601)
-    # Assumes start date is in the format YYYY-MM-DD
+    # Assumes start date is in the format YYYY-MM-DD, and that week 1 contains the start date
     # Assumes week number is between 1-53, and day number is between 1-7 (ISO-8601)
     # Assumes week begins on a Monday
 
-    start_datetime = datetime.strptime(start_date, "%Y-%m-%d")
+    start_datetime = datetime.strptime(start_date, TimetableSettings.FORMAT_DATE)
 
     # Subtract 1 from week number and day number to obtain week delta and day delta
     delta = timedelta(weeks=week-1, days=day-1)
@@ -219,7 +219,7 @@ def get_date(start_date : str, week : int, day : int) -> str:
     # Obtain date by adding delta to the start date
     date = start_datetime + delta
 
-    return date.strftime("%Y-%m-%d")
+    return date.strftime(TimetableSettings.FORMAT_DATE)
 
 
 
@@ -304,8 +304,8 @@ def create_table_row(booking_data : dict[str, str], week : int, day : int, class
     processed_booking_data["Building"] = partition[0]
     processed_booking_data["Room"] = partition[2]
 
-    # Calculate date of the booking
-    processed_booking_data["Date"] = get_date(TimetableSettings.START_DATE, week, day)
+    # Calculate date of the booking using reference date
+    processed_booking_data["Date"] = get_date(TimetableSettings.REFERENCE_DATE, week, day)
 
 
     # Copy over booking cell data that was not set/processed (already had a one-to-one correspondence with scraped table)
@@ -341,10 +341,10 @@ def create_table_rows(bookings, day : int, classroom_type : ClassroomType) -> li
         for j in range(0, len(booking_cells)):
             booking_data[column_titles[j]] = booking_cells[j].get_text()
 
-        # Get all week numbers for a booking
+        # Get all week numbers for a bookings
         weeks = get_weeks(booking_data["Weeks"])
 
-        # Create one row for each week on the given weekday
+        # Create one row for each desired week on the given weekday
         for week in weeks:
             rows.append(create_table_row(booking_data, week, day, classroom_type))
 
@@ -408,7 +408,7 @@ def scrape_classroom_type(driver, building_code : BuildingCode, classroom_type :
 
     # Get chosen timetable options including classrooms
     # Unpacking is faster for small collections
-    options = get_timetable_options(classrooms=[*classrooms.values()], weeks=['1-53'], days=['1-7'], period=['0-10'], report_type=['textspreadsheet;swsurl;UBCSWSActivities_TS'])
+    options = get_timetable_options(classrooms=[*classrooms.values()], weeks=['t', 'n'], days=['1-7'], period=['0-30'], report_type=['textspreadsheet;swsurl;UBCSWSActivities_TS'])
 
     # Sets the chosen timetable options to be selected
     set_options_selected(driver, options)
@@ -430,8 +430,8 @@ def scrape_classroom_type(driver, building_code : BuildingCode, classroom_type :
         
 
 
-def write_to_file(data : list[list[str]], building_code : BuildingCode) -> None:
-    # Writes the given data to file
+def create_dataframe(data : list[list[str]]) -> pd.DataFrame:
+    # Returns a dataframe with the given data, and datestrings converted to datetimes
 
     # Ensure that scraped table columns are in the correct order
     table_headers = get_table_headers()
@@ -444,16 +444,41 @@ def write_to_file(data : list[list[str]], building_code : BuildingCode) -> None:
     # Initialize table for booking data
     df = pd.DataFrame(data=data, columns=columns)
 
+    # Convert all datestrings to datetimes
+    df['Date'] = pd.to_datetime(df['Date'], format=TimetableSettings.FORMAT_DATE)
+
+    return df
+
+
+
+def filter_bookings(dataframe : pd.DataFrame) -> pd.DataFrame:
+    # Returns a modified dataframe with duplicate and out-of-range bookings removed
+    # Assumes dataframe has columns specified in get_table_headers
+
+    # Get start and end dates as datetimes
+    start_date = datetime.strptime(TimetableSettings.START_DATE, TimetableSettings.FORMAT_DATE)
+    end_date = datetime.strptime(TimetableSettings.END_DATE, TimetableSettings.FORMAT_DATE)
+
+    # Filter out bookings that are outside of the timetable range
+    dataframe = dataframe[(dataframe['Date'] >= start_date) & (dataframe['Date'] <= end_date)]
+
     # Filter out bookings that are duplicates (date, time, and location all overlap)
     # Keep the first instances
-    df = df.drop_duplicates(subset=['Building', 'Room', 'Date', 'Start', 'End'], ignore_index=True)
+    dataframe = dataframe.drop_duplicates(subset=['Building', 'Room', 'Date', 'Start', 'End'], ignore_index=True)
+
+    return dataframe
+
+
+
+def write_to_file(dataframe : pd.DataFrame, building_code : BuildingCode) -> None:
+    # Writes the given data to file
 
     # Make path and create parent directories if they do not exist
-    path = Path.cwd() / f'{Targets.RAW_BOOKING_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{building_code.name}.csv'
+    path = Path.cwd() / f'{Targets.RAW_BOOKING_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.START_DATE}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{TimetableSettings.START_DATE}_{building_code.name}.csv'
     path.parent.mkdir(parents=True, exist_ok=True)
 
     # Write booking data to file for building in target directory
-    df.to_csv(path, index=False, mode="w")
+    dataframe.to_csv(path, index=False, mode="w", date_format=TimetableSettings.FORMAT_DATE)
 
 
 
@@ -474,7 +499,9 @@ def scrape(driver, building_code : BuildingCode) -> None:
 
         data.extend(classroom_type_data)
 
-    write_to_file(data, building_code)
+    df = filter_bookings(create_dataframe(data))
+
+    write_to_file(df, building_code)
 
 
 
