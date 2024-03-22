@@ -2,17 +2,39 @@
 
 
 from enum import Enum
+from datetime import datetime, timedelta
+
+
+class Targets():
+    # Paths to target directories for scripts
+    RAW_BOOKING_DATA = '/raw_booking_data'
+    TIMESLOT_DATA = '/timeslot_data'
 
 
 
 class TimetableSettings():
-    # UBC Online Timetable information for a given academic year
+    # UBC Online Timetable information
 
     CAMPUS = "UBCV"                                 
-    ACADEMIC_YEAR = "2023-2024"                     # Change academic year for updated timetable
-    URL = 'https://sws-van.as.it.ubc.ca/sws_2023/'  # Change date to get updated timetable
-    START_DATE = "2023-08-21"                       # First day in the timetable range in ISO-8601 format
-    END_DATE = "2024-08-25"                         # Last day in the timetable range in ISO-8601 format
+    ACADEMIC_YEAR = "2023-2024"                             # Change academic year for updated timetable
+    URL = 'https://sws-van.as.it.ubc.ca/sws_2023/'          # Change date to get updated timetable
+    START_TIME = "07:00"                                    # Earliest time provided by the timetable in 24-hour format
+    END_TIME = "22:00"                                      # Latest time provided by the timetable in 24-hour format
+
+    # Reference date for timetable in ISO-8601 format (used in conjunction with week numbers to calculate dates)
+    REFERENCE_DATE = "2023-08-21"
+
+    # Calculate start and end dates for scraping
+    _now = datetime.now()
+    _start = _now - timedelta(days=_now.weekday())
+    _end = _start + timedelta(weeks=1, days=6)
+
+    # Describe how to format and parse dates and datetimes
+    FORMAT_DATE = "%Y-%m-%d"
+    FORMAT_DATETIME = "%Y-%m-%d %H:%M"
+
+    START_DATE = _start.strftime(FORMAT_DATE)                # First day in the chosen time period in ISO-8601 format (date of the current Monday of the week)
+    END_DATE = _end.strftime(FORMAT_DATE)                    # Last day in the chosen time period in ISO-8601 format (date of the Sunday of the next week)
 
 
 
