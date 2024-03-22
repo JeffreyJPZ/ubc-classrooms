@@ -451,10 +451,13 @@ def create_dataframe(data : list[list[str]]) -> pd.DataFrame:
 
 
 
-def filter_bookings(dataframe : pd.DataFrame) -> pd.DataFrame:
+def filter_bookings(dataframe : pd.DataFrame, building_code : BuildingCode) -> pd.DataFrame:
     # Returns a modified dataframe with duplicate and out-of-range bookings removed
     # Assumes dataframe has columns specified in get_table_headers
 
+    # Filter out bookings that do not belong to the building
+    dataframe = dataframe[dataframe['Building'] == building_code.name]
+    
     # Get start and end dates as datetimes
     start_date = datetime.strptime(TimetableSettings.START_DATE, TimetableSettings.FORMAT_DATE)
     end_date = datetime.strptime(TimetableSettings.END_DATE, TimetableSettings.FORMAT_DATE)
@@ -499,7 +502,7 @@ def scrape(driver, building_code : BuildingCode) -> None:
 
         data.extend(classroom_type_data)
 
-    df = filter_bookings(create_dataframe(data))
+    df = filter_bookings(create_dataframe(data), building_code)
 
     write_to_file(df, building_code)
 
