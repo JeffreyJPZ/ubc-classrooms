@@ -20,7 +20,7 @@ from selenium.common.exceptions import NoSuchElementException
 from models import TimetableSettings
 from models import Targets
 from models import BuildingCode
-from models import ClassroomType
+from utils.ubc import ClassroomType
 
 
 

@@ -1,8 +1,9 @@
-# Models used throughout scripts
-
-
+"""
+Models used throughout scripts
+"""
 from enum import Enum
 from datetime import datetime, timedelta
+from utils.ubc import Campus
 
 
 class Targets():
@@ -15,7 +16,7 @@ class Targets():
 class TimetableSettings():
     # UBC Online Timetable information
 
-    CAMPUS = "UBCV"                                 
+    CAMPUS = Campus.UBCV.value                               
     ACADEMIC_YEAR = "2023-2024"                             # Change academic year for updated timetable
     URL = 'https://sws-van.as.it.ubc.ca/sws_2023/'          # Change date to get updated timetable
     START_TIME = "07:00"                                    # Earliest time provided by the timetable in 24-hour format
@@ -43,7 +44,7 @@ class TimetableSettings():
 #   then UBC Online Timetable name was preferred
 # - Comments denote whether buildings' classrooms are all restricted and/or other notes
 class BuildingCode(Enum):
-    # Building codes for UBC names and their full names (with exceptions)
+    # Building codes for UBC buildings and their names as displayed in UBC Online Timetable
     
     ALRD = "Allard Hall"
     ANSO = "Anthropology and Sociology"
@@ -119,11 +120,3 @@ class BuildingCode(Enum):
     WESB = "Wesbrook"
     SWNG = "West Mall Swing Space"
     IRC = "Woodward IRC"
-
-
-
-class ClassroomType(Enum):
-    # Types of classrooms - "General" is for general teaching spaces that are open to all faculties, 
-    #                       "Restricted" is for restricted spaces primarily reserved for a respective faculty
-    GENERAL = "General"
-    RESTRICTED = "Restricted"
