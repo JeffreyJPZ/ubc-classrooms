@@ -20,7 +20,6 @@ class BuildingCode(Enum):
     # Building codes for UBC buildings and their full names
     # Full names taken from UBC Learning Spaces when available, or misc. UBC sites
 
-    # TODO: make full names
     ALRD = "Allard Hall"
     ANSO = "Anthropology and Sociology"
     AERL = "Aquatic Ecosystems Research Laboratory"
