@@ -10,7 +10,7 @@ from pathlib import Path
 
 from models import TimetableSettings
 from models import Targets
-from models import BuildingCode
+from models import BuildingCodeToTimetableName
 
 
 
@@ -177,7 +177,7 @@ def compute_timeslots_by_building(building_dataframe : pd.DataFrame) -> list[lis
 
 
 
-def read_from_file(building_code : BuildingCode) -> pd.DataFrame:
+def read_from_file(building_code : BuildingCodeToTimetableName) -> pd.DataFrame:
     # Reads the booking data for the building from file and returns a dataframe with the booking data
 
     # Get path to booking data file
@@ -194,7 +194,7 @@ def read_from_file(building_code : BuildingCode) -> pd.DataFrame:
 
 
 
-def write_to_file(data : list[list[str]], building_code : BuildingCode) -> None:
+def write_to_file(data : list[list[str]], building_code : BuildingCodeToTimetableName) -> None:
     # Writes the timeslot data to file
 
     # Ensure that scraped table columns are in the correct order
@@ -218,7 +218,7 @@ def write_to_file(data : list[list[str]], building_code : BuildingCode) -> None:
 
 
 
-def compute_timeslots(building_code : BuildingCode) -> None:
+def compute_timeslots(building_code : BuildingCodeToTimetableName) -> None:
     # Reads booking data from file for a building, gets the available timeslots for the entire academic year, and writes the timeslots to file
 
     df = read_from_file(building_code)
@@ -251,13 +251,13 @@ def main() -> None:
         # Validate building codes
         for building_code in building_code_data['buildingCodes']:
             try:
-                assert building_code == BuildingCode[building_code].name
+                assert building_code == BuildingCodeToTimetableName[building_code].name
             except AssertionError:
                 print("An invalid building code was entered\n")
                 return
 
         for building_code in building_code_data['buildingCodes']:
-            compute_timeslots(BuildingCode[building_code])
+            compute_timeslots(BuildingCodeToTimetableName[building_code])
         
 
 

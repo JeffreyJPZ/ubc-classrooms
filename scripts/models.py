@@ -43,7 +43,7 @@ class TimetableSettings():
 # - If there were conflicting values with UBC Online Timetable, (e.g. abbreviations), 
 #   then UBC Online Timetable name was preferred
 # - Comments denote whether buildings' classrooms are all restricted and/or other notes
-class BuildingCode(Enum):
+class BuildingCodeToTimetableName(Enum):
     # Building codes for UBC buildings and their names as displayed in UBC Online Timetable
     
     ALRD = "Allard Hall"

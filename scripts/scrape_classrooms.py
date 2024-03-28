@@ -19,7 +19,7 @@ from selenium.common.exceptions import NoSuchElementException
 
 from models import TimetableSettings
 from models import Targets
-from models import BuildingCode
+from models import BuildingCodeToTimetableName
 from utils.ubc import ClassroomType
 
 
@@ -128,7 +128,7 @@ def should_add_classroom(building_name : str, classroom_name : str) -> bool:
     # Returns true if the classroom should be added (i.e. it matches the building and its timetable is not empty), false otherwise
         
     # NOTE: Entry with classroom name "Wayne & William White Engineering Design Centre" has an empty timetable, should be skipped
-    if building_name == BuildingCode.EDC.name and re.fullmatch(building_name, classroom_name) != None:
+    if building_name == BuildingCodeToTimetableName.EDC.name and re.fullmatch(building_name, classroom_name) != None:
         return False
     
     return check_building_match(building_name, classroom_name)
@@ -147,7 +147,7 @@ def format_name(building_code : str, classroom_name : str) -> str:
 
 
 
-def get_matching_classrooms(driver, building_code : BuildingCode) -> dict[str, str]:
+def get_matching_classrooms(driver, building_code : BuildingCodeToTimetableName) -> dict[str, str]:
     # For a given classroom type, returns classroom names mapped to numeric values in string format, where:
     #   - each classroom name is unique
     #   - each classroom belongs to the building represented by the building code
@@ -400,7 +400,7 @@ def view_timetable(driver) -> None:
 
 
 
-def scrape_classroom_type(driver, building_code : BuildingCode, classroom_type : ClassroomType) -> list[list[str]]:
+def scrape_classroom_type(driver, building_code : BuildingCodeToTimetableName, classroom_type : ClassroomType) -> list[list[str]]:
     # Sets all classrooms for a given building and classroom type as selected and returns the scraped bookings
 
     # Gets classroom values and names matching building code and classroom type
@@ -451,7 +451,7 @@ def create_dataframe(data : list[list[str]]) -> pd.DataFrame:
 
 
 
-def filter_bookings(dataframe : pd.DataFrame, building_code : BuildingCode) -> pd.DataFrame:
+def filter_bookings(dataframe : pd.DataFrame, building_code : BuildingCodeToTimetableName) -> pd.DataFrame:
     # Returns a modified dataframe with duplicate and out-of-range bookings removed
     # Assumes dataframe has columns specified in get_table_headers
 
@@ -473,7 +473,7 @@ def filter_bookings(dataframe : pd.DataFrame, building_code : BuildingCode) -> p
 
 
 
-def write_to_file(dataframe : pd.DataFrame, building_code : BuildingCode) -> None:
+def write_to_file(dataframe : pd.DataFrame, building_code : BuildingCodeToTimetableName) -> None:
     # Writes the given data to file
 
     # Make path and create parent directories if they do not exist
@@ -485,7 +485,7 @@ def write_to_file(dataframe : pd.DataFrame, building_code : BuildingCode) -> Non
 
 
 
-def scrape(driver, building_code : BuildingCode) -> None:
+def scrape(driver, building_code : BuildingCodeToTimetableName) -> None:
     # Scrapes all classroom bookings for a building and writes the data to file
 
     # List of all timetable bookings for a building
@@ -520,7 +520,7 @@ def main() -> None:
         # Validate building codes
         for building_code in building_code_data['buildingCodes']:
             try:
-                assert building_code == BuildingCode[building_code].name
+                assert building_code == BuildingCodeToTimetableName[building_code].name
             except AssertionError:
                 print("An invalid building code was entered\n")
                 return
@@ -531,7 +531,7 @@ def main() -> None:
 
         # Scrape all classrooms in each building
         for building_code in building_code_data['buildingCodes']:
-            scrape(driver, BuildingCode[building_code])
+            scrape(driver, BuildingCodeToTimetableName[building_code])
 
 
 

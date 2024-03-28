@@ -16,7 +16,7 @@ class ClassroomType(Enum):
 
 
 
-class BuildingCode(Enum):
+class BuildingCodeToFullName(Enum):
     # Building codes for UBC buildings and their full names
     
     ALRD = "Allard Hall"
