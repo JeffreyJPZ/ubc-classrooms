@@ -1,17 +1,9 @@
 """
-Models used throughout scripts
+Constants for scraping UBC Online Timetable
 """
 from enum import Enum
 from datetime import datetime, timedelta
 from utils.ubc import Campus
-
-
-class Targets():
-    # Paths to target directories for scripts
-    RAW_BOOKING_DATA = '/raw_booking_data'
-    TIMESLOT_DATA = '/timeslot_data'
-
-
 
 class TimetableSettings():
     # UBC Online Timetable information

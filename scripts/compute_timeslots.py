@@ -8,9 +8,9 @@ from typing import Iterator
 from datetime import datetime, timedelta
 from pathlib import Path
 
-from models import TimetableSettings
-from models import Targets
-from models import BuildingCodeToTimetableName
+from utils.timetable import TimetableSettings
+from utils.targets import Targets
+from utils.ubc import BuildingCodeToFullName
 
 
 
@@ -18,7 +18,8 @@ def get_timeslot_headers() -> dict[str, int]:
     # Return a mapping of attributes for an available timeslot within an academic year to their column index in the timeslot table:
     # Campus:                   UBCV
     # Year:                     Academic year in format YYYY-YYYY
-    # Building:                 3-5 letter code representing a building
+    # BuildingCode:             3-5 letter code representing a building
+    # BuildingName:             Full name of building
     # Room:                     3-4 digit classroom number
     # RoomType:                 String representing whether the room the is a general teaching space or a restricted space
     # Start:                    Datetime in ISO-8601 format representing the beginning of the timeslot
@@ -26,11 +27,12 @@ def get_timeslot_headers() -> dict[str, int]:
     return {
         "Campus": 0, 
         "Year": 1,
-        "Building": 2, 
-        "Room": 3, 
-        "RoomType": 4,
-        "Start": 5,
-        "End": 6
+        "BuildingCode": 2,
+        "BuildingName": 3,
+        "Room": 4, 
+        "RoomType": 5,
+        "Start": 6,
+        "End": 7
     }
 
 
@@ -41,7 +43,7 @@ def get_timeslot_headers_to_booking_headers() -> dict[str, str]:
     return {
         "Campus": "Campus", 
         "Year": "Year",
-        "Building": "Building", 
+        "BuildingCode": "BuildingCode", 
         "Room": "Room", 
         "RoomType": "RoomType",
     }
@@ -57,9 +59,12 @@ def create_timeslot(timeslot_data : dict[str, str], start : str, end : str) -> l
     # Initialize timeslot size
     timeslot = [None] * len(timeslot_headers)
 
+    # Copy over building full name
+    timeslot_data["BuildingName"] = BuildingCodeToFullName[timeslot_data["BuildingCode"]].value
+
     # Copy over start and end datetimes
-    timeslot_data['Start'] = start
-    timeslot_data['End'] = end
+    timeslot_data["Start"] = start
+    timeslot_data["End"] = end
 
     # Copy the timeslot data to the correct positions
     for header in timeslot_headers:
@@ -75,7 +80,7 @@ def compute_timeslots_by_room_and_date(room_date_dataframe : pd.DataFrame, share
     room_date_timeslots = []
 
     # Sort bookings in increasing order by start time (as they are non-overlapping), and transpose in order to iterate over columns (efficient)
-    sorted_room_date_dataframe = room_date_dataframe.sort_values(by=['Start']).T
+    sorted_room_date_dataframe = room_date_dataframe.sort_values(by=["Start"]).T
 
     # Creates ISO-8601 datetimes for start and end datetimes
     start = datetime.strptime(date.strftime(TimetableSettings.FORMAT_DATE) + " " + TimetableSettings.START_TIME, TimetableSettings.FORMAT_DATETIME)
@@ -93,8 +98,8 @@ def compute_timeslots_by_room_and_date(room_date_dataframe : pd.DataFrame, share
             break
 
         # Get start and end datetimes for a booking
-        booking_start = content.get('Start')
-        booking_end = content.get('End')
+        booking_start = content.get("Start")
+        booking_end = content.get("Start")
 
         # Check if current time is not the beginning of a booking - if so, create a timeslot spanning the current time to the beginning of the next booking
         if curr != booking_start:
@@ -144,7 +149,7 @@ def compute_timeslots_by_room(room_dataframe : pd.DataFrame) -> list[list[str]]:
 
     for date in dates:
         # Query for bookings that match the given date
-        room_date_dataframe = room_dataframe[room_dataframe['Date'] == date]
+        room_date_dataframe = room_dataframe[room_dataframe["Date"] == date]
 
         # Compute timeslots for the room on the given date
         room_date_timeslots = compute_timeslots_by_room_and_date(room_date_dataframe, shared_timeslot_data, date)
@@ -161,12 +166,12 @@ def compute_timeslots_by_building(building_dataframe : pd.DataFrame) -> list[lis
     building_timeslots = []
 
     # Get all unique rooms
-    unique_rooms = pd.unique(building_dataframe['Room'])
+    unique_rooms = pd.unique(building_dataframe["Room"])
 
     # Go through each room and create timeslots for the entire academic year
     for room in unique_rooms:
         # Get only bookings that match the room
-        room_dataframe = building_dataframe[building_dataframe['Room'] == room]
+        room_dataframe = building_dataframe[building_dataframe["Room"] == room]
 
         # Compute the timeslots for the room
         room_timeslots = compute_timeslots_by_room(room_dataframe)
@@ -177,7 +182,7 @@ def compute_timeslots_by_building(building_dataframe : pd.DataFrame) -> list[lis
 
 
 
-def read_from_file(building_code : BuildingCodeToTimetableName) -> pd.DataFrame:
+def read_from_file(building_code : BuildingCodeToFullName) -> pd.DataFrame:
     # Reads the booking data for the building from file and returns a dataframe with the booking data
 
     # Get path to booking data file
@@ -186,15 +191,15 @@ def read_from_file(building_code : BuildingCodeToTimetableName) -> pd.DataFrame:
 
     # Read file into dataframe and convert datestrings and timestrings into ISO-8601 datetimes
     df = pd.read_csv(read_path, index_col=False)
-    df['Start'] = pd.to_datetime(df['Date'] + ' ' + df['Start'], format=TimetableSettings.FORMAT_DATETIME)
-    df['End'] = pd.to_datetime(df['Date'] + ' ' + df['End'], format=TimetableSettings.FORMAT_DATETIME)
-    df['Date'] = pd.to_datetime(df['Date'], format=TimetableSettings.FORMAT_DATE)
+    df["Start"] = pd.to_datetime(df["Date"] + " " + df["Start"], format=TimetableSettings.FORMAT_DATETIME)
+    df["End"] = pd.to_datetime(df["Date"] + " " + df["End"], format=TimetableSettings.FORMAT_DATETIME)
+    df["Date"] = pd.to_datetime(df["Date"], format=TimetableSettings.FORMAT_DATE)
 
     return df
 
 
 
-def write_to_file(data : list[list[str]], building_code : BuildingCodeToTimetableName) -> None:
+def write_to_file(data : list[list[str]], building_code : BuildingCodeToFullName) -> None:
     # Writes the timeslot data to file
 
     # Ensure that scraped table columns are in the correct order
@@ -218,7 +223,7 @@ def write_to_file(data : list[list[str]], building_code : BuildingCodeToTimetabl
 
 
 
-def compute_timeslots(building_code : BuildingCodeToTimetableName) -> None:
+def compute_timeslots(building_code : BuildingCodeToFullName) -> None:
     # Reads booking data from file for a building, gets the available timeslots for the entire academic year, and writes the timeslots to file
 
     df = read_from_file(building_code)
@@ -249,15 +254,15 @@ def main() -> None:
         building_code_data = json.load(f)
 
         # Validate building codes
-        for building_code in building_code_data['buildingCodes']:
+        for building_code in building_code_data["buildingCodes"]:
             try:
-                assert building_code == BuildingCodeToTimetableName[building_code].name
+                assert building_code == BuildingCodeToFullName[building_code].name
             except AssertionError:
                 print("An invalid building code was entered\n")
                 return
 
-        for building_code in building_code_data['buildingCodes']:
-            compute_timeslots(BuildingCodeToTimetableName[building_code])
+        for building_code in building_code_data["buildingCodes"]:
+            compute_timeslots(BuildingCodeToFullName[building_code])
         
 
 

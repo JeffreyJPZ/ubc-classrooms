@@ -17,9 +17,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from selenium.common.exceptions import NoSuchElementException
 
-from models import TimetableSettings
-from models import Targets
-from models import BuildingCodeToTimetableName
+from utils.timetable import TimetableSettings, BuildingCodeToTimetableName
+from utils.targets import Targets
 from utils.ubc import ClassroomType
 
 
@@ -174,7 +173,7 @@ def get_table_headers() -> dict[str, int]:
     # Return a mapping of attributes for a classroom booking within an academic year to their column index in the scraped table:
     # Campus:                   UBCV
     # Year:                     Academic year in format YYYY-YYYY
-    # Building:                 3-5 letter code representing a building
+    # BuildingCode:             3-5 letter code representing a building
     # Room:                     3-4 digit classroom number
     # RoomType:                 String representing whether the room the booking is in is a general teaching space or a restricted space
     # Date:                     ISO-8601 compliant date in format YYYY-MM-DD
@@ -189,7 +188,7 @@ def get_table_headers() -> dict[str, int]:
     return {
         "Campus": 0, 
         "Year": 1,
-        "Building": 2, 
+        "BuildingCode": 2, 
         "Room": 3, 
         "RoomType": 4,
         "Date": 5,
@@ -301,7 +300,7 @@ def create_table_row(booking_data : dict[str, str], week : int, day : int, class
     # PROCESSING:
     # Separate location into building code and room number
     partition = booking_data["Location"].partition(" ")
-    processed_booking_data["Building"] = partition[0]
+    processed_booking_data["BuildingCode"] = partition[0]
     processed_booking_data["Room"] = partition[2]
 
     # Calculate date of the booking using reference date
@@ -408,7 +407,7 @@ def scrape_classroom_type(driver, building_code : BuildingCodeToTimetableName, c
 
     # Get chosen timetable options including classrooms
     # Unpacking is faster for small collections
-    options = get_timetable_options(classrooms=[*classrooms.values()], weeks=['t', 'n'], days=['1-7'], period=['0-30'], report_type=['textspreadsheet;swsurl;UBCSWSActivities_TS'])
+    options = get_timetable_options(classrooms=[*classrooms.values()], weeks=["t", "n"], days=["1-7"], period=["0-30"], report_type=["textspreadsheet;swsurl;UBCSWSActivities_TS"])
 
     # Sets the chosen timetable options to be selected
     set_options_selected(driver, options)
@@ -417,7 +416,7 @@ def scrape_classroom_type(driver, building_code : BuildingCodeToTimetableName, c
     view_timetable(driver)
 
     # Gets parse tree for timetable page
-    soup = BeautifulSoup(driver.page_source, 'lxml')
+    soup = BeautifulSoup(driver.page_source, "lxml")
 
     # Scrape timetable for the given classrooms
     # Using parse tree is much faster than selenium which uses JSON wire protocol for each request (i.e. for each command)
@@ -445,7 +444,7 @@ def create_dataframe(data : list[list[str]]) -> pd.DataFrame:
     df = pd.DataFrame(data=data, columns=columns)
 
     # Convert all datestrings to datetimes
-    df['Date'] = pd.to_datetime(df['Date'], format=TimetableSettings.FORMAT_DATE)
+    df["Date"] = pd.to_datetime(df["Date"], format=TimetableSettings.FORMAT_DATE)
 
     return df
 
@@ -456,18 +455,18 @@ def filter_bookings(dataframe : pd.DataFrame, building_code : BuildingCodeToTime
     # Assumes dataframe has columns specified in get_table_headers
 
     # Filter out bookings that do not belong to the building
-    dataframe = dataframe[dataframe['Building'] == building_code.name]
+    dataframe = dataframe[dataframe["BuildingCode"] == building_code.name]
     
     # Get start and end dates as datetimes
     start_date = datetime.strptime(TimetableSettings.START_DATE, TimetableSettings.FORMAT_DATE)
     end_date = datetime.strptime(TimetableSettings.END_DATE, TimetableSettings.FORMAT_DATE)
 
     # Filter out bookings that are outside of the timetable range
-    dataframe = dataframe[(dataframe['Date'] >= start_date) & (dataframe['Date'] <= end_date)]
+    dataframe = dataframe[(dataframe["Date"] >= start_date) & (dataframe["Date"] <= end_date)]
 
     # Filter out bookings that are duplicates (date, time, and location all overlap)
     # Keep the first instances
-    dataframe = dataframe.drop_duplicates(subset=['Building', 'Room', 'Date', 'Start', 'End'], ignore_index=True)
+    dataframe = dataframe.drop_duplicates(subset=["BuildingCode", "Room", "Date", "Start", "End"], ignore_index=True)
 
     return dataframe
 
