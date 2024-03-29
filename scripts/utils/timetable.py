@@ -1,17 +1,9 @@
 """
-Models used throughout scripts
+Constants for scraping UBC Online Timetable
 """
 from enum import Enum
 from datetime import datetime, timedelta
 from utils.ubc import Campus
-
-
-class Targets():
-    # Paths to target directories for scripts
-    RAW_BOOKING_DATA = '/raw_booking_data'
-    TIMESLOT_DATA = '/timeslot_data'
-
-
 
 class TimetableSettings():
     # UBC Online Timetable information
@@ -43,7 +35,7 @@ class TimetableSettings():
 # - If there were conflicting values with UBC Online Timetable, (e.g. abbreviations), 
 #   then UBC Online Timetable name was preferred
 # - Comments denote whether buildings' classrooms are all restricted and/or other notes
-class BuildingCode(Enum):
+class BuildingCodeToTimetableName(Enum):
     # Building codes for UBC buildings and their names as displayed in UBC Online Timetable
     
     ALRD = "Allard Hall"
