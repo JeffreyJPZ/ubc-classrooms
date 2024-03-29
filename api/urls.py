@@ -5,7 +5,6 @@ from django.urls import path, register_converter
 
 import converters
 
-register_converter(converters.CampusConverter, "campus")
 register_converter(converters.DateConverter, "date")
 
 urlpatterns = [

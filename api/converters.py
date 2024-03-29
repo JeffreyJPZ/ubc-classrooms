@@ -2,18 +2,6 @@
 Custom path converters for timeslots API
 """
 from datetime import datetime
-from utils.ubc import Campus
-
-class CampusConverter():
-    # Matches strings referring to UBC campuses and converts them into campuses
-
-    regex = f"{Campus.UBCV.value}"                   # Currently only supports UBC Vancouver
-
-    def to_python(self, value):
-        return Campus[value]
-    
-    def to_url(self, value):
-        return Campus[value].name
     
 class DateConverter():
     # Matches datestrings in the given format and converts them into dates
