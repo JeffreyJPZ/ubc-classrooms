@@ -25,7 +25,12 @@ class QueryParametersSerializer(serializers.Serializer):
 
 
 
-# class TimeslotsSerializer(serializers.Serializer):
+class TimeslotsSerializer(serializers.Serializer):
     # Serializes timeslots fields for output 
 
-
+    campus = CampusField()
+    building = BuildingField()
+    roomtype = RoomTypeField()
+    date = serializers.DateField(format="iso-8601", required=True)
+    start = serializers.TimeField(format="%H:%M", required=False)
+    end = serializers.TimeField(format="%H:%M", required=False)
