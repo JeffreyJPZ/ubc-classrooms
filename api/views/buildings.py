@@ -16,4 +16,4 @@ def buildings_v1(request : Request, campus : str):
     result = [] # stub
     if result == []:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    return Response('hi')
+    return Response('hi', status=status.HTTP_200_OK)
