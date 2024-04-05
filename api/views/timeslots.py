@@ -11,7 +11,7 @@ from datetime import date
 # Version 1
 
 @api_view(['GET'])
-def timeslots_v1(request : Request, campus : str, date : date):
+def timeslots_v1(request : Request, campus : str, date : date) -> Response:
     # Get timeslots for empty classrooms
 
     # Use query params for start time, end time, building names, and room types

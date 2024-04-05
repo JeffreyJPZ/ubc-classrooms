@@ -9,7 +9,7 @@ from rest_framework.response import Response
 # Version 1
 
 @api_view(['GET'])
-def roomtypes_v1(request : Request, campus : str):
+def roomtypes_v1(request : Request, campus : str) -> Response:
     # Get room types
 
     if request.method == 'GET':
