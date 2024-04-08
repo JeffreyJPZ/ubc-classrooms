@@ -1,5 +1,5 @@
 """
-URL configuration for timeslots API
+URL configuration for UBC Classrooms API
 """
 from django.urls import path
 from views import buildings, roomtypes, timeslots
