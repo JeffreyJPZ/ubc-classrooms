@@ -10,7 +10,8 @@ from utils.ubc import *
 # Custom error messages for validation
 default_error_messages = {
     "InvalidCampus": "Invalid campus, got {input}",
-    "InvalidBuilding": "Invalid building, got {input}",
+    "InvalidBuildingCode": "Invalid building code, got {input}",
+    "InvalidBuildingName": "Invalid building name, got {input}",
     "InvalidRoomType": "Invalid room type, got {input}",
 }
 
@@ -18,7 +19,7 @@ default_error_messages = {
 
 class CampusField(serializers.Field):
     # Campuses are serialized into campus enums and vice versa
-    # E.g. "UBCV" <-> UBCV 
+    # e.g. "UBCV" <-> UBCV 
 
     # Convert campus enum into campus name
     def to_representation(self, value : Campus):
@@ -37,9 +38,30 @@ class CampusField(serializers.Field):
     
 
 
-class BuildingField(serializers.Field):
-    # Buildings are serialized into building enums and vice versa
-    # E.g. "Irving K. Barber Learning Centre" <-> IKB 
+class BuildingCodeField(serializers.Field):
+    # Building codes are serialized into building enums and vice versa
+    # e.g. "IKB" <-> IKB 
+
+    # Convert building enum into full name
+    def to_representation(self, value : BuildingCodeToFullName):
+        return value.name
+    
+    # Convert full name into building enum
+    def to_internal_value(self, data : str):
+
+        # Validate
+        try:
+            assert data == BuildingCodeToFullName[data].name
+        except ValueError:
+            raise self.fail("InvalidBuildingCode", input=data)
+        
+        return BuildingCodeToFullName[data]
+    
+
+
+class BuildingNameField(serializers.Field):
+    # Building names are serialized into building enums and vice versa
+    # e.g. "Irving K. Barber Learning Centre" <-> IKB 
 
     # Convert building enum into full name
     def to_representation(self, value : BuildingCodeToFullName):
@@ -52,7 +74,7 @@ class BuildingField(serializers.Field):
         try:
             assert data == BuildingCodeToFullName[data].value
         except ValueError:
-            raise self.fail("InvalidBuilding", input=data)
+            raise self.fail("InvalidBuildingName", input=data)
         
         return BuildingCodeToFullName[data]
         
@@ -60,7 +82,7 @@ class BuildingField(serializers.Field):
 
 class RoomTypeField(serializers.Field):
     # Room types are serialized into room type enums and vice versa
-    # E.g. "General" <-> GENERAL 
+    # e.g. "General" <-> GENERAL 
 
     # Convert building enum into full name
     def to_representation(self, value : ClassroomType):
