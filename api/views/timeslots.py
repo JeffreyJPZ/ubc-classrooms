@@ -10,7 +10,7 @@ from rest_framework.response import Response
 
 @api_view(['GET'])
 def timeslots_v1(request : Request, campus : str) -> Response:
-    # Get timeslots for empty classrooms
+    # Get timeslots for empty classrooms for a campus
 
     # Use serializers to validate date, start time, end time, building names, and room types query params
     if request.method == 'GET':

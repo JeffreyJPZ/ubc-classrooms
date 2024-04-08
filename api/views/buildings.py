@@ -10,7 +10,7 @@ from rest_framework.response import Response
 
 @api_view(['GET'])
 def buildings_v1(request : Request, campus : str) -> Response:
-    # Get buildings
+    # Get buildings for a campus
     
     if request.method == 'GET':
         result = [] # stub
