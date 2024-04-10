@@ -2,16 +2,16 @@ services:
   db:
     image: postgres
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - ./backend/data/db:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   web:
-    build: .
+    build: ./backend
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/src
+      - ./backend:/src
     ports:
     - "8000:8000"
     environment:
@@ -21,13 +21,13 @@ services:
     depends_on:
       - db
   scrape-classrooms:
-    build: .
+    build: ./backend
     volumes:
-      - ./data/raw_booking_data:/raw_booking_data
+      - ./backend/data/raw_booking_data:/raw_booking_data
     command: python scripts/scrape_classrooms.py
   compute-timeslots:
-    build: .
+    build: ./backend
     volumes:
-      - ./data/raw_booking_data:/raw_booking_data
-      - ./data/timeslot_data:/timeslot_data
+      - ./backend/data/raw_booking_data:/raw_booking_data
+      - ./backend/data/timeslot_data:/timeslot_data
     command: python scripts/compute_timeslots.py
