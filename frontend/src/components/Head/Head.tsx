@@ -7,11 +7,11 @@ type HeadProps = {
     description?: string,
 };
 
-export function Head(props: HeadProps) {
+export function Head({title = '', description = ''}: HeadProps) {
     return (
         <>
-            <title>{props.title? '${props.title}' : 'UBC Classrooms'}</title>
-            <meta name='description'>{props.description? '${props.description}' : 'Space finder for UBC buildings'}</meta>
+            <title>{title? '${title}' : 'UBC Classrooms'}</title>
+            <meta name='description'>{description? '${description}' : 'Space finder for UBC buildings'}</meta>
         </>
     );
 };
