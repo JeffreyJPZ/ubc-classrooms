@@ -188,11 +188,8 @@ def read_from_file(building_code : BuildingCodeToFullName) -> pd.DataFrame:
     # Get path to booking data file
     read_path = Path.cwd() / f'{Targets.RAW_BOOKING_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.START_DATE}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{TimetableSettings.START_DATE}_{building_code.name}.csv'
 
-    # Read file into dataframe and convert datestrings and timestrings into ISO-8601 datetimes
-    df = pd.read_csv(read_path, index_col=False)
-    df["Start"] = pd.to_datetime(df["Date"] + " " + df["Start"], format=TimetableSettings.FORMAT_DATETIME)
-    df["End"] = pd.to_datetime(df["Date"] + " " + df["End"], format=TimetableSettings.FORMAT_DATETIME)
-    df["Date"] = pd.to_datetime(df["Date"], format=TimetableSettings.FORMAT_DATE)
+    # Read file into dataframe
+    df = pd.read_csv(read_path, index_col=False, engine="pyarrow")
 
     return df
 
@@ -224,8 +221,12 @@ def write_to_file(data : list[list[str]], building_code : BuildingCodeToFullName
 
 def compute_timeslots(building_code : BuildingCodeToFullName) -> None:
     # Reads booking data from file for a building, gets the available timeslots for the entire academic year, and writes the timeslots to file
-
     df = read_from_file(building_code)
+
+    # Convert datestrings and timestrings into ISO-8601 datetimes
+    df["Start"] = pd.to_datetime(df["Date"] + " " + df["Start"], format=TimetableSettings.FORMAT_DATETIME)
+    df["End"] = pd.to_datetime(df["Date"] + " " + df["End"], format=TimetableSettings.FORMAT_DATETIME)
+    df["Date"] = pd.to_datetime(df["Date"], format=TimetableSettings.FORMAT_DATE)
 
     # Get all available timeslots for the building
     data = compute_timeslots_by_building(df)
