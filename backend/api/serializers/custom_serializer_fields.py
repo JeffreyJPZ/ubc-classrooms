@@ -18,12 +18,12 @@ default_error_messages = {
 
 
 class CampusField(serializers.Field):
-    # Campuses are serialized into campus enums and vice versa
-    # e.g. "UBCV" <-> UBCV 
+    # Campuses are verified
+    # e.g. "UBCV" <-> "UBCV"
 
     # Convert campus enum into campus name
-    def to_representation(self, value : Campus):
-        return value.value
+    def to_representation(self, value : str):
+        return value
     
     # Convert full name into campus enum
     def to_internal_value(self, data : str):
@@ -34,17 +34,17 @@ class CampusField(serializers.Field):
         except ValueError:
             raise self.fail("InvalidCampus", input=data)
         
-        return Campus[data]
+        return data
     
 
 
 class BuildingCodeField(serializers.Field):
-    # Building codes are serialized into building enums and vice versa
-    # e.g. "IKB" <-> IKB 
+    # Building codes are verified
+    # e.g. "IKB" <-> "IKB"
 
     # Convert building enum into full name
-    def to_representation(self, value : BuildingCodeToFullName):
-        return value.name
+    def to_representation(self, value : str):
+        return value
     
     # Convert full name into building enum
     def to_internal_value(self, data : str):
@@ -55,17 +55,17 @@ class BuildingCodeField(serializers.Field):
         except ValueError:
             raise self.fail("InvalidBuildingCode", input=data)
         
-        return BuildingCodeToFullName[data]
+        return data
     
 
 
 class BuildingNameField(serializers.Field):
-    # Building names are serialized into building enums and vice versa
-    # e.g. "Irving K. Barber Learning Centre" <-> IKB 
+    # Building names are verified
+    # e.g. "Irving K. Barber Learning Centre" <-> "Irving K. Barber Learning Centre"
 
     # Convert building enum into full name
-    def to_representation(self, value : BuildingCodeToFullName):
-        return value.value
+    def to_representation(self, value : str):
+        return value
     
     # Convert full name into building enum
     def to_internal_value(self, data : str):
@@ -76,16 +76,16 @@ class BuildingNameField(serializers.Field):
         except ValueError:
             raise self.fail("InvalidBuildingName", input=data)
         
-        return BuildingCodeToFullName[data]
+        return data
         
 
 
 class RoomTypeField(serializers.Field):
-    # Room types are serialized into room type enums and vice versa
-    # e.g. "General" <-> GENERAL 
+    # Room types are verified
+    # e.g. "General" <-> "General"
 
     # Convert building enum into full name
-    def to_representation(self, value : ClassroomType):
+    def to_representation(self, value : str):
         return value.value
     
     # Convert full name into building enum
@@ -97,4 +97,4 @@ class RoomTypeField(serializers.Field):
         except ValueError:
             raise self.fail("InvalidRoomType", input=data)
         
-        return ClassroomType[data]
+        return data

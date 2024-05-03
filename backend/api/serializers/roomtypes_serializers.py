@@ -3,7 +3,7 @@ Serializers for roomtypes resource
 """
 from rest_framework import serializers
 
-from custom_fields import *
+from backend.api.serializers.custom_serializer_fields import *
 
 
 

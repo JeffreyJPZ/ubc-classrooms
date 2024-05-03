@@ -4,7 +4,7 @@ Serializers for timeslots resource
 from rest_framework import serializers
 
 from utils.ubc import *
-from custom_fields import *
+from backend.api.serializers.custom_serializer_fields import *
     
 
 
