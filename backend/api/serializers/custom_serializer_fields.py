@@ -5,8 +5,6 @@ from rest_framework import serializers
 
 from utils.ubc import *
 
-
-
 # Custom error messages for validation
 default_error_messages = {
     "InvalidCampus": "Invalid campus, got {input}",
@@ -14,8 +12,6 @@ default_error_messages = {
     "InvalidBuildingName": "Invalid building name, got {input}",
     "InvalidRoomType": "Invalid room type, got {input}",
 }
-
-
 
 class CampusField(serializers.Field):
     # Campuses are verified
