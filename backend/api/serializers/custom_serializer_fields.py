@@ -13,7 +13,7 @@ default_error_messages = {
     "InvalidRoomType": "Invalid room type, got {input}",
 }
 
-class CampusField(serializers.Field):
+class CampusField(serializers.CharField):
     # Campuses are verified
     # e.g. "UBCV" <-> "UBCV"
 
@@ -34,7 +34,7 @@ class CampusField(serializers.Field):
     
 
 
-class BuildingCodeField(serializers.Field):
+class BuildingCodeField(serializers.CharField):
     # Building codes are verified
     # e.g. "IKB" <-> "IKB"
 
@@ -55,7 +55,7 @@ class BuildingCodeField(serializers.Field):
     
 
 
-class BuildingNameField(serializers.Field):
+class BuildingNameField(serializers.CharField):
     # Building names are verified
     # e.g. "Irving K. Barber Learning Centre" <-> "Irving K. Barber Learning Centre"
 
@@ -76,13 +76,13 @@ class BuildingNameField(serializers.Field):
         
 
 
-class RoomTypeField(serializers.Field):
+class RoomTypeField(serializers.CharField):
     # Room types are verified
     # e.g. "General" <-> "General"
 
     # Convert building enum into full name
     def to_representation(self, value : str):
-        return value.value
+        return value
     
     # Convert full name into building enum
     def to_internal_value(self, data : str):
