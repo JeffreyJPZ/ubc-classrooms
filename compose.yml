@@ -33,4 +33,4 @@ services:
     command: python scripts/compute_timeslots.py
   api-test:
     build: ./backend
-    command: python manage.py run test
+    command: ./manage.py test
