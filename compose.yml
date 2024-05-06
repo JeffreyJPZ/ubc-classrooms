@@ -31,3 +31,6 @@ services:
       - ./backend/data/raw_booking_data:/raw_booking_data
       - ./backend/data/timeslot_data:/timeslot_data
     command: python scripts/compute_timeslots.py
+  api-test:
+    build: ./backend
+    command: python manage.py run test

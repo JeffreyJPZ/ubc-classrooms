@@ -10,15 +10,10 @@ jobs:
   api-tests:
     name: Run API tests
     runs-on: ubuntu-latest
-    container:
-      image: python:latest
-      volumes:
-        - ${{ github.workspace }}:.
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-      - name: Run tests
-        run: python manage.py test
+      - name: Build image
+        run: docker compose build
+      - name: Run API tests
+        run: docker compose run api-test
