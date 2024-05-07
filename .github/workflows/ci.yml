@@ -21,7 +21,5 @@ jobs:
         uses: actions/checkout@v4
       - name: Build image
         run: docker compose build
-      - name: Start DB service
-        run: docker compose up -d db
       - name: Run API tests
         run: docker compose run api-test
