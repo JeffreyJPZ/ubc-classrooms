@@ -11,7 +11,7 @@ jobs:
     name: Run API tests
     runs-on: ubuntu-latest
     env:
-      POSTGRES_DB: ${{ secrets.POSTGRES_DB}} 
+      POSTGRES_NAME: ${{ secrets.POSTGRES_NAME}} 
       POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       DB_HOST: ${{ secrets.DB_HOST }}
@@ -20,6 +20,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
       - name: Build image
+        run: docker compose build
+      - name: Set up environment variables
         run: docker compose build
       - name: Run API tests
         run: docker compose run api-test
