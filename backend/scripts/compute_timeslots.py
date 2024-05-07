@@ -247,22 +247,11 @@ def main() -> None:
     #       - No two timeslots overlap
     # Writes the timeslot data to file
 
-    # TODO: replace with compute_timeslots_config for prod
-    configPath = 'config/compute_timeslots_config_test.json'
+    # TODO: remove and replace with all buildings for prod
+    buildings = [BuildingCodeToFullName["ALRD"], BuildingCodeToFullName["SWNG"]]
 
-    with open(Path(__file__).parent / configPath, encoding='utf8') as f:
-        building_code_data = json.load(f)
-
-        # Validate building codes
-        for building_code in building_code_data["buildingCodes"]:
-            try:
-                assert building_code == BuildingCodeToFullName[building_code].name
-            except AssertionError:
-                print("An invalid building code was entered\n")
-                return
-
-        for building_code in building_code_data["buildingCodes"]:
-            compute_timeslots(BuildingCodeToFullName[building_code])
+    for building_code in buildings:
+        compute_timeslots(building_code)
         
         
 
