@@ -254,6 +254,7 @@ def main() -> None:
         compute_timeslots(building_code)
         
         
+        
 
 if __name__ == "__main__":
     main()
