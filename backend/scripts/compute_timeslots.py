@@ -264,6 +264,7 @@ def main() -> None:
         for building_code in building_code_data["buildingCodes"]:
             compute_timeslots(BuildingCodeToFullName[building_code])
         
+        
 
-
-main()
+if __name__ == "__main__":
+    main()
