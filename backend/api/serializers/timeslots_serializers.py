@@ -22,7 +22,7 @@ class TimeslotSerializer(serializers.Serializer):
     campus = CampusField(required=True)
     building_code = BuildingCodeField(required=True)
     building_name = BuildingNameField(required=True)
-    room = serializers.IntegerField(required=True)
+    room = serializers.CharField(required=True)
     room_type = RoomTypeField(required=True)
     date = serializers.DateField(format="%Y-%m-%d", required=True)
     start = serializers.TimeField(format="%H:%M", required=True)

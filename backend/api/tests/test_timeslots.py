@@ -10,10 +10,10 @@ from api.models.timeslot import *
 
 class TestTimeslotsV1(APITestCase):
     def createTimeslots():
-        Timeslot.objects.create(campus="UBCV", building_code="ALRD", building_name="Allard Hall", room=105, room_type="General", start=datetime.strptime("2024-05-03 15:00", "%Y-%m-%d %H:%M"), end=datetime.strptime("2024-05-03 18:00", "%Y-%m-%d %H:%M"))
-        Timeslot.objects.create(campus="UBCV", building_code="SWNG", building_name="West Mall Swing Space", room=200, room_type="Restricted", start=datetime.strptime("2024-05-03 16:00", "%Y-%m-%d %H:%M"), end=datetime.strptime("2024-05-03 17:00", "%Y-%m-%d %H:%M"))
-        Timeslot.objects.create(campus="UBCV", building_code="LIFE", building_name="UBC Life Building", room=2201, room_type="General", start=datetime.strptime("2024-05-03 08:00", "%Y-%m-%d %H:%M"), end=datetime.strptime("2024-05-03 11:00", "%Y-%m-%d %H:%M"))
-        Timeslot.objects.create(campus="UBCV", building_code="ESB", building_name="Earth Sciences Building", room=1013, room_type="General", start=datetime.strptime("2024-05-04 12:30", "%Y-%m-%d %H:%M"), end=datetime.strptime("2024-05-04 14:30", "%Y-%m-%d %H:%M"))
+        Timeslot.objects.create(campus="UBCV", building_code="ALRD", building_name="Allard Hall", room="105", room_type="General", start=datetime.strptime("2024-05-03 15:00", "%Y-%m-%d %H:%M"), end=datetime.strptime("2024-05-03 18:00", "%Y-%m-%d %H:%M"))
+        Timeslot.objects.create(campus="UBCV", building_code="SWNG", building_name="West Mall Swing Space", room="200", room_type="Restricted", start=datetime.strptime("2024-05-03 16:00", "%Y-%m-%d %H:%M"), end=datetime.strptime("2024-05-03 17:00", "%Y-%m-%d %H:%M"))
+        Timeslot.objects.create(campus="UBCV", building_code="LIFE", building_name="UBC Life Building", room="B101", room_type="General", start=datetime.strptime("2024-05-03 08:00", "%Y-%m-%d %H:%M"), end=datetime.strptime("2024-05-03 11:00", "%Y-%m-%d %H:%M"))
+        Timeslot.objects.create(campus="UBCV", building_code="ESB", building_name="Earth Sciences Building", room="1013", room_type="General", start=datetime.strptime("2024-05-04 12:30", "%Y-%m-%d %H:%M"), end=datetime.strptime("2024-05-04 14:30", "%Y-%m-%d %H:%M"))
 
     def testGetMatchingDateStatusOk(self):
         TestTimeslotsV1.createTimeslots()
