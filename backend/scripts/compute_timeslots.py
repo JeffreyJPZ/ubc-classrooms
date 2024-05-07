@@ -189,7 +189,7 @@ def read_from_file(building_code : BuildingCodeToFullName) -> pd.DataFrame:
     read_path = Path.cwd() / f'{Targets.RAW_BOOKING_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.START_DATE}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{TimetableSettings.START_DATE}_{building_code.name}.csv'
 
     # Read file into dataframe
-    df = pd.read_csv(read_path, index_col=False, engine="pyarrow")
+    df = pd.read_csv(read_path, index_col=False)
 
     return df
 
@@ -264,6 +264,7 @@ def main() -> None:
         for building_code in building_code_data["buildingCodes"]:
             compute_timeslots(BuildingCodeToFullName[building_code])
         
+        
 
-
-main()
+if __name__ == "__main__":
+    main()
