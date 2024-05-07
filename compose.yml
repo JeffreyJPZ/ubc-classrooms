@@ -6,6 +6,7 @@ services:
     volumes:
       - ./backend/data/db:/var/lib/postgresql/data
     environment:
+      - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_NAME=${POSTGRES_NAME}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -18,6 +19,7 @@ services:
     - "8000:8000"
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_NAME=${POSTGRES_NAME}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - DB_HOST=${DB_HOST}
@@ -37,6 +39,7 @@ services:
   api-test:
     build: ./backend
     environment:
+      - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_NAME=${POSTGRES_NAME}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
