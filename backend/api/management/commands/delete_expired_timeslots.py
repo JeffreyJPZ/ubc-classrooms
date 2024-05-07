@@ -15,12 +15,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options) -> None:
         # TODO: replace hardcoded date for prod
-        date = "2024-03-25"
+        date = "2024-05-07"
 
         # Delete expired timeslots
-        Timeslot.objects.filter(start__lt=datetime.combine(date, "00:00")).delete()
-        
-                    
-
-        
-
+        Timeslot.objects.filter(start__lt=datetime.strptime(date + " 00:00", TimetableSettings.FORMAT_DATETIME)).delete()

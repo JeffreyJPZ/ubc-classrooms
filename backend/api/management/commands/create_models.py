@@ -22,14 +22,12 @@ class Command(BaseCommand):
 
         # Populate buildings table with new buildings, otherwise do nothing
         for building_code in BuildingCodeToFullName:
-            if not Building.objects.filter(building_code=building_code.name).exists():
-                Building.objects.create(building_code=building_code.name, building_name=building_code.value)
-
+            Building.objects.get_or_create(building_code=building_code.name, building_name=building_code.value)
+                
         # Populate roomtypes table with new roomtypes, otherwise do nothing
         for room in ClassroomType:
-            if not RoomType.objects.filter(room_type=room.value).exists():
-                RoomType.objects.create(room_type=room.value)
-
+            RoomType.objects.get_or_create(room_type=room.value)
+                
         # Populate timeslots table with unique timeslots, otherwise do nothing
         for building_code in buildings:
             path = Path.cwd() / f'{Targets.TIMESLOT_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{date}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{date}_{building_code.name}.csv'
@@ -38,20 +36,15 @@ class Command(BaseCommand):
                 reader = csv.DictReader(f, delimiter=",")
 
                 for timeslot in reader:
-                    if not Timeslot.objects.filter(campus=timeslot["Campus"],
+                    Timeslot.objects.get_or_create(campus=timeslot["Campus"],
                                                     building_code=timeslot["BuildingCode"],
+                                                    building_name=timeslot["BuildingName"],
                                                     room=timeslot["Room"],
+                                                    room_type=timeslot["RoomType"],
                                                     start=datetime.strptime(timeslot["Start"], TimetableSettings.FORMAT_DATETIME),
-                                                    end=datetime.strptime(timeslot["End"], TimetableSettings.FORMAT_DATETIME)
-                                                    ).exists():
+                                                    end=datetime.strptime(timeslot["End"], TimetableSettings.FORMAT_DATETIME))
                         
-                        Timeslot.objects.create(campus=timeslot["Campus"],
-                                                building_code=timeslot["BuildingCode"],
-                                                building_name=timeslot["BuildingName"],
-                                                room=timeslot["Room"],
-                                                room_type=timeslot["RoomType"],
-                                                start=datetime.strptime(timeslot["Start"], TimetableSettings.FORMAT_DATETIME),
-                                                end=datetime.strptime(timeslot["End"], TimetableSettings.FORMAT_DATETIME))
+                        
 
         
 
