@@ -11,9 +11,11 @@ jobs:
     name: Run API tests
     runs-on: ubuntu-latest
     env:
-      POSTGRES_DB: ${{ github.workspace.env.POSTGRES_DB }} 
-      POSTGRES_USER: ${{ github.workspace.env.POSTGRES_USER }}
-      POSTGRES_PASSWORD: ${{ github.workspace.env.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB}} 
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      TEST_NAME: ${{ secrets.TEST_NAME }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
