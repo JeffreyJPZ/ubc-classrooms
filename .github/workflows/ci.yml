@@ -23,6 +23,6 @@ jobs:
       - name: Build image
         run: docker compose build
       - name: Start DB service and wait for connection
-        run: docker compose up db -d --detach --wait --wait-timeout 30
+        run: docker compose up db -d --wait --wait-timeout 30
       - name: Run API tests
         run: docker compose run api-test
