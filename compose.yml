@@ -46,3 +46,5 @@ services:
       - DB_HOST=${DB_HOST}
       - TEST_NAME=${TEST_NAME}
     command: python manage.py test api.tests
+    depends_on:
+      - db
