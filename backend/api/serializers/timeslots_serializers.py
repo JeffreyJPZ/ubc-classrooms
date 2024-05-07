@@ -3,28 +3,27 @@ Serializers for timeslots resource
 """
 from rest_framework import serializers
 
-from utils.ubc import *
-from backend.api.serializers.custom_serializer_fields import *
+from .custom_serializer_fields import *
     
 class PathParametersSerializer(serializers.Serializer):
     # Serializer for validating path parameters
-    campus = CampusField()
+    campus = CampusField(required=True)
 
 class QueryParametersSerializer(serializers.Serializer):
     # Serializer for validating query parameters
     date = serializers.DateField(format="%Y-%m-%d", required=True)
-    start = serializers.TimeField(format="%H:%M", required=False)
-    end = serializers.TimeField(format="%H:%M", required=False)
+    start = serializers.TimeField(format="%H:%M", allow_null=True)
+    end = serializers.TimeField(format="%H:%M", allow_null=True)
     buildings = serializers.ListField(child=BuildingCodeField(), allow_empty=True)
     room_types = serializers.ListField(child=RoomTypeField(), allow_empty=True)
-    
+
 class TimeslotSerializer(serializers.Serializer):
     # Serializer for a timeslot
-    campus = CampusField()
-    building_code = BuildingCodeField()
-    building_name = BuildingNameField()
-    room = serializers.IntegerField()
-    room_type = RoomTypeField()
+    campus = CampusField(required=True)
+    building_code = BuildingCodeField(required=True)
+    building_name = BuildingNameField(required=True)
+    room = serializers.IntegerField(required=True)
+    room_type = RoomTypeField(required=True)
     date = serializers.DateField(format="%Y-%m-%d", required=True)
-    start = serializers.TimeField(format="%H:%M", required=False)
-    end = serializers.TimeField(format="%H:%M", required=False)
+    start = serializers.TimeField(format="%H:%M", required=True)
+    end = serializers.TimeField(format="%H:%M", required=True)

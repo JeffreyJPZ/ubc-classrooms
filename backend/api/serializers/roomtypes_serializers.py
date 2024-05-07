@@ -3,12 +3,13 @@ Serializers for roomtypes resource
 """
 from rest_framework import serializers
 
-from backend.api.serializers.custom_serializer_fields import *
+from .custom_serializer_fields import *
 
 class PathParametersSerializer(serializers.Serializer):
     # Serializer for validating path parameters
-    campus = CampusField()
+    campus = CampusField(required=True)
 
 class RoomTypeSerializer(serializers.Serializer):
     # Serializer for a room type
-    room_type = RoomTypeField()
+    campus = CampusField(required=True)
+    room_type = RoomTypeField(required=True)

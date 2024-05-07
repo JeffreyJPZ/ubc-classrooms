@@ -6,10 +6,9 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.serializers import ValidationError
 
-from serializers.buildings_serializers import *
-from models.building import *
+from api.serializers.buildings_serializers import *
+from api.models.building import *
 
 # Version 1
 
@@ -17,28 +16,23 @@ from models.building import *
 @renderer_classes([JSONRenderer])
 def buildings_v1(request : Request, campus : str) -> Response:
     # Get all buildings for a campus
-    
-    if request.method == 'GET':
-        path_serializer = PathParametersSerializer(data=campus)
 
-        # Validate path and return HTTP 400 response if path is invalid
-        try:
-            path_serializer.is_valid(raise_exception=True)
-        except ValidationError:
-            return Response(path_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+    if request.method == 'GET':
+        # Validate path and return HTTP 404 response if resource does not exist
+        path_params_serializer = PathParametersSerializer(data={"campus": campus})
+        if not path_params_serializer.is_valid():
+            return Response(status=status.HTTP_404_NOT_FOUND)
+    
         # Query buildings table and serialize query result
-        buildings = Building.objects.all()
-        buildings_serializer = BuildingSerializer(data=buildings)
+        path_params = path_params_serializer.validated_data
+        buildings = list(Building.objects.filter(campus=path_params.get("campus")).values())
+        buildings_serializer = BuildingSerializer(data=buildings, many=True)
 
         # Validate result and return HTTP 400 response if result is invalid
-        try:
-            buildings_serializer.is_valid(raise_exception=True)
-        except ValidationError:
-            return Response(buildings_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        buildings_serializer.is_valid(raise_exception=True)
         
-        content = buildings_serializer.data
+        content = buildings_serializer.validated_data
 
-        return Response(content, status=status.HTTP_200_OK) if content != [] else Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(content, status=status.HTTP_200_OK)
     
     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)

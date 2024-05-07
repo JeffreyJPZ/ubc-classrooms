@@ -1,6 +1,8 @@
 services:
   db:
     image: postgres
+    ports:
+      - "5432:5432"
     volumes:
       - ./backend/data/db:/var/lib/postgresql/data
     environment:
@@ -33,4 +35,4 @@ services:
     command: python scripts/compute_timeslots.py
   api-test:
     build: ./backend
-    command: ./manage.py test
+    command: python manage.py test api.tests

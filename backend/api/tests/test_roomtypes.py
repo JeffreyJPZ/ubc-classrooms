@@ -1,31 +1,32 @@
 """
 API tests for roomtypes resource
 """
-from rest_framework import status
 from rest_framework.test import APITestCase
 
-from models.roomtype import *
+from api.models.roomtype import *
+
+# Version 1
 
 class TestRoomtypesV1(APITestCase):
     def createRoomtypes():
-        RoomType.objects.create(room_type="General")
-        RoomType.objects.create(room_type="Restricted")
+        RoomType.objects.create(campus="UBCV", room_type="General")
+        RoomType.objects.create(campus="UBCV", room_type="Restricted")
 
     def testGetStatusOk(self):
         TestRoomtypesV1.createRoomtypes()
-        response = self.client.get('roomtypes/UBCV')
-        self.assertTrue(status.is_success(response.status_code))
+        response = self.client.get('/api/v1/roomtypes/UBCV/')
+        self.assertEqual(response.status_code, 200)
+
+    def testGetEmptyDBStatusOk(self):
+        response = self.client.get('/api/v1/roomtypes/UBCV/')
+        self.assertEqual(response.status_code, 200)
 
     def testGetStatusNotFound(self):
-        response = self.client.get('roomtypes/UBCV')
-        self.assertTrue(status.is_client_error(response.status_code))
-
-    def testGetStatusBadRequest(self):
         TestRoomtypesV1.createRoomtypes()
-        response = self.client.get('roomtypes/UBCO')
-        self.assertTrue(status.is_client_error(response.status_code))
+        response = self.client.get('/api/v1/roomtypes/UBCO/')
+        self.assertEqual(response.status_code, 404)
 
     def testPostStatusMethodNotAllowed(self):
         TestRoomtypesV1.createRoomtypes()
-        response = self.client.post('roomtypes/UBCV')
-        self.assertTrue(status.is_client_error(response.status_code))
+        response = self.client.post('/api/v1/roomtypes/UBCV/')
+        self.assertEqual(response.status_code, 405)
