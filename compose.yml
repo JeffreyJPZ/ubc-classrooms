@@ -6,7 +6,7 @@ services:
     volumes:
       - ./backend/data/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_NAME=${POSTGRES_NAME}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   web:
@@ -20,6 +20,7 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_HOST=${DB_HOST}
     depends_on:
       - db
   scrape-classrooms:
@@ -35,4 +36,12 @@ services:
     command: python scripts/compute_timeslots.py
   api-test:
     build: ./backend
+    environment:
+      - POSTGRES_NAME=${POSTGRES_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - TEST_NAME=${TEST_NAME}
     command: python manage.py test api.tests
+    depends_on:
+      - db
