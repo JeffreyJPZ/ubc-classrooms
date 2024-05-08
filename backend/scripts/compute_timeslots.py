@@ -99,7 +99,7 @@ def compute_timeslots_by_room_and_date(room_date_dataframe : pd.DataFrame, share
 
         # Get start and end datetimes for a booking
         booking_start = content.get("Start")
-        booking_end = content.get("Start")
+        booking_end = content.get("End")
 
         # Check if current time is not the beginning of a booking - if so, create a timeslot spanning the current time to the beginning of the next booking
         if curr != booking_start:
