@@ -17,7 +17,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options) -> None:
         # TODO: replace hardcoded date and buildings for prod
-        date = "2024-03-25"
+        date = "2024-05-06"
         buildings = [BuildingCodeToFullName["ALRD"], BuildingCodeToFullName["SWNG"]]
 
         # Populate buildings table with new buildings, otherwise do nothing
