@@ -19,14 +19,16 @@ class Command(BaseCommand):
         # TODO: replace hardcoded date and buildings for prod
         date = "2024-05-06"
         buildings = [BuildingCodeToFullName["ALRD"], BuildingCodeToFullName["SWNG"]]
-
+        
+        # UBCV
+        
         # Populate buildings table with new buildings, otherwise do nothing
         for building_code in BuildingCodeToFullName:
-            Building.objects.get_or_create(building_code=building_code.name, building_name=building_code.value)
+            Building.objects.get_or_create(campus=Campus.UBCV.value, building_code=building_code.name, building_name=building_code.value)
                 
         # Populate roomtypes table with new roomtypes, otherwise do nothing
         for room in ClassroomType:
-            RoomType.objects.get_or_create(room_type=room.value)
+            RoomType.objects.get_or_create(campus=Campus.UBCV.value, room_type=room.value)
                 
         # Populate timeslots table with unique timeslots, otherwise do nothing
         for building_code in buildings:
