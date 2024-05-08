@@ -24,13 +24,28 @@ def timeslots_v1(request : Request, campus : str) -> Response:
         if not path_params_serializer.is_valid():
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        # Validate query query_params and return HTTP 400 response if query params are invalid
+        # Create mapping of all valid query params
+        valid_query_params = {
+           "date": True,
+           "start": True,
+           "end": True,
+           "buildings": True,
+           "room_types": True
+        }
+
+        # Validate query params and return HTTP 400 response if query params are invalid
+        for query_param in request.query_params:
+            try:
+                assert valid_query_params[query_param] == True
+            except KeyError:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        
         query_params_serializer = QueryParametersSerializer(data={
-            "date": request.query_params.get("date"),
-            "start": request.query_params.get("start"),
-            "end": request.query_params.get("end"),
-            "buildings": request.query_params.getlist("buildings"),
-            "room_types": request.query_params.getlist("room_types")
+           "date": request.query_params.get("date"),
+           "start": request.query_params.get("start"),
+           "end": request.query_params.get("end"),
+           "buildings": request.query_params.getlist("buildings"),
+           "room_types": request.query_params.getlist("room_types")
         })
         query_params_serializer.is_valid(raise_exception=True)
     
@@ -60,9 +75,9 @@ def timeslots_v1(request : Request, campus : str) -> Response:
         # Add column for date to all timeslots, and truncate start and end
         timeslots = list(timeslots.values())
         for t in timeslots:
-            t["date"] = t["start"].strftime("%Y-%m-%d")
-            t["start"] = t["start"].strftime("%H:%M")
-            t["end"] = t["end"].strftime("%H:%M")
+            t["date"] = t["start"].date()
+            t["start"] = t["start"].time()
+            t["end"] = t["end"].time()
 
         # Serialize query result
         timeslots_serializer = TimeslotSerializer(data=timeslots, many=True)
