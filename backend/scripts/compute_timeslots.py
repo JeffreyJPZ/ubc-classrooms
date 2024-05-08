@@ -99,7 +99,7 @@ def compute_timeslots_by_room_and_date(room_date_dataframe : pd.DataFrame, share
 
         # Get start and end datetimes for a booking
         booking_start = content.get("Start")
-        booking_end = content.get("Start")
+        booking_end = content.get("End")
 
         # Check if current time is not the beginning of a booking - if so, create a timeslot spanning the current time to the beginning of the next booking
         if curr != booking_start:
@@ -188,11 +188,8 @@ def read_from_file(building_code : BuildingCodeToFullName) -> pd.DataFrame:
     # Get path to booking data file
     read_path = Path.cwd() / f'{Targets.RAW_BOOKING_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.START_DATE}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{TimetableSettings.START_DATE}_{building_code.name}.csv'
 
-    # Read file into dataframe and convert datestrings and timestrings into ISO-8601 datetimes
+    # Read file into dataframe
     df = pd.read_csv(read_path, index_col=False)
-    df["Start"] = pd.to_datetime(df["Date"] + " " + df["Start"], format=TimetableSettings.FORMAT_DATETIME)
-    df["End"] = pd.to_datetime(df["Date"] + " " + df["End"], format=TimetableSettings.FORMAT_DATETIME)
-    df["Date"] = pd.to_datetime(df["Date"], format=TimetableSettings.FORMAT_DATE)
 
     return df
 
@@ -224,8 +221,12 @@ def write_to_file(data : list[list[str]], building_code : BuildingCodeToFullName
 
 def compute_timeslots(building_code : BuildingCodeToFullName) -> None:
     # Reads booking data from file for a building, gets the available timeslots for the entire academic year, and writes the timeslots to file
-
     df = read_from_file(building_code)
+
+    # Convert datestrings and timestrings into ISO-8601 datetimes
+    df["Start"] = pd.to_datetime(df["Date"] + " " + df["Start"], format=TimetableSettings.FORMAT_DATETIME)
+    df["End"] = pd.to_datetime(df["Date"] + " " + df["End"], format=TimetableSettings.FORMAT_DATETIME)
+    df["Date"] = pd.to_datetime(df["Date"], format=TimetableSettings.FORMAT_DATE)
 
     # Get all available timeslots for the building
     data = compute_timeslots_by_building(df)
@@ -246,23 +247,14 @@ def main() -> None:
     #       - No two timeslots overlap
     # Writes the timeslot data to file
 
-    # TODO: replace with compute_timeslots_config for prod
-    configPath = 'config/compute_timeslots_config_test.json'
+    # TODO: remove and replace with all buildings for prod
+    buildings = [BuildingCodeToFullName["ALRD"], BuildingCodeToFullName["SWNG"]]
 
-    with open(Path(__file__).parent / configPath, encoding='utf8') as f:
-        building_code_data = json.load(f)
-
-        # Validate building codes
-        for building_code in building_code_data["buildingCodes"]:
-            try:
-                assert building_code == BuildingCodeToFullName[building_code].name
-            except AssertionError:
-                print("An invalid building code was entered\n")
-                return
-
-        for building_code in building_code_data["buildingCodes"]:
-            compute_timeslots(BuildingCodeToFullName[building_code])
+    for building_code in buildings:
+        compute_timeslots(building_code)
+        
+        
         
 
-
-main()
+if __name__ == "__main__":
+    main()

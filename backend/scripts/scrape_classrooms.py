@@ -510,30 +510,20 @@ def scrape(driver, building_code : BuildingCodeToTimetableName) -> None:
 def main() -> None:
     # Scrapes and writes the classroom booking data to file
 
-    # TODO: replace with scrape_classrooms_config.json for prod
-    configPath = 'config/scrape_classrooms_config_test.json'
+    # TODO: remove and replace with all buildings for prod
+    buildings = [BuildingCodeToTimetableName["ALRD"], BuildingCodeToTimetableName["SWNG"]]
+    
+    # Navigate to UBC Online Timetable main page
+    driver = get_driver()
+    driver.get(TimetableSettings.URL)
 
-    with open(Path(__file__).parent / configPath, encoding='utf8') as f:
-        building_code_data = json.load(f)
-
-        # Validate building codes
-        for building_code in building_code_data['buildingCodes']:
-            try:
-                assert building_code == BuildingCodeToTimetableName[building_code].name
-            except AssertionError:
-                print("An invalid building code was entered\n")
-                return
-
-        # Navigate to UBC Online Timetable main page
-        driver = get_driver()
-        driver.get(TimetableSettings.URL)
-
-        # Scrape all classrooms in each building
-        for building_code in building_code_data['buildingCodes']:
-            scrape(driver, BuildingCodeToTimetableName[building_code])
+    # Scrape all classrooms in each building
+    for building_code in buildings:
+        scrape(driver, building_code)
 
 
 
-main()
+if __name__ == "__main__":
+    main()
 
 

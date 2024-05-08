@@ -1,10 +1,12 @@
 services:
   db:
     image: postgres
+    ports:
+      - "5432:5432"
     volumes:
       - ./backend/data/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_NAME=${POSTGRES_NAME}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   web:
@@ -15,9 +17,10 @@ services:
     ports:
     - "8000:8000"
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_NAME=${POSTGRES_NAME}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_HOST=${DB_HOST}
     depends_on:
       - db
   scrape-classrooms:
@@ -31,3 +34,37 @@ services:
       - ./backend/data/raw_booking_data:/raw_booking_data
       - ./backend/data/timeslot_data:/timeslot_data
     command: python scripts/compute_timeslots.py
+  create-models:
+    build: ./backend
+    environment:
+      - POSTGRES_NAME=${POSTGRES_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_HOST=${DB_HOST}
+    volumes:
+      - ./backend/data/raw_booking_data:/raw_booking_data
+      - ./backend/data/timeslot_data:/timeslot_data
+    command: python manage.py create_models
+    depends_on:
+      - db
+  delete-expired-timeslots:
+    build: ./backend
+    environment:
+      - POSTGRES_NAME=${POSTGRES_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_HOST=${DB_HOST}
+    command: python manage.py delete_expired_timeslots
+    depends_on:
+      - db
+  api-test:
+    build: ./backend
+    environment:
+      - POSTGRES_NAME=${POSTGRES_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - TEST_NAME=${TEST_NAME}
+    command: python manage.py test api.tests
+    depends_on:
+      - db
