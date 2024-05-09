@@ -16,9 +16,7 @@ class Command(BaseCommand):
     help = "Read timeslot data for a given period from file and create models for tables"
 
     def handle(self, *args, **options) -> None:
-        # TODO: replace hardcoded date and buildings for prod
-        date = "2024-05-06"
-        buildings = [BuildingCodeToFullName["ALRD"], BuildingCodeToFullName["SWNG"]]
+        date = TimetableSettings.START_DATE
         
         # UBCV
         
@@ -31,7 +29,7 @@ class Command(BaseCommand):
             RoomType.objects.get_or_create(campus=Campus.UBCV.value, room_type=room.value)
                 
         # Populate timeslots table with unique timeslots, otherwise do nothing
-        for building_code in buildings:
+        for building_code in BuildingCodeToFullName:
             path = Path.cwd() / f'{Targets.TIMESLOT_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{date}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{date}_{building_code.name}.csv'
 
             with open(path, mode="r", newline="") as f:
