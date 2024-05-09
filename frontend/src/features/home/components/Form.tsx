@@ -5,23 +5,23 @@
 type FormProps = {
     name: string
     children: React.ReactNode
-}
+};
 
 type FormState = {
     
-}
+};
 
-export function Form(props: FormProps) {
+export function Form({name, children}: FormProps) {
 
     function componentDidUpdate(prevProps: FormProps, prevState: FormState) {
         // Make network request
         // Update state with response
-    }
+    };
 
     return (
         <>
-        <div>{props.name}</div>
-        {props.children}
+        <div>{name}</div>
+        {children}
         </>
-    )
-}
+    );
+};

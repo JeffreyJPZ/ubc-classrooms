@@ -7,7 +7,7 @@ type HeadProps = {
     description?: string,
 };
 
-export function Head({title = '', description = ''}: HeadProps) {
+function Head({title = '', description = ''}: HeadProps) {
     return (
         <>
             <title>{title? '${title}' : 'UBC Classrooms'}</title>
@@ -15,3 +15,5 @@ export function Head({title = '', description = ''}: HeadProps) {
         </>
     );
 };
+
+export default Head
