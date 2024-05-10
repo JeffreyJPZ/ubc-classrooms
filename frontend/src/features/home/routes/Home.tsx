@@ -1,3 +1,5 @@
 export function Home() {
-    return <></>
+    return (
+        <>Hello world</>
+    );
 };
