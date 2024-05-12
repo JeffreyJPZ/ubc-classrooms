@@ -1,7 +1,11 @@
 import { Header } from "../../../components";
 import { Footer } from "../../../components";
+import { Combobox } from "../components/Combobox";
 import { Form } from "../components/Form";
 import { TimeslotTable } from "../components/TimeslotTable";
+import { useBuildings, useRoomTypes, useTimeslots } from "../api";
+import { getCurrentISODate } from "../../../lib/getCurrentISODate";
+
 import './Home.css'
 
 export function Home() {
@@ -15,13 +19,11 @@ export function Home() {
                 <Form>
                     <div>
                         <p>Campus</p>
-                        <select>
-                            <option>UBCV</option>
-                        </select>
+                        <Combobox isMulti={false} defaultValue="UBCV" defaultLabel="UBCV" options={[{value: "UBCV", label: "UBCV"}]} optionValue="value" optionLabel="label" />
                     </div>
                     <div>
                         <p>Date</p>
-                        <input type="date" required/>
+                        <input type="date" required defaultValue={getCurrentISODate()}/>
                     </div>
                     <div>
                         <p>Start Time</p>
@@ -33,17 +35,11 @@ export function Home() {
                     </div>
                     <div>
                         <p>Buildings</p>
-                        <select>
-                            <option>ALRD - Allard Hall</option>
-                            <option>SWNG - West Mall Swing Space</option>
-                        </select>
+                        <Combobox isMulti={true} query={useBuildings({campus: "UBCV"})} queryValue="building_code" queryLabel="building_name"/>
                     </div>
                     <div>
                         <p>Room Types</p>
-                        <select>
-                            <option>General</option>
-                            <option>Restricted</option>
-                        </select>
+                        <Combobox isMulti={true} query={useRoomTypes({campus: "UBCV"})} queryValue="room_type" queryLabel="room_type"/>
                     </div>
                 </Form>
                 <TimeslotTable/>

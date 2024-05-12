@@ -22,7 +22,6 @@ async function getBuildings(parameters: GetBuildingsParameters): Promise<Buildin
 const useBuildingsConfig = {
     refetchOnWindowFocus: false,
     retry: true,
-    staleTime: Infinity,
     useErrorBoundary: true,
 };
 
