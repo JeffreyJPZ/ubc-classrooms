@@ -14,7 +14,7 @@ export function Home() {
             <Header/>
             <div className="content">
                 <div className="introduction">
-                    <h1>Looking for a place to study, take meetings, or meet with friends? UBC Classrooms is the right tool for you.</h1>
+                    <h1>Looking for a place to study, take meetings, or meet with friends? UBC Classrooms shows you when and where empty classrooms are available.</h1>
                 </div>
                 <Form>
                     <div>
