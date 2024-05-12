@@ -15,12 +15,14 @@ async function getBuildings(parameters: GetBuildingsParameters): Promise<Buildin
     if (!response.ok) {
         throw new Error(`Response was not ok, received ${response.status}`)
     }
-    return await response.json();
+
+    return response.json();
 };
 
 const useBuildingsConfig = {
     refetchOnWindowFocus: false,
     retry: true,
+    staleTime: Infinity,
     useErrorBoundary: true,
 };
 

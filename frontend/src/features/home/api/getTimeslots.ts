@@ -23,7 +23,7 @@ async function getTimeslots(parameters: GetTimeslotParameters): Promise<Timeslot
     if (!response.ok) {
         throw new Error(`Response was not ok, received ${response.status}`)
     }
-    return await response.json();
+    return response.json();
 };
 
 const useTimeslotsConfig = {
