@@ -1,0 +1,60 @@
+.header {
+    display: flex;
+    flex-grow: 1;
+    position: relative;
+    top: 0;
+    width: 100%;
+    margin: 0 0 1em 0;
+    background-color: black;
+    outline: 2px solid red;
+}
+
+.logo {
+    font-size: 2em;
+    align-self: center;
+    text-wrap: nowrap;
+    margin: 0.5em 1em 1em 0.5em;
+    outline: 2px solid red;
+}
+
+.credits {
+    display: flex;
+    position: relative;
+    right: 0;
+    align-items: stretch;
+    margin: 1em 1em 1em 1em;
+    outline: 2px solid red;
+}
+
+.authors {
+    text-wrap: nowrap;
+    align-self: center;
+    padding: 1em 1em 1em 1em;
+    outline: 2px solid red;
+}
+
+.links {
+    padding: 1em 1em 1em 1em;
+    outline: 2px solid red;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    line-height: 0;
+}
+
+/* small tablets */
+@media screen and (min-width: 620px) {
+    
+}
+
+/* large tablets and laptops */
+@media screen and (min-width: 960px) {
+    
+}
+
+/* desktops */
+@media screen and (min-width: 1200px) {
+    
+}

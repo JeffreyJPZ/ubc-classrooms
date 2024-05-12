@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientConfig } from "react-query";
 
-const config: QueryClientConfig = {
+export const queryConfig: QueryClientConfig = {
     defaultOptions: {
         queries: {
             refetchOnWindowFocus: false,
@@ -10,4 +10,4 @@ const config: QueryClientConfig = {
     },
 };
 
-export const queryClient = new QueryClient(config)
+export const queryClient = new QueryClient(queryConfig);

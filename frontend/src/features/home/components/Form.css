@@ -1,0 +1,29 @@
+.filters {
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* small tablets */
+@media screen and (min-width: 620px) {
+    .form {
+        flex-basis: 75%;
+    }
+}
+
+/* large tablets and laptops */
+@media screen and (min-width: 960px) {
+    .form {
+        flex-basis: 50%;
+    }
+}
+
+/* desktops */
+@media screen and (min-width: 1200px) {
+    .form {
+        flex-basis: 25%;
+    }
+}

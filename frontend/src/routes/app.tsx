@@ -1,9 +1,9 @@
 /**
  * Manages routing
  */
-import { RouterProvider, createBrowserRouter } from "react-router-dom"
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import { publicRoutes } from "./public"
+import { publicRoutes } from "./public";
 
 const router = createBrowserRouter(publicRoutes);
 

@@ -1,8 +1,8 @@
 /*
  * Error handling and fallbacks for app
  */
-import { Suspense } from "react"
-import { ErrorBoundary } from "react-error-boundary"
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { QueryClientProvider } from "react-query";
 
 import { queryClient } from "../lib/react-query";
@@ -10,7 +10,7 @@ import { queryClient } from "../lib/react-query";
 type ErrorFallbackProps = {
     error: Error
     resetErrorBoundary: () => void
-}
+};
 
 function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
     return (
@@ -20,11 +20,11 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
             <button onClick={resetErrorBoundary}>Retry</button>
         </div>
     );
-}
+};
 
 type AppProviderProps = {
     children: React.ReactNode
-}
+};
 
 export function AppProvider({ children }: AppProviderProps) {
     return (
@@ -36,4 +36,4 @@ export function AppProvider({ children }: AppProviderProps) {
             </ErrorBoundary>
         </Suspense>
     );
-}
+};

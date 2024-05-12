@@ -2,8 +2,10 @@
  * Handles submission of user input
  */
 
+import { FormEvent } from 'react';
+import './Form.css'
+
 type FormProps = {
-    name: string
     children: React.ReactNode
 };
 
@@ -11,17 +13,21 @@ type FormState = {
     
 };
 
-export function Form({name, children}: FormProps) {
+export function Form({children}: FormProps) {
 
-    function componentDidUpdate(prevProps: FormProps, prevState: FormState) {
-        // Make network request
-        // Update state with response
-    };
+    // function componentDidUpdate(prevProps: FormProps, prevState: FormState) {
+    //     // Make network request
+    //     // Update state with response
+    // };
+
+    function onSubmit(e: FormEvent) {
+       console.log(e.target);
+    }
 
     return (
-        <>
-        <div>{name}</div>
-        {children}
-        </>
+        <div className="filters">
+            {children}
+            <button onClick={e => onSubmit(e)}>Search</button>
+        </div>
     );
 };
