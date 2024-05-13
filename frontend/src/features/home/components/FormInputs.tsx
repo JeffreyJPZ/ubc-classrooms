@@ -6,7 +6,7 @@ import { getCurrentISODate } from "../../../lib/getCurrentISODate";
 
 export function FormInputs() {
     const formDispatch = useContext(FormDispatchContext);
-    const {formSubmitted, setFormSubmitted} = useContext(FormSubmittedContext);
+    const {setFormSubmitted} = useContext(FormSubmittedContext);
 
     return (
         <div className="filters">
