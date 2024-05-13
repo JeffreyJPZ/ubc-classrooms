@@ -12,6 +12,7 @@ async function getBuildings(parameters: GetBuildingsParameters): Promise<Buildin
             "accepts":"application/json"
         }}
     );
+    
     if (!response.ok) {
         throw new Error(`Response was not ok, received ${response.status}`)
     }
@@ -25,10 +26,10 @@ const useBuildingsConfig = {
     useErrorBoundary: true,
 };
 
-export const useBuildings = (params: GetBuildingsParameters) => {
+export const useBuildings = (parameters: GetBuildingsParameters) => {
     return useQuery({
         ...useBuildingsConfig,
         queryKey: ["buildings"],
-        queryFn: () => getBuildings(params),
+        queryFn: () => getBuildings(parameters),
     });
 };

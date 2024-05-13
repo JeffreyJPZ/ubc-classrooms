@@ -2,32 +2,72 @@
  * Handles submission of user input
  */
 
-import { FormEvent } from 'react';
+import { useReducer, useState } from 'react';
+import { FormStateTypes, FormActions, FormDataContext, FormDispatchContext, FormState, FormSubmittedContext } from '../contexts';
+import { getCurrentISODate } from '../../../lib/getCurrentISODate';
+
 import './Form.css'
+import { FormInputs } from './FormInputs';
+import { TimeslotTable } from './TimeslotTable';
 
-type FormProps = {
-    children: React.ReactNode
-};
-
-type FormState = {
-    
-};
-
-export function Form({children}: FormProps) {
-
-    // function componentDidUpdate(prevProps: FormProps, prevState: FormState) {
-    //     // Make network request
-    //     // Update state with response
-    // };
-
-    function onSubmit(e: FormEvent) {
-       console.log(e.target);
+function formReducer(state: FormState, action: FormActions): FormState {
+    switch (action.type) {
+        case FormStateTypes.CAMPUS:
+            return {
+                ...state,
+                campus: action.value as string,
+            };
+        case FormStateTypes.DATE:
+            return {
+                ...state,
+                date: action.value as string,
+            };
+        case FormStateTypes.START:
+            return {
+                ...state,
+                start: action.value as string,
+            };
+        case FormStateTypes.END:
+            return {
+                ...state,
+                end: action.value as string,
+            };
+        case FormStateTypes.BUILDINGS:
+            return {
+                ...state,
+                buildings: action.value as string[],
+            };
+        case FormStateTypes.ROOM_TYPES:
+            return {
+                ...state,
+                room_types: action.value as string[],
+            };
+        default:
+            return state;
     }
+}
+
+const initialFormState: FormState = {
+    campus: "UBCV",
+    date: getCurrentISODate(),
+    start: "",
+    end: "",
+    buildings: [],
+    room_types: [],
+}
+
+export function Form() {
+    const [formState, formDispatch] = useReducer(formReducer, initialFormState);
+    const [formSubmitted, setFormSubmitted]= useState(false);
 
     return (
-        <div className="filters">
-            {children}
-            <button onClick={e => onSubmit(e)}>Search</button>
-        </div>
+        <FormDataContext.Provider value={formState}>
+            <FormSubmittedContext.Provider value={{formSubmitted, setFormSubmitted}}>
+                <FormDispatchContext.Provider value={formDispatch}>
+                    <FormInputs/>
+                </FormDispatchContext.Provider>
+                <TimeslotTable/>
+            </FormSubmittedContext.Provider>
+        </FormDataContext.Provider>
     );
 };

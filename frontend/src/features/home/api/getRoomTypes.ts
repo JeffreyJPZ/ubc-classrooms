@@ -12,9 +12,11 @@ async function getRoomTypes(parameters: GetRoomTypesParameters): Promise<RoomTyp
             "accepts":"application/json"
         }}
     );
+    
     if (!response.ok) {
         throw new Error(`Response was not ok, received ${response.status}`)
     }
+
     return response.json();
 };
 
@@ -24,10 +26,10 @@ const useRoomTypesConfig = {
     useErrorBoundary: true,
 };
 
-export const useRoomTypes = (params: GetRoomTypesParameters) => {
+export const useRoomTypes = (parameters: GetRoomTypesParameters) => {
     return useQuery({
         ...useRoomTypesConfig,
         queryKey: ["roomtypes"],
-        queryFn: () => getRoomTypes(params),
+        queryFn: () => getRoomTypes(parameters),
     });
 };
