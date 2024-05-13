@@ -8,7 +8,6 @@ export function TimeslotTable() {
     const timeslotsQuery = useTimeslots(formState, [formSubmitted]);
 
     useEffect(() => {
-        console.log(formState)
         if (formSubmitted) {
             setFormSubmitted(false);
         }
