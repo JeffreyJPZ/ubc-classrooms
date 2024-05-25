@@ -11,7 +11,7 @@ Frontend project structure was inspired by [Bulletproof React](https://github.co
    
    Linux:
    - [Docker Engine and CLI](https://docs.docker.com/engine/install/)
-   - [Docker Compose](https://docs.docker.com/engine/install/)
+   - [Docker Compose](https://docs.docker.com/compose/install/)
    
    Windows:
    - [Docker Desktop for Windows](https://docs.docker.com/desktop/install/windows-install/)
