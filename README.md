@@ -30,33 +30,43 @@ Frontend project structure was inspired by [Bulletproof React](https://github.co
     $ # Clone the repo
     $ git clone https://github.com/JeffreyJPZ/ubc-classrooms.git
     ```
+    
+3. Create a `.env` file in the project's root directory with the following format:
 
-3. Create a config file for UBC VPN
+   ```
+   POSTGRES_NAME=ubc_classrooms
+   POSTGRES_USER=default
+   POSTGRES_PASSWORD=default
+   DB_HOST=db
+   TEST_NAME=test
+   ```
+   
+5. Create a config file for UBC VPN
    - Follow the instructions in `workflowscript.sh`
       
-4. Run the workflow script
+6. Run the workflow script
    - You may have to change some dependency paths — instructions are found in `workflowscript.sh`
-   
-   Linux/macOS:
-   
-     ```bash
-     $ ./workflowscript
-     ```
-   
-   Windows:
+
+   Bash:
    
       ```bash
-      $ .\workflowscript.bat
+      $ ./workflowscript
+      ```
+   
+   Windows Command Prompt or Powershell:
+   
+      ```cmd
+      .\workflowscript.bat
       ```
   
-5. Start the required services:
+7. Start the required services:
    
     ```bash
     $ # Start the web and database services
     $ docker compose up -d db web
     ```
 
-6. Run the application
+8. Run the application
    
     ```bash
     $ # Navigate to the UBC Classrooms application
@@ -67,9 +77,9 @@ Frontend project structure was inspired by [Bulletproof React](https://github.co
     $ npm run dev
     ```
 
-7. Access the application at http://localhost:3000/
+9. Access the application at http://localhost:3000/
 
-8. To stop the application and reclaim disk space, do the following:
+10. To stop the application and reclaim disk space, do the following:
    
     - Press CTRL + C to stop the application and regain control of the command line
     - Run the following commands:
