@@ -8,6 +8,7 @@ Frontend project structure was inspired by [Bulletproof React](https://github.co
 1. Ensure that the following dependencies are installed:
    - [Git](https://git-scm.com/downloads)
    - [Node.js v20+](https://nodejs.org/en/download/package-manager)
+   - [Cisco AnyConnect Secure Mobility Client](https://www.cisco.com/c/en/us/support/security/anyconnect-secure-mobility-client-v4-x/model.html#~tab-downloads)
    
    Linux:
    - [Docker Engine and CLI](https://docs.docker.com/engine/install/)
@@ -30,25 +31,27 @@ Frontend project structure was inspired by [Bulletproof React](https://github.co
     $ git clone https://github.com/JeffreyJPZ/ubc-classrooms.git
     ```
 
-3. Start the Docker daemon
+3. Create a config file for UBC VPN
+   - Follow the instructions in `workflowscript.sh`
+      
+4. Run the workflow script
+   - You may have to change some dependency paths — instructions are found in `workflowscript.sh`
    
-   Linux:
+   Linux/macOS:
    
      ```bash
-     $ # Using OS utilities
-     $ sudo systemctl start docker
-     $ # Or manually
-     $ dockerd
+     $ ./workflowscript
      ```
    
-   Windows/macOS:
-   - Open Docker Desktop
+   Windows:
+   
+      ```bash
+      $ .\workflowscript.bat
+      ```
   
 5. Start the required services:
    
     ```bash
-    $ # Builds the project's docker image
-    $ docker compose build
     $ # Start the web and database services
     $ docker compose up -d db web
     ```
