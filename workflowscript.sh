@@ -24,7 +24,7 @@ echo "Error with starting Docker"
 
 # Build Docker image
 echo "Building Docker image..."
-(docker compose build & wait $!) && 
+(docker compose build) && 
 echo "Docker image built" || 
 echo "Error with building Docker image"
 
@@ -37,7 +37,7 @@ echo "Error with connecting to VPN"
 
 # Run script to scrape classrooms
 echo "Attempting to scrape UBC Online Timetable..."
-(docker compose run scrape-classrooms & wait $!) &&
+(docker compose run scrape-classrooms) &&
 echo "Classrooms successfully scraped" ||
 echo "Error with scraping classrooms"
 
@@ -49,19 +49,19 @@ echo "Error with disconnecting from VPN"
 
 # Run script to calculate timeslots
 echo "Attempting to calculate timeslots"
-(docker compose run compute-timeslots & wait $!) &&
+(docker compose run compute-timeslots) &&
 echo "Timeslots successfully calculated" ||
 echo "Error with calculating timeslots"
 
 # Run script to populate db with timeslots
 echo "Attempting to create timeslots in db"
-(docker compose run create-models & wait $!) &&
+(docker compose run create-models) &&
 echo "Timeslots successfully created" ||
 echo "Error with creating timeslots"
 
 # Run script to remove expired timeslots
 echo "Attempting to remove expired timeslots"
-(docker compose run delete-expired-timeslots & wait $!) &&
+(docker compose run delete-expired-timeslots) &&
 echo "Expired timeslots successfully deleted" ||
 echo "Error with deleting expired timeslots"
 
