@@ -41,10 +41,10 @@ Frontend project structure was inspired by [Bulletproof React](https://github.co
    TEST_NAME=test
    ```
    
-5. Create a config file for UBC VPN
+4. Create a config file for UBC VPN
    - Follow the instructions in `workflowscript.sh`
       
-6. Run the workflow script
+5. Run the workflow script
    - You may have to change some dependency paths — instructions are found in `workflowscript.sh`
 
    Bash:
