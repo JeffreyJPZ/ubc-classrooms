@@ -50,7 +50,7 @@ Frontend project structure was inspired by [Bulletproof React](https://github.co
    Bash:
    
       ```bash
-      $ ./workflowscript
+      $ ./workflowscript.sh
       ```
    
    Windows Command Prompt or Powershell:
