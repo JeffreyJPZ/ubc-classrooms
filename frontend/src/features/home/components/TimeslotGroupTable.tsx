@@ -1,8 +1,9 @@
 import { useContext, useEffect } from "react";
 import { FormDataContext, FormSubmittedContext } from "../contexts";
 import { useTimeslots } from "../api";
+import { TimeslotGroup } from "./TimeslotGroup";
 
-export function TimeslotTable() {
+export function TimeslotGroupTable() {
     const formState = useContext(FormDataContext);
     const {formSubmitted, setFormSubmitted} = useContext(FormSubmittedContext);
     const timeslotsQuery = useTimeslots(formState, [formSubmitted]);
@@ -26,12 +27,12 @@ export function TimeslotTable() {
     };
 
     return (
+        <div className="table">
         <>
-            {timeslotsQuery.data.map(timeslot => {
-                return (
-                    <div>{timeslot.building_code} {timeslot.room} {timeslot.date} {timeslot.start} {timeslot.end} </div>
-                );
+            {Object.keys(timeslotsQuery.data).forEach((key) => {
+                return <TimeslotGroup name={key} data={timeslotsQuery.data[key]}/>
             })};
         </>
+        </div>
     );
 };

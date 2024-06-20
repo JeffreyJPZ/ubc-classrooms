@@ -12,6 +12,9 @@ type GetTimeslotParameters = {
     room_types?: string[],
 };
 
+type Building = string;
+type Room = string;
+
 async function getTimeslots(parameters: GetTimeslotParameters): Promise<Timeslot[]> {
     /* TODO: zod validation */
 
@@ -45,11 +48,20 @@ const useTimeslotsConfig = {
     useErrorBoundary: true,
 };
 
+function mapTimeslotsToBuildingsAndRooms(data: Timeslot[]): Record<Building, Record<Room, Timeslot[]>> {
+    return data.reduce((transformedData, currTimeslot) => {
+        transformedData[currTimeslot.building_code][currTimeslot.room].push(currTimeslot);
+        return transformedData;
+    }, {} as Record<Building, Record<Room, Timeslot[]>>);
+};
+
 export const useTimeslots = (parameters: GetTimeslotParameters, keys: unknown[]) => {
     return useQuery({
         ...useTimeslotsConfig,
         // Refetches data only when given keys change
         queryKey: ["timeslots", ...keys],
         queryFn: () => getTimeslots(parameters),
+        // Transforms timeslot data to be mapped to buildings and rooms
+        select: mapTimeslotsToBuildingsAndRooms,
     });
 };

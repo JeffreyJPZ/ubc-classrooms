@@ -1,4 +1,5 @@
-/* Generates a time option array from start to end, with each value separated by an interval */
+/* Generates a time option array from startTime to endTime, with each value separated by an interval */
+/* Assumes startTime and endTime end with ":00" or ":30" */
 export const createTimeIntervals = (startTime: string, endTime: string, intervalMinutes: number): {value: string, label: string}[] => {
     const startDate = new Date(`2024-05-13 ${startTime}`); // used to take advantage of date operations
     const endDate = new Date(`2024-05-13 ${endTime}`);

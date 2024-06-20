@@ -4,7 +4,7 @@ import { FormStateTypes, FormDispatchContext, FormSubmittedContext } from "../co
 import { useBuildings, useRoomTypes } from "../api";
 import { getCurrentISODate } from "../../../lib/getCurrentISODate";
 import { createISODates } from "../../../lib/createISODates";
-import { createTimeIntervals } from "../../../lib/createTimeIntervals";
+import { createTimeIntervals } from "../../../lib/createTimeIntervalsAMPM";
 
 export function FormInputs() {
     const formDispatch = useContext(FormDispatchContext);
@@ -19,7 +19,6 @@ export function FormInputs() {
             <div>
                 <p>Date</p>
                 <Combobox isMulti={false} defaultValue={getCurrentISODate()} defaultLabel={getCurrentISODate()} options={createISODates(getCurrentISODate(), 14)} optionValue="value" optionLabel="label" onChange={(e) => formDispatch({type: FormStateTypes.DATE, value: (e as Option).value})} />
-                {/* <input type="date" required defaultValue={getCurrentISODate()} onChange={(e) => formDispatch({type: FormStateTypes.DATE, value: e.target.value})} /> */}
             </div>
             <div>
                 <p>Start Time</p>

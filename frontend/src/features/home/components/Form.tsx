@@ -8,7 +8,7 @@ import { getCurrentISODate } from '../../../lib/getCurrentISODate';
 
 import './Form.css'
 import { FormInputs } from './FormInputs';
-import { TimeslotTable } from './TimeslotTable';
+import { TimeslotGroupTable } from './TimeslotGroupTable';
 
 function formReducer(state: FormState, action: FormActions): FormState {
     switch (action.type) {
@@ -66,7 +66,7 @@ export function Form() {
                 <FormDispatchContext.Provider value={formDispatch}>
                     <FormInputs/>
                 </FormDispatchContext.Provider>
-                <TimeslotTable/>
+                <TimeslotGroupTable/>
             </FormSubmittedContext.Provider>
         </FormDataContext.Provider>
     );
