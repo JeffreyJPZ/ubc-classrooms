@@ -39,10 +39,10 @@ export function TimeslotGroup({name, data}: TimeslotGroupProps) {
                                 </div>
                             </div>
                         );
-                    })};
+                    })}
                     </>
                 </div>
-            };
+            }
 
         </details>
     );

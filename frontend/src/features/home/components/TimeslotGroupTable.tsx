@@ -31,7 +31,7 @@ export function TimeslotGroupTable() {
         <>
             {Object.keys(timeslotsQuery.data).forEach((key) => {
                 return <TimeslotGroup name={key} data={timeslotsQuery.data[key]}/>
-            })};
+            })}
         </>
         </div>
     );
