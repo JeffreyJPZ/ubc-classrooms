@@ -51,9 +51,14 @@ const useTimeslotsConfig = {
 function mapTimeslotsToBuildingsAndRooms(data: Timeslot[]): Record<Building, Record<Room, Timeslot[]>> {
     return data.reduce((transformedData, currTimeslot) => {
         if (transformedData[currTimeslot.building_code] && transformedData[currTimeslot.building_code][currTimeslot.room]) {
+            // entry for building and room exists
             transformedData[currTimeslot.building_code][currTimeslot.room].push(currTimeslot);
+        } else if (transformedData[currTimeslot.building_code]) {
+            // entry for building exists
+            transformedData[currTimeslot.building_code][currTimeslot.room] = [currTimeslot];
         } else {
-            let roomObj = {} as Record<Room, Timeslot[]>;
+            // no entry for building exists
+            const roomObj = {} as Record<Room, Timeslot[]>;
             roomObj[currTimeslot.room] = [currTimeslot];
             transformedData[currTimeslot.building_code] = roomObj;
         }
