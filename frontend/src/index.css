@@ -14,7 +14,7 @@
 
 
   --primary-color: linear-gradient(to right, rgb(107 33 168), rgb(79, 70, 229));
-  --secondary-color: rgb(108, 117, 125);
+  --secondary-color: rgb(204, 204, 204);
   --primary-background-color: rgb(231, 235, 240);
   --secondary-background-color: rgb(255, 255, 255);
   --primary-text-color: rgb(17, 24, 39);
@@ -63,7 +63,7 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--secondary-color);
 }
 button:focus,
 button:focus-visible {

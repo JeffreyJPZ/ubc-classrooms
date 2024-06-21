@@ -23,18 +23,32 @@ details summary::marker {
 .timeslot-group-title {
     display: flex;
     justify-content: space-between;
-    margin-left: var(--horizontal-margin);
-    margin-right: var(--horizontal-margin);
+    border: 2px solid var(--secondary-background-color);
+    border-radius: var(--border-radius);
     padding-top: 1vh;
     padding-bottom: 1vh;
+    transition: border-color 0.25s;
 }
 
 .timeslot-group-title:hover {
     cursor: pointer;
+    border-color: var(--secondary-color);
+}
+
+.timeslot-group-title:focus,
+.timeslot-group-title:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
 }
 
 .timeslot-group-name {
+    margin-left: var(--horizontal-margin);
+    margin-right: var(--horizontal-margin);
     font-size: 1.25em;
+}
+
+.timeslot-group-room-count {
+    margin-left: var(--horizontal-margin);
+    margin-right: var(--horizontal-margin);
 }
 
 .timeslot-group-content {
