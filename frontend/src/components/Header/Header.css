@@ -5,26 +5,23 @@
     align-items: center;
     justify-content: space-between;
     top: 0;
-    width: 100%;
-    padding: 1em;
-    background-color: black;
-    outline: 2px solid red;
+    padding: 2vh;
+    background-image: var(--primary-color);
+    color: var(--secondary-text-color);
 }
 
 .logo {
     font-size: 1.5em;
     align-self: center;
-    margin-left: 1em;
+    margin-left: 2.5vw;
     text-wrap: nowrap;
-    outline: 2px solid red;
 }
 
 .credits {
-    width: 2.5em;
-    height: 2.5em;
-    margin-right: 1em;
+    width: 2em;
+    height: 2em;
+    margin-right: 2.5vw;
     align-items: stretch;
-    outline: 2px solid red;
 }
 
 img {
@@ -45,7 +42,7 @@ img {
     .credits {
         width: 3.5em;
         height: 3.5em;
-        margin-right: 2em;
+        margin-right: 3em;
     }
 }
 

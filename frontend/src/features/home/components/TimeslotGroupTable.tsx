@@ -3,6 +3,8 @@ import { FormDataContext, FormSubmittedContext } from "../contexts";
 import { useTimeslots } from "../api";
 import { TimeslotGroup } from "./TimeslotGroup";
 
+import './TimeslotGroupTable.css';
+
 export function TimeslotGroupTable() {
     const formState = useContext(FormDataContext);
     const {formSubmitted, setFormSubmitted} = useContext(FormSubmittedContext);

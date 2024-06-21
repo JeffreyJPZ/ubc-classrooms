@@ -1,0 +1,11 @@
+.filter {
+    margin: var(--vertical-margin);
+}
+
+.filter-name {
+    margin: auto;
+}
+
+.filter-button {
+    margin: var(--vertical-margin);
+}

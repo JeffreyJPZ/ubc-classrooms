@@ -1,11 +1,62 @@
-.timeslot-group {
-    outline: 2px solid red;
+details summary {
+    list-style-type: none;
+}
+
+details summary::marker {
+    display: none;
+}
+
+.timeslot-group-visible {
+    margin-top: var(--vertical-margin);
+    margin-bottom: var(--vertical-margin);
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    background-color: var(--secondary-background-color);
+    border-radius: var(--border-radius);
+}
+
+.timeslot-group-hidden {
+    margin-top: var(--vertical-margin);
+    margin-bottom: var(--vertical-margin);
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    background-color: var(--secondary-background-color);
+    border-radius: var(--border-radius);
+}
+
+.timeslot-group-title {
+    display: flex;
+    justify-content: space-between;
+    margin-left: var(--horizontal-margin);
+    margin-right: var(--horizontal-margin);
 }
 
 .timeslot-group-name {
-    outline: 2px solid red;
+    font-size: 1.25em;
 }
 
 .timeslot-group-content {
-    outline: 2px solid red;
+    display: flex;
+    flex-direction: column;
+}
+
+.timeslot {
+    margin: var(--horizontal-margin);
+}
+
+.content-visible-indicator {
+    padding-top: 1.5vh;
+    height: 1.25em;
+    width: 1.25em;
+    transform: rotate(-90deg);
+    transform-box: fill-box;
+    transform-origin: center;
+    fill: var(--primary-color);
+}
+
+.content-hidden-indicator {
+    padding-top: 1.5vh;
+    height: 1.25em;
+    width: 1.25em;
+    fill: var(--primary-color);
 }

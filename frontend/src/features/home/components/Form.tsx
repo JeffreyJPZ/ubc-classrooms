@@ -6,9 +6,10 @@ import { useReducer, useState } from 'react';
 import { FormStateTypes, FormActions, FormDataContext, FormDispatchContext, FormState, FormSubmittedContext } from '../contexts';
 import { getCurrentISODate } from '../../../lib/getCurrentISODate';
 
-import './Form.css'
 import { FormInputs } from './FormInputs';
 import { TimeslotGroupTable } from './TimeslotGroupTable';
+
+import './Form.css';
 
 function formReducer(state: FormState, action: FormActions): FormState {
     switch (action.type) {
