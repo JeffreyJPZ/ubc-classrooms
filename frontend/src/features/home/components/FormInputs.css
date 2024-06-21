@@ -1,5 +1,8 @@
 .filter {
-    margin: var(--vertical-margin);
+    margin-top: var(--vertical-margin);
+    margin-bottom: var(--vertical-margin);
+    margin-left: var(--horizontal-margin);
+    margin-right: var(--horizontal-margin);
 }
 
 .filter-name {
@@ -7,5 +10,21 @@
 }
 
 .filter-button {
-    margin: var(--vertical-margin);
+    margin-top: var(--vertical-margin);
+    margin-bottom: var(--vertical-margin);
+    margin-left: var(--horizontal-margin);
+    margin-right: var(--horizontal-margin);
+}
+
+.errors {
+    margin-top: var(--vertical-margin);
+    margin-bottom: var(--vertical-margin);
+    margin-left: var(--horizontal-margin);
+    margin-right: var(--horizontal-margin);
+    text-align: center;
+}
+
+.error {
+    font-size: 0.75em;
+    color: var(--error-text-color);
 }

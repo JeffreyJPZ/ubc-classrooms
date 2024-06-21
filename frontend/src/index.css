@@ -19,6 +19,7 @@
   --secondary-background-color: rgb(255, 255, 255);
   --primary-text-color: rgb(17, 24, 39);
   --secondary-text-color: rgb(255, 255, 255);
+  --error-text-color: rgb(255, 0, 0);
 
   --horizontal-margin: 2vh;
   --vertical-margin: 1vh;

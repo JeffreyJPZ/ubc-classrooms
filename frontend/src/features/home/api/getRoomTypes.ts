@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 
-import { RoomType } from "../../../types";
+import { RoomType, RoomTypesSchema } from "../../../types";
 
 type GetRoomTypesParameters = {
     campus: "UBCV",
@@ -17,7 +17,14 @@ async function getRoomTypes(parameters: GetRoomTypesParameters): Promise<RoomTyp
         throw new Error(`Response was not ok, received ${response.status}`)
     }
 
-    return response.json();
+    const unvalidatedData = await response.json();
+    const result = RoomTypesSchema.safeParse(unvalidatedData);
+
+    if (!result.success) {
+        throw new Error(`Error in validation: ${result.error.format()}`);
+    };
+
+    return result.data;
 };
 
 const useRoomTypesConfig = {

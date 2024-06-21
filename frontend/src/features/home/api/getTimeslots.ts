@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import queryString from "query-string";
 
-import { Timeslot } from "../../../types";
+import { Timeslots, TimeslotsSchema } from "../../../types";
 
 type GetTimeslotParameters = {
     campus: string,
@@ -12,21 +12,15 @@ type GetTimeslotParameters = {
     room_types?: string[],
 };
 
-type Building = string;
-type Room = string;
+type TransformedData = Record<string, Record<string, Timeslots>>;
 
-async function getTimeslots(parameters: GetTimeslotParameters): Promise<Timeslot[]> {
-    /* TODO: zod validation */
+const useTimeslotsConfig = {
+    refetchOnWindowFocus: false,
+    retry: true,
+    useErrorBoundary: true,
+};
 
-    /* Replaces empty arrays with undefined */
-    if (!parameters.buildings) {
-        parameters.buildings = undefined;
-    }
-
-    if (!parameters.room_types) {
-        parameters.room_types = undefined;
-    }
-
+async function getTimeslots(parameters: GetTimeslotParameters): Promise<Timeslots> {
     const queryParams = queryString.stringify(parameters, {skipEmptyString: true}).replace(`campus=${parameters.campus}`, "").replace(/%3A/g, ":");
 
     const response = await fetch(`/api/v1/timeslots/${parameters.campus}/?${queryParams}`, {
@@ -36,19 +30,20 @@ async function getTimeslots(parameters: GetTimeslotParameters): Promise<Timeslot
     );
 
     if (!response.ok) {
-        throw new Error(`Response was not ok, received ${response.status}`)
-    }
+        throw new Error(`Response was not ok, received ${response.status}`);
+    };
 
-    return response.json();
+    const unvalidatedData = await response.json();
+    const result = TimeslotsSchema.safeParse(unvalidatedData);
+
+    if (!result.success) {
+        throw new Error(`Error in validation: ${result.error.format()}`);
+    };
+
+    return result.data;
 };
 
-const useTimeslotsConfig = {
-    refetchOnWindowFocus: false,
-    retry: true,
-    useErrorBoundary: true,
-};
-
-function mapTimeslotsToBuildingsAndRooms(data: Timeslot[]): Record<Building, Record<Room, Timeslot[]>> {
+function mapTimeslotsToBuildingsAndRooms(data: Timeslots): TransformedData {
     return data.reduce((transformedData, currTimeslot) => {
         if (transformedData[currTimeslot.building_code] && transformedData[currTimeslot.building_code][currTimeslot.room]) {
             // entry for building and room exists
@@ -58,12 +53,12 @@ function mapTimeslotsToBuildingsAndRooms(data: Timeslot[]): Record<Building, Rec
             transformedData[currTimeslot.building_code][currTimeslot.room] = [currTimeslot];
         } else {
             // no entry for building exists
-            const roomObj = {} as Record<Room, Timeslot[]>;
+            const roomObj = {} as Record<string, Timeslots>;
             roomObj[currTimeslot.room] = [currTimeslot];
             transformedData[currTimeslot.building_code] = roomObj;
         }
         return transformedData;
-    }, {} as Record<Building, Record<Room, Timeslot[]>>);
+    }, {} as TransformedData);
 };
 
 export const useTimeslots = (parameters: GetTimeslotParameters, keys: unknown[]) => {
