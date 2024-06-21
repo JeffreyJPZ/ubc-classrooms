@@ -9,8 +9,6 @@ details summary::marker {
 .timeslot-group-visible {
     margin-top: var(--vertical-margin);
     margin-bottom: var(--vertical-margin);
-    padding-top: 1vh;
-    padding-bottom: 1vh;
     background-color: var(--secondary-background-color);
     border-radius: var(--border-radius);
 }
@@ -18,8 +16,6 @@ details summary::marker {
 .timeslot-group-hidden {
     margin-top: var(--vertical-margin);
     margin-bottom: var(--vertical-margin);
-    padding-top: 1vh;
-    padding-bottom: 1vh;
     background-color: var(--secondary-background-color);
     border-radius: var(--border-radius);
 }
@@ -29,6 +25,8 @@ details summary::marker {
     justify-content: space-between;
     margin-left: var(--horizontal-margin);
     margin-right: var(--horizontal-margin);
+    padding-top: 1vh;
+    padding-bottom: 1vh;
 }
 
 .timeslot-group-title:hover {
