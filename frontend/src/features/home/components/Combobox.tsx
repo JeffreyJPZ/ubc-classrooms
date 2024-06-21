@@ -10,7 +10,9 @@ type OptionsT = Record<string, string>[];
 type QueryT = UseQueryResult<Record<string, string>[], unknown>;
 
 type ComboboxProps = {
+    required?: boolean,
     isMulti?: boolean,
+    isClearable?: boolean,
     defaultValue?: string,
     defaultLabel?: string,
     options?: OptionsT,
@@ -22,7 +24,7 @@ type ComboboxProps = {
     onChange?: OptionsEventHandler,
 }
 
-export function Combobox({isMulti = false, defaultValue = "", defaultLabel = "", options = [], optionValue = "", optionLabel = "", query = null, queryValue = "", queryLabel = "", onChange = () => {}}: ComboboxProps) {
+export function Combobox({required = false, isMulti = false, isClearable = true, defaultValue = "", defaultLabel = "", options = [], optionValue = "", optionLabel = "", query = null, queryValue = "", queryLabel = "", onChange = () => {}}: ComboboxProps) {
     if (query && queryValue && queryLabel) {
         if (query.isLoading) {
             return (
@@ -37,24 +39,35 @@ export function Combobox({isMulti = false, defaultValue = "", defaultLabel = "",
         };
     
         if (queryValue === queryLabel) {
-            return (<Select className="combobox" isMulti={isMulti} onChange={onChange} options={query.data.map(queryItem => {
+            return (<Select className="combobox" required={required} isMulti={isMulti} isClearable={isClearable} onChange={onChange} options={query.data.map(queryItem => {
                         return {value: queryItem[queryValue], label: queryItem[queryLabel]};
                     })}/>
             );
         } else {
-            return (<Select className="combobox" isMulti={isMulti} onChange={onChange} options={query.data.map(queryItem => {
-                return {value: queryItem[queryValue], label: `${queryItem[queryValue]} - ${queryItem[queryLabel]}`};
+            return (<Select className="combobox" required={required} isMulti={isMulti} isClearable={isClearable} onChange={onChange} options={query.data.map(queryItem => {
+                return {value: queryItem[queryValue], label: `${queryItem[queryLabel]} (${queryItem[queryValue]})`};
             })}/>
             );
         }
     };
 
+    if (required) {
+        return (
+            <>
+                <Select className="combobox" required={required} defaultValue={{value: defaultValue, label: defaultLabel}} isMulti={isMulti} isClearable={isClearable} onChange={onChange} options={options.map(option => {
+                    return {value: option[optionValue], label: option[optionLabel]};
+                })}/>
+            </>
+        );
+    }
+
     return (
         <>
-            <Select className="combobox" defaultValue={{value: defaultValue, label: defaultLabel}} isMulti={isMulti} onChange={onChange} options={options.map(option => {
+            <Select className="combobox" required={required} isMulti={isMulti} isClearable={isClearable} onChange={onChange} options={options.map(option => {
                 return {value: option[optionValue], label: option[optionLabel]};
             })}/>
         </>
     );
+    
     
 };
