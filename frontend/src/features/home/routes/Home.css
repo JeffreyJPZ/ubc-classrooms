@@ -1,19 +1,14 @@
-.app {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
 .introduction {
-    justify-content: center;
+    margin-top: var(--vertical-margin);
+    margin-bottom: var(--vertical-margin);
 }
 
 .content {
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-left: var(--horizontal-margin);
+    margin-right: var(--horizontal-margin);
 }
 
 /* small tablets */

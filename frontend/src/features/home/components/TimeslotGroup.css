@@ -31,6 +31,10 @@ details summary::marker {
     margin-right: var(--horizontal-margin);
 }
 
+.timeslot-group-title:hover {
+    cursor: pointer;
+}
+
 .timeslot-group-name {
     font-size: 1.25em;
 }
