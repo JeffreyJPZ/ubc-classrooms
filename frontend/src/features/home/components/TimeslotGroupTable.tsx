@@ -28,11 +28,9 @@ export function TimeslotGroupTable() {
 
     return (
         <div className="table">
-        <>
-            {Object.keys(timeslotsQuery.data).forEach((key) => {
-                return <TimeslotGroup name={key} data={timeslotsQuery.data[key]}/>
+            {Object.keys(timeslotsQuery.data).map((key) => {
+                return <TimeslotGroup key={key} name={key} data={timeslotsQuery.data[key]}/>
             })}
-        </>
         </div>
     );
 };
