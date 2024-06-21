@@ -42,10 +42,6 @@ details summary::marker {
     flex-direction: column;
 }
 
-.timeslot {
-    margin: var(--horizontal-margin);
-}
-
 .content-visible-indicator {
     padding-top: 1.5vh;
     height: 1.25em;
@@ -61,4 +57,12 @@ details summary::marker {
     height: 1.25em;
     width: 1.25em;
     fill: var(--primary-color);
+}
+
+.timeslot {
+    margin: var(--horizontal-margin);
+}
+
+.timeslot-room {
+    font-size: 1.1em;
 }

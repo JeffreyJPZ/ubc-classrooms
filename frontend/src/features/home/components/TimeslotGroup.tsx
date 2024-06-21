@@ -39,12 +39,11 @@ export function TimeslotGroup({name, data}: TimeslotGroupProps) {
                     {Object.keys(data).map((room) => {
                         return (
                             <div key={room} className="timeslot">
-                                <div className="date">{`${data[room][0].date}`}</div>
-                                <div className="room">{`${name} ${room}`}</div>
-                                <div className="room-type">{`${data[room][0].room_type}`}</div>
+                                <div className="timeslot-room">{`${name} ${room}`}</div>
+                                <div className="timeslot-room-type">{`${data[room][0].room_type}`}</div>
 
                                 {/* Combine all availabilities */}
-                                <div className="availabilities">
+                                <div className="timeslot-availabilities">
                                     {data[room].map((timeslot: Timeslot) => {
                                         return (
                                             <div key={timeslot.start}>{`${getTimeAMPM(timeslot.start)}-${getTimeAMPM(timeslot.end)}`}</div>
