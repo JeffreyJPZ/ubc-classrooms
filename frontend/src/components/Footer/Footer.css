@@ -1,16 +1,13 @@
 .footer {
-    margin: var(--horizontal-margin);
+    margin-left: var(--horizontal-margin);
+    margin-right: var(--horizontal-margin);
 }
 
 .disclaimer {
-    margin-top: var(--vertical-margin);
-    margin-bottom: var(--vertical-margin);
     font-size: 0.75em;
 }
 
 .authors {
-    margin-top: var(--vertical-margin);
-    margin-bottom: var(--vertical-margin);
     text-align: center;
     text-wrap: nowrap;
     font-size: 1em;

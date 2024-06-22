@@ -21,7 +21,7 @@
   --secondary-text-color: rgb(255, 255, 255);
   --error-text-color: rgb(255, 0, 0);
 
-  --horizontal-margin: 2vh;
+  --horizontal-margin: 3vw;
   --vertical-margin: 1vh;
   --border-radius: 0.5rem;
 }

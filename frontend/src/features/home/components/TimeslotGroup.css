@@ -25,8 +25,8 @@ details summary::marker {
     justify-content: space-between;
     border: 2px solid var(--secondary-background-color);
     border-radius: var(--border-radius);
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+    padding-top: var(--vertical-margin);
+    padding-bottom: var(--vertical-margin);
     transition: border-color 0.25s;
 }
 
@@ -55,10 +55,13 @@ details summary::marker {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    margin-top: calc(2 * var(--vertical-margin));
+    margin-bottom: calc(2 * var(--vertical-margin));
 }
 
 .content-visible-indicator {
-    padding-top: 1.5vh;
+    margin-top: calc(2 * var(--vertical-margin));
+    margin-right: var(--horizontal-margin);
     height: 1.25em;
     width: 1.25em;
     transform: rotate(-90deg);
@@ -68,18 +71,22 @@ details summary::marker {
 }
 
 .content-hidden-indicator {
-    padding-top: 1.5vh;
+    margin-top: calc(2 * var(--vertical-margin));
+    margin-right: var(--horizontal-margin);
     height: 1.25em;
     width: 1.25em;
     fill: var(--primary-color);
 }
 
 .timeslot {
-    margin: var(--horizontal-margin);
+    margin-top: var(--vertical-margin);
+    margin-bottom: var(--vertical-margin);
+    margin-left: var(--horizontal-margin);
+    margin-right: var(--horizontal-margin);
 }
 
 .timeslot-room {
-    font-size: 1.1em;
+    font-size: 1.25em;
 }
 
 /* small tablets */
@@ -97,12 +104,58 @@ details summary::marker {
 
 /* large tablets and laptops */
 @media screen and (min-width: 960px) {
+    .timeslot-group-name {
+        margin-left: calc(0.8 * var(--horizontal-margin));
+        margin-right: calc(0.8 * var(--horizontal-margin));
+    }
 
+    .timeslot-group-room-count {
+        margin-left: calc(0.8 * var(--horizontal-margin));
+        margin-right: calc(0.8 * var(--horizontal-margin));
+    }
+
+    .timeslot {
+        margin-top: calc(0.8 * var(--vertical-margin));
+        margin-bottom: calc(0.8 * var(--vertical-margin));
+        margin-left: calc(0.8 * var(--horizontal-margin));
+        margin-right: calc(0.8 * var(--horizontal-margin));
+    }
+
+    .content-visible-indicator {
+        margin-right: calc(0.8 * var(--horizontal-margin));
+    }
+
+    .content-hidden-indicator {
+        margin-right: calc(0.8 * var(--horizontal-margin));
+    }
 }
 
 /* desktops */
 @media screen and (min-width: 1200px) {
+    .timeslot-group-name {
+        margin-left: calc(0.5 * var(--horizontal-margin));
+        margin-right: calc(0.5 * var(--horizontal-margin));
+    }
 
+    .timeslot-group-room-count {
+        margin-left: calc(0.5 * var(--horizontal-margin));
+        margin-right: calc(0.5 * var(--horizontal-margin));
+    }
+
+    .timeslot {
+        margin-top: calc(0.5 * var(--vertical-margin));
+        margin-bottom: calc(0.5 * var(--vertical-margin));
+        margin-left: calc(0.5 * var(--horizontal-margin));
+        margin-right: calc(0.5 * var(--horizontal-margin));
+    }
+
+    .content-visible-indicator {
+        margin-right: calc(0.5 * var(--horizontal-margin));
+    }
+
+    .content-hidden-indicator {
+        margin-right: calc(0.5 * var(--horizontal-margin));
+    }
 }
 
 /* medium desktops */
