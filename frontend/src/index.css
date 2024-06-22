@@ -14,7 +14,7 @@
 
   --blue: rgba(38, 132, 255, 1);
   --indigo: rgba(79, 70, 229, 1);
-  --primary-color: linear-gradient(to right, var(--indigo), var(--blue));
+  --primary-color: var(--blue);
   --secondary-color: rgb(204, 204, 204);
   --primary-background-color: rgb(231, 235, 240);
   --secondary-background-color: rgb(255, 255, 255);
@@ -61,12 +61,14 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-image: var(--primary-color);
+  background-color: var(--primary-color);
   cursor: pointer;
   transition: border-color 0.25s, filter 0.25s;
 }
 
 button:hover {
   background-image: var(--primary-color);
+  background-color: var(--primary-color);
   filter: brightness(90%);
   border: 1px solid var(--secondary-color);
 }
