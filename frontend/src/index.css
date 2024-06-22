@@ -12,8 +12,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-
-  --primary-color: linear-gradient(to right, rgb(107 33 168), rgb(79, 70, 229));
+  --blue: rgba(38, 132, 255, 1);
+  --indigo: rgba(79, 70, 229, 1);
+  --primary-color: linear-gradient(to right, var(--indigo), var(--blue));
   --secondary-color: rgb(204, 204, 204);
   --primary-background-color: rgb(231, 235, 240);
   --secondary-background-color: rgb(255, 255, 255);
@@ -66,14 +67,18 @@ button {
 
 button:hover {
   background-image: var(--primary-color);
-  filter: brightness(80%);
-  border-color: var(--secondary-color);
+  filter: brightness(90%);
+  border: 1px solid var(--secondary-color);
 }
 
-button:focus,
+button:active {
+  filter: brightness(100%);
+}
+
+/* button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
+} */
 
 /* @media (prefers-color-scheme: dark) {
   :root {
