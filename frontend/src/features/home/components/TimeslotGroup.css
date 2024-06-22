@@ -27,7 +27,7 @@ details summary::marker {
     border-radius: var(--border-radius);
     padding-top: var(--vertical-margin);
     padding-bottom: var(--vertical-margin);
-    transition: border-color 0.25s outline 0.25s;
+    transition: border-color 0.25s, outline 0.25s;
 }
 
 .timeslot-group-title:hover {
