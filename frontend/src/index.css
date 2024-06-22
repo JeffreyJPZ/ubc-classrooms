@@ -61,9 +61,11 @@ button {
   font-family: inherit;
   background-image: var(--primary-color);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: border-color 0.25s, filter 0.25s;
 }
 button:hover {
+  background-image: var(--primary-color);
+  filter: brightness(80%);
   border-color: var(--secondary-color);
 }
 button:focus,
