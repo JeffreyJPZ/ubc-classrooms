@@ -51,10 +51,10 @@ function formReducer(state: FormState, action: FormActions): FormState {
 const initialFormState: FormState = {
     campus: "UBCV",
     date: getCurrentISODate(),
-    start: "",
-    end: "",
-    buildings: [],
-    room_types: [],
+    start: undefined,
+    end: undefined,
+    buildings: undefined,
+    room_types: undefined,
 }
 
 export function Form() {

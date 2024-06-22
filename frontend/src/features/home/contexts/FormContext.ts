@@ -31,7 +31,7 @@ export const FormStateSchema = z.object({
     end: z.string().optional(),
     buildings: z.array(z.string()).optional(),
     room_types: z.array(z.string()).optional(),
-}).refine((data) => {return (data.start === undefined || data.end === undefined || (data.start !== undefined && data.end !== undefined && (new Date(data.date + " " + data.start) < new Date(data.date + " " + data.end))))}, {
+}).refine((data) => {return (data.start === undefined) || (data.end === undefined) || (data.start !== undefined && data.end !== undefined && (new Date(data.date + " " + data.start) < new Date(data.date + " " + data.end)))}, {
     message: `"Available From" must be before "Available Until"`,
     path: ["start"],
 });
