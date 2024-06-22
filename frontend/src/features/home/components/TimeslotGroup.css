@@ -54,6 +54,7 @@ details summary::marker {
 .timeslot-group-content {
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
 }
 
 .content-visible-indicator {
@@ -79,4 +80,37 @@ details summary::marker {
 
 .timeslot-room {
     font-size: 1.1em;
+}
+
+/* small tablets */
+@media screen and (min-width: 620px) {
+    .timeslot-group-content {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .timeslot {
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+}
+
+/* large tablets and laptops */
+@media screen and (min-width: 960px) {
+
+}
+
+/* desktops */
+@media screen and (min-width: 1200px) {
+
+}
+
+/* medium desktops */
+@media screen and (min-width: 1600px) {
+
+}
+
+/* large desktops */
+@media screen and (min-width: 1920px) {
+    
 }
