@@ -9,6 +9,7 @@ services:
       - POSTGRES_NAME=${POSTGRES_NAME}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_HOST=${DB_HOST}
   web:
     build: ./backend
     command: python manage.py runserver 0.0.0.0:8000

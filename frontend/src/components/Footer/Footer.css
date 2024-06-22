@@ -1,0 +1,43 @@
+.footer {
+    margin-left: var(--horizontal-margin);
+    margin-right: var(--horizontal-margin);
+}
+
+.disclaimer {
+    margin-top: var(--vertical-margin);
+    margin-bottom: var(--vertical-margin);
+    font-size: 0.75em;
+}
+
+.authors {
+    margin-top: var(--vertical-margin);
+    margin-bottom: var(--vertical-margin);
+    text-align: center;
+    text-wrap: nowrap;
+    font-size: 1em;
+}
+
+/* small tablets */
+@media screen and (min-width: 620px) {
+
+}
+
+/* large tablets and laptops */
+@media screen and (min-width: 960px) {
+    
+}
+
+/* desktops */
+@media screen and (min-width: 1200px) {
+
+}
+
+/* medium desktops */
+@media screen and (min-width: 1600px) {
+
+}
+
+/* large desktops */
+@media screen and (min-width: 1920px) {
+    
+}

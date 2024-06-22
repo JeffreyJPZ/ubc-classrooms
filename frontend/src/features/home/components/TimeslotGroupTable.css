@@ -1,0 +1,6 @@
+.table {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--vertical-margin);
+    margin-bottom: var(--vertical-margin);
+}
