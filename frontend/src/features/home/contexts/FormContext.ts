@@ -8,16 +8,7 @@ export enum FormStateTypes {
     "END",
     "BUILDINGS",
     "ROOM_TYPES",
-}
-
-// export type FormState = {
-//     campus: string,
-//     date: string,
-//     start: string,
-//     end: string,
-//     buildings: string[],
-//     room_types: string[],
-// };
+};
 
 export type FormActions = {
     type: FormStateTypes,
