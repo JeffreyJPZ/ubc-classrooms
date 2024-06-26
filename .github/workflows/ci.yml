@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    branches: [ "**" ]
+    branches-ignore: [ main ]
   pull_request:
     branches: [ "**" ]
 
@@ -20,11 +20,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Build image
-        run: docker compose build
+        run: docker compose build db api-test
+
       - name: Start DB service
         run: docker compose up db -d
+
       - name: Wait for DB connection
         run: sleep 10
+
       - name: Run API tests
         run: docker compose run api-test
