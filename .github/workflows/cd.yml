@@ -33,7 +33,9 @@ jobs:
           echo SQL_HOST=${{ secrets.SQL_HOST }} >> prod.env
           echo SQL_PORT=${{ secrets.SQL_PORT }} >> prod.env
           echo DB=${{ secrets.DB }} >> prod.env
-          echo DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY}} >> prod.env
+          echo DEBUG=0 >> prod.env
+          echo DJANGO_ALLOWED_HOSTS=.ubcclassrooms.ca >> prod.env
+          echo DJANGO_PROD_SECRET_KEY=${{ secrets.DJANGO_PROD_SECRET_KEY}} >> prod.env
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3

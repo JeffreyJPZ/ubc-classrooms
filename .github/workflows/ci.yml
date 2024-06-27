@@ -25,6 +25,9 @@ jobs:
           echo SQL_HOST=${{ secrets.SQL_HOST }} >> dev.env
           echo SQL_PORT=${{ secrets.SQL_PORT }} >> dev.env
           echo DB=${{ secrets.DB }} >> dev.env
+          echo DEBUG=1 >> dev.env
+          echo DJANGO_ALLOWED_HOSTS=* >> dev.env
+          echo DJANGO_DEV_SECRET_KEY=${{ secrets.DJANGO_DEV_SECRET_KEY}} >> dev.env
 
       - name: Build image
         run: docker compose -f compose.dev.yml build db api-test
