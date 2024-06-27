@@ -1,0 +1,29 @@
+FROM python:latest
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV DJANGO_SETTINGS_MODULE=config.settings
+
+WORKDIR /src
+
+# Install dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends netcat-traditional
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+RUN apt-get update && apt-get install -y wget unzip && \
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+    apt install -y ./google-chrome-stable_current_amd64.deb && \
+    rm google-chrome-stable_current_amd64.deb && \
+    apt-get clean
+
+# Copy entrypoint.dev.sh
+COPY ./entrypoint.dev.sh .
+RUN sed -i 's/\r$//g' /src/entrypoint.dev.sh
+RUN chmod +x /src/entrypoint.dev.sh
+
+# Copy project
+COPY . .
+
+# Run entrypoint.dev.sh
+ENTRYPOINT [ "/src/entrypoint.dev.sh" ]
