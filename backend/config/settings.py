@@ -54,8 +54,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Allow CORS between our frontend and our API
-# Change the domain for production
+# Allow CORS between our frontend and our API in development
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000'
 ]
