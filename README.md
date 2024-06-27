@@ -31,39 +31,45 @@ Frontend project structure was inspired by [Bulletproof React](https://github.co
     $ git clone https://github.com/JeffreyJPZ/ubc-classrooms.git
     ```
     
-3. Create a `.env` file in the project's root directory with the following format:
+3. Create a `dev.env` file in the project's root directory with the following format:
 
    ```
-   POSTGRES_NAME=ubc_classrooms
-   POSTGRES_USER=default
-   POSTGRES_PASSWORD=default
-   DB_HOST=db
-   TEST_NAME=test
+   SQL_ENGINE=django.db.backends.postgresql
+   SQL_DB=ubc_classrooms
+   SQL_DB_TEST=ubc_classrooms_test
+   SQL_USER=default
+   SQL_PASSWORD=default
+   SQL_HOST=db
+   SQL_PORT=5432
+   DB=postgres
+   DEBUG=1
+   DJANGO_ALLOWED_HOSTS=*
+   DJANGO_DEV_SECRET_KEY='django-insecure-$^pvra=ndps97#a#ei#*8(h%_jbs3#&4inla2!(l^x+ry62dat'
    ```
    
 4. Create a config file for UBC VPN
    - Follow the instructions in `workflowscript.sh`
       
-5. Run the workflow script
-   - You may have to change some dependency paths — instructions are found in `workflowscript.sh`
+5. Run the setup script
+   - You may have to change some dependency paths depending on your OS — instructions are found in `setupscript.sh`
 
    Bash:
    
       ```bash
-      $ ./workflowscript.sh
+      $ ./setupscript.sh
       ```
    
    Windows Command Prompt or Powershell:
    
       ```cmd
-      .\workflowscript.bat
+      .\setupscript.bat
       ```
   
 7. Start the required services:
    
     ```bash
     $ # Start the web and database services
-    $ docker compose up -d db web
+    $ docker compose -f compose.dev.yml up db web -d --wait
     ```
 
 8. Run the application
@@ -86,7 +92,7 @@ Frontend project structure was inspired by [Bulletproof React](https://github.co
     
       ```bash
       $ # Stops the services
-      $ docker compose down
+      $ docker -f compose.dev.yml compose down
       $ # Removes services and other utilities, frees up disk space
-      $ docker system prune
+      $ docker -f compose.dev.yml system prune
       ```

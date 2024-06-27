@@ -1,7 +1,9 @@
-# Workflow script for Windows
+#!/usr/bin/env bash
+
+# Setup script
 #
-# --IMPORTANT--
-# Replace dependency paths with appropriate OS-specific paths (default is Windows)
+# IMPORTANT:
+# Replace dependency paths as required with the appropriate OS-specific paths (default is Windows)
 # For Windows:
 # - Assumes Git Bash is located at default path "C:\Program Files\Git\bin\sh.exe"
 # - Assumes Cisco AnyConnect VPN Client CLI is located at default path "C:\Program Files (x86)\Cisco\Cisco AnyConnect Secure Mobility Client\vpncli.exe
@@ -24,7 +26,7 @@ echo "Error with starting Docker"
 
 # Build Docker image
 echo "Building Docker image..."
-(docker compose build) && 
+(docker compose -f compose.dev.yml build) && 
 echo "Docker image built" || 
 echo "Error with building Docker image"
 
@@ -37,7 +39,7 @@ echo "Error with connecting to VPN"
 
 # Run script to scrape classrooms
 echo "Attempting to scrape UBC Online Timetable..."
-(docker compose run scrape-classrooms) &&
+(docker compose -f compose.dev.yml run scrape-classrooms) &&
 echo "Classrooms successfully scraped" ||
 echo "Error with scraping classrooms"
 
@@ -49,19 +51,19 @@ echo "Error with disconnecting from VPN"
 
 # Run script to calculate timeslots
 echo "Attempting to calculate timeslots"
-(docker compose run compute-timeslots) &&
+(docker compose -f compose.dev.yml run compute-timeslots) &&
 echo "Timeslots successfully calculated" ||
 echo "Error with calculating timeslots"
 
 # Run script to populate db with timeslots
 echo "Attempting to create timeslots in db"
-(docker compose run create-models) &&
+(docker compose -f compose.dev.yml run create-models) &&
 echo "Timeslots successfully created" ||
 echo "Error with creating timeslots"
 
 # Run script to remove expired timeslots
 echo "Attempting to remove expired timeslots"
-(docker compose run delete-expired-timeslots) &&
+(docker compose -f compose.dev.yml run delete-expired-timeslots) &&
 echo "Expired timeslots successfully deleted" ||
 echo "Error with deleting expired timeslots"
 
