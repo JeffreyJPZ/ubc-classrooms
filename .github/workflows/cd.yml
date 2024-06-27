@@ -66,7 +66,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          envs: REGISTRY,{{ secrets.DOCKERHUB_TOKEN }}
+          envs: REGISTRY,{{ secrets.DOCKERHUB_USERNAME }},{{ secrets.DOCKERHUB_TOKEN }}
           # Install Docker Compose plugin
           script: |
             # Change directory to project
@@ -76,8 +76,8 @@ jobs:
             # Login to registry
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} $(echo $REGISTRY)
             # Pull latest images
-            docker compose pull
+            docker compose -f compose.prod.yml pull
             # Build images
-            docker compose build
+            docker compose -f compose.prod.yml build
             # Recreate and restart services
-            docker compose up $(echo $DB_SERVICE_NAME) $(echo $WEB_SERVICE_NAME) -d --force-recreate
+            docker compose -f compose.prod.yml up $(echo $DB_SERVICE_NAME) $(echo $WEB_SERVICE_NAME) -d --wait --force-recreate
