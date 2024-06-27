@@ -15,10 +15,7 @@ jobs:
       db:
         image: postgres
         env:
-          SQL_DB: ${{ secrets.SQL_DB }}
-          SQL_TEST_DB: ${{ secrets.SQL_TEST_DB }}
-          SQL_USER: ${{ secrets.SQL_USER }}
-          SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
+          POSTGRES_PASSWORD: ${{ secrets.SQL_PASSWORD }}
         ports:
           - "5432:5432"
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=5
