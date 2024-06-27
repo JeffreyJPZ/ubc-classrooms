@@ -16,7 +16,7 @@
 # <CWL password>
 # --END--
 
-echo "Beginning workflow..."
+echo "Beginning setup..."
 
 # Start Docker Desktop
 echo "Starting Docker..."
