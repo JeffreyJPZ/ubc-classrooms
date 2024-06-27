@@ -18,6 +18,7 @@ jobs:
           SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
         ports:
           - "5432:5432"
+        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=5
 
     steps:
       - name: Checkout repository
@@ -26,7 +27,7 @@ jobs:
       - name: Create development/testing env file
         run: |
           touch dev.env
-          echo SQL_ENGINE=${{ secrets.SQL_ENGINE}} >> dev.env
+          echo SQL_ENGINE=${{ secrets.SQL_ENGINE }} >> dev.env
           echo SQL_DB=${{ secrets.SQL_DB }} >> dev.env
           echo SQL_TEST_DB=${{ secrets.SQL_TEST_DB }} >> dev.env
           echo SQL_USER=${{ secrets.SQL_USER }} >> dev.env
