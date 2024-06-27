@@ -10,8 +10,6 @@ jobs:
   api-tests:
     name: Run API tests
     runs-on: ubuntu-latest
-    env:
-      SQL_USER: ${{ secrets.SQL_USER }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -32,7 +30,7 @@ jobs:
           echo DJANGO_DEV_SECRET_KEY=${{ secrets.DJANGO_DEV_SECRET_KEY}} >> dev.env
 
       - name: Build image
-        run: docker compose -f compose.dev.yml build db api-tests
+        run: docker compose -f compose.test.yml build db api-tests
 
       - name: Run API tests
-        run: docker compose -f compose.dev.yml run api-tests
+        run: docker compose -f compose.test.yml run api-tests
