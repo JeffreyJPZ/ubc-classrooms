@@ -1,6 +1,7 @@
 Django
 djangorestframework
 django-cors-headers
+gunicorn
 psycopg2
 bs4
 selenium

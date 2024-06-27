@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    branches: [ "**" ]
+    branches-ignore: [ main ]
   pull_request:
     branches: [ "**" ]
 
@@ -11,20 +11,37 @@ jobs:
     name: Run API tests
     runs-on: ubuntu-latest
     env:
-      POSTGRES_DB: ${{ secrets.POSTGRES_DB}} 
-      POSTGRES_NAME: ${{ secrets.POSTGRES_NAME}} 
-      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      DB_HOST: ${{ secrets.DB_HOST }}
-      TEST_NAME: ${{ secrets.TEST_NAME }}
+      SQL_DB: ${{ secrets.SQL_DB }}
+      SQL_USER: ${{ secrets.SQL_USER }}
+      SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Build image
-        run: docker compose build
+
+      - name: Create testing env file
+        run: |
+          touch test.env
+          echo SQL_ENGINE=${{ secrets.SQL_ENGINE }} >> test.env
+          echo SQL_DB=${{ secrets.SQL_DB }} >> test.env
+          echo SQL_DB_TEST=${{ secrets.SQL_DB_TEST }} >> test.env
+          echo SQL_USER=${{ secrets.SQL_USER }} >> test.env
+          echo SQL_PASSWORD=${{ secrets.SQL_PASSWORD }} >> test.env
+          echo SQL_HOST=${{ secrets.SQL_HOST }} >> test.env
+          echo SQL_PORT=${{ secrets.SQL_PORT }} >> test.env
+          echo DB=${{ secrets.DB }} >> test.env
+          echo DEBUG=1 >> test.env
+          echo DJANGO_ALLOWED_HOSTS=* >> test.env
+          echo DJANGO_TEST_SECRET_KEY=${{ secrets.DJANGO_TEST_SECRET_KEY}} >> test.env
+
+      - name: Build images
+        run: docker compose -f compose.test.yml build db api-tests
+
       - name: Start DB service
-        run: docker compose up db -d
-      - name: Wait for DB connection
-        run: sleep 10
+        run: docker compose -f compose.test.yml up db -d --wait
+
       - name: Run API tests
-        run: docker compose run api-test
+        run: docker compose -f compose.test.yml run api-tests
+      
+      - name: Dump Docker logs on failure
+        if: failure()
+        uses: jwalton/gh-docker-logs@v2.2.2

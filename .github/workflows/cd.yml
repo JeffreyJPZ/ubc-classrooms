@@ -1,0 +1,84 @@
+name: cd
+
+on:
+  push:
+    branches: [ main ]
+
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Image version"
+        required: true
+
+env:
+  REGISTRY: "registry-1.docker.io/v2"
+  WEB_SERVICE_NAME: "web"
+  DB_SERVICE_NAME: "db"
+
+jobs:
+  build-and-push:
+    name: Build Docker image and push to registry
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Create production env file
+        run: |
+          touch prod.env
+          echo SQL_ENGINE=${{ secrets.SQL_ENGINE}} >> prod.env
+          echo SQL_DB=${{ secrets.SQL_DB }} >> prod.env
+          echo SQL_USER=${{ secrets.SQL_USER }} >> prod.env
+          echo SQL_PASSWORD=${{ secrets.SQL_PASSWORD }} >> prod.env
+          echo SQL_HOST=${{ secrets.SQL_HOST }} >> prod.env
+          echo SQL_PORT=${{ secrets.SQL_PORT }} >> prod.env
+          echo DB=${{ secrets.DB }} >> prod.env
+          echo DEBUG=0 >> prod.env
+          echo DJANGO_ALLOWED_HOSTS=.ubcclassrooms.ca >> prod.env
+          echo DJANGO_PROD_SECRET_KEY=${{ secrets.DJANGO_PROD_SECRET_KEY}} >> prod.env
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker images
+        uses: docker/bake-action@v5
+        with:
+          pull: true
+          push: true
+
+  deploy:
+    name: Deploy to production
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to Digital Ocean droplet via SSH action
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          # Add secrets
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          envs: REGISTRY,{{ secrets.DOCKERHUB_USERNAME }},{{ secrets.DOCKERHUB_TOKEN }}
+          # Install Docker Compose plugin
+          script: |
+            # Change directory to project
+            cd projects/ubc-classrooms
+            # Pull from main branch
+            git pull origin main
+            # Login to registry
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} $(echo $REGISTRY)
+            # Pull latest images
+            docker compose -f compose.prod.yml pull
+            # Build images
+            docker compose -f compose.prod.yml build
+            # Recreate and restart services
+            docker compose -f compose.prod.yml up $(echo $DB_SERVICE_NAME) $(echo $WEB_SERVICE_NAME) -d --wait --force-recreate

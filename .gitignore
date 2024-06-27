@@ -1,9 +1,9 @@
 .idea
-.env
+*.env
 __pycache__
 
 # Exclude data and other binaries
-/backend/data
+/backend/data/*
 
 # Exclude config files
 *.txt
