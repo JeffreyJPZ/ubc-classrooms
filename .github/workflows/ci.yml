@@ -34,3 +34,7 @@ jobs:
 
       - name: Run API tests
         run: docker compose -f compose.test.yml run api-tests
+      
+      - name: Dump docker logs on failure
+        if: failure()
+        uses: jwalton/gh-docker-logs@v2.2.2
