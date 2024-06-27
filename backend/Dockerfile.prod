@@ -26,4 +26,4 @@ RUN chmod +x /src/entrypoint.prod.sh
 COPY . .
 
 # Run entrypoint.prod.sh
-ENTRYPOINT [ "/src/entrypoint.prod.sh" ]
+CMD [ "./entrypoint.prod.sh" ]

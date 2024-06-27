@@ -19,11 +19,11 @@ RUN apt-get update && apt-get install -y wget unzip && \
 
 # Copy entrypoint.dev.sh
 COPY ./entrypoint.dev.sh .
-RUN sed -i 's/\r$//g' /src/entrypoint.dev.sh
+RUN sed -i 's/\r$//' /src/entrypoint.dev.sh
 RUN chmod +x /src/entrypoint.dev.sh
 
 # Copy project
 COPY . .
 
 # Run entrypoint.dev.sh
-ENTRYPOINT [ "/src/entrypoint.dev.sh" ]
+CMD [ "./entrypoint.dev.sh" ]
