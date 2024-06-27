@@ -12,7 +12,7 @@ services:
     build: 
       context: ./backend
       dockerfile: Dockerfile.prod
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn api.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./backend:/src
     ports:
