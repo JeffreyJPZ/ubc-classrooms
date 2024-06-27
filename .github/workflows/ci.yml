@@ -11,7 +11,9 @@ jobs:
     name: Run API tests
     runs-on: ubuntu-latest
     env:
+      SQL_DB: ${{ secrets.SQL_DB }}
       SQL_USER: ${{ secrets.SQL_USER }}
+      SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
