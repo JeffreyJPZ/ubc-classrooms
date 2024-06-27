@@ -210,7 +210,6 @@ def write_to_file(data : list[list[str]], building_code : BuildingCodeToFullName
     df = pd.DataFrame(data=data, columns=columns)
 
     # Make path and create parent directories if they do not exist
-    # TODO: change directory
     path = Path.cwd() / f'{Targets.TIMESLOT_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{TimetableSettings.START_DATE}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{TimetableSettings.START_DATE}_{building_code.name}.csv'
     path.parent.mkdir(parents=True, exist_ok=True)
 
