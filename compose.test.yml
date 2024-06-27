@@ -4,9 +4,11 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - SQL_USER=${SQL_USER}
-    env_file:
-      - dev.env
+      - POSTGRES_USER=${SQL_USER}
+      - POSTGRES_PASSWORD=${SQL_PASSWORD}
+      - POSTGRES_DB=${SQL_DB}
+    volumes:
+      - ./backend/data/db_test:/var/lib/postgresql/data
     healthcheck: 
       test: ["CMD-SHELL", "pg_isready -U $SQL_USER"]
       interval: 10s

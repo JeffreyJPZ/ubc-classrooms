@@ -10,6 +10,8 @@ jobs:
   api-tests:
     name: Run API tests
     runs-on: ubuntu-latest
+    env:
+      SQL_USER: ${{ secrets.SQL_USER }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
