@@ -10,6 +10,10 @@ jobs:
   api-tests:
     name: Run API tests
     runs-on: ubuntu-latest
+    env:
+      SQL_DB: ${{ secrets.SQL_DB }}
+      SQL_USER: ${{ secrets.SQL_USER }}
+      SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -25,6 +29,9 @@ jobs:
           echo SQL_HOST=${{ secrets.SQL_HOST }} >> test.env
           echo SQL_PORT=${{ secrets.SQL_PORT }} >> test.env
           echo DB=${{ secrets.DB }} >> test.env
+          echo POSTGRES_DB=${{ secrets.POSTGRES_DB }} >> test.env
+          echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> test.env
+          echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> test.env
           echo DEBUG=1 >> test.env
           echo DJANGO_ALLOWED_HOSTS=* >> test.env
           echo DJANGO_TEST_SECRET_KEY=${{ secrets.DJANGO_TEST_SECRET_KEY}} >> test.env
