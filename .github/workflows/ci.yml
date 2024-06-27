@@ -15,6 +15,9 @@ jobs:
       db:
         image: postgres
         env:
+          SQL_DB: ${{ secrets.SQL_DB }}
+          SQL_TEST_DB: ${{ secrets.SQL_TEST_DB }}
+          SQL_USER: ${{ secrets.SQL_USER }}
           SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
         ports:
           - "5432:5432"
