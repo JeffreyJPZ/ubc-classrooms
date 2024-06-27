@@ -30,7 +30,7 @@ jobs:
         run: docker compose -f compose.dev.yml build db api-test
 
       - name: Start DB service
-        run: docker compose -f compose.dev.yml up db -d
+        run: docker compose -f compose.dev.yml up db -d --wait
 
       - name: Run API tests
         run: docker compose -f compose.dev.yml run api-test
