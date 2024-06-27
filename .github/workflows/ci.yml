@@ -10,7 +10,6 @@ jobs:
   api-tests:
     name: Run API tests
     runs-on: ubuntu-latest
-    container: "ubuntu:latest"
     
     services:
       db:
