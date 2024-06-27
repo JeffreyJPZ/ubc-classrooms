@@ -23,7 +23,7 @@ jobs:
           touch test.env
           echo SQL_ENGINE=${{ secrets.SQL_ENGINE }} >> test.env
           echo SQL_DB=${{ secrets.SQL_DB }} >> test.env
-          echo SQL_TEST_DB=${{ secrets.SQL_TEST_DB }} >> test.env
+          echo SQL_DB_TEST=${{ secrets.SQL_DB_TEST }} >> test.env
           echo SQL_USER=${{ secrets.SQL_USER }} >> test.env
           echo SQL_PASSWORD=${{ secrets.SQL_PASSWORD }} >> test.env
           echo SQL_HOST=${{ secrets.SQL_HOST }} >> test.env
