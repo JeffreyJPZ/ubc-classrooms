@@ -31,7 +31,7 @@ jobs:
           echo DJANGO_DEV_SECRET_KEY=${{ secrets.DJANGO_DEV_SECRET_KEY}} >> dev.env
 
       - name: Build image
-        run: docker compose -f compose.dev.yml build db api-test
+        run: docker compose -f compose.dev.yml build db api-tests
 
       - name: Run API tests
-        run: docker compose -f compose.dev.yml run api-test
+        run: docker compose -f compose.dev.yml run api-tests
