@@ -29,7 +29,7 @@ jobs:
           echo SQL_HOST=${{ secrets.SQL_HOST }} >> test.env
           echo SQL_PORT=${{ secrets.SQL_PORT }} >> test.env
           echo DB=${{ secrets.DB }} >> test.env
-          echo POSTGRES_DB=${{ secrets.POSTGRES_DB }} >> test.env
+          echo POSTGRES_DB=${{ secrets.POSTGRES_DB_TEST }} >> test.env
           echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> test.env
           echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> test.env
           echo DEBUG=1 >> test.env
