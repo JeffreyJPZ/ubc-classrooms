@@ -1,4 +1,5 @@
 #!/bin/bash
+# Credit to Michael Herman from testdriven.io
 
 if [ "$DB" = "postgres" ]
 then

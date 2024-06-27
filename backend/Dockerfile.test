@@ -1,0 +1,29 @@
+FROM python:latest
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV DJANGO_SETTINGS_MODULE=config.settings
+
+WORKDIR /src
+
+# Linting
+RUN pip install flake8
+RUN flake8 .
+
+# Install dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends netcat-traditional
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+# Copy entrypoint.test.sh
+COPY ./entrypoint.test.sh .
+RUN sed -i 's/\r$//' /src/entrypoint.test.sh
+RUN chmod +x /src/entrypoint.test.sh
+
+# Copy project
+COPY . .
+
+# Run entrypoint.test.sh
+CMD [ "./entrypoint.test.sh" ]
