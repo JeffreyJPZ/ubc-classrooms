@@ -31,7 +31,7 @@ services:
   nginx:
     build: ./nginx
     ports: 
-    - 443:443
+      - 443:443
     depends_on:
       - web
 
