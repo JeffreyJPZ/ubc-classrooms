@@ -24,10 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_PROD_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get('DEBUG', default="0"))
+DEBUG = bool(os.environ.get('DEBUG', default="False"))
 
-# Replace with production domain
-ALLOWED_HOSTS = str(os.environ.get('DJANGO_ALLOWED_HOSTS')).split(" ")
+ALLOWED_HOSTS = str(os.environ.get('DJANGO_ALLOWED_HOSTS')).split(",")
 
 
 # Application definition
@@ -40,14 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'corsheaders',
     'api',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -55,11 +52,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Allow CORS between our frontend and our API
-# Remove this as we will use nginx as reverse proxy
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000'
-]
+# Not needed due to nginx reverse proxy
+CORS_ALLOWED_ORIGINS = []
 
 ROOT_URLCONF = 'config.urls'
 
