@@ -58,4 +58,4 @@ export function TimeslotGroup({name, data}: TimeslotGroupProps) {
 
         </details>
     );
-};
+}

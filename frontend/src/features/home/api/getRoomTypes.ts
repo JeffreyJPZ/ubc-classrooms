@@ -22,10 +22,10 @@ async function getRoomTypes(parameters: GetRoomTypesParameters): Promise<RoomTyp
 
     if (!result.success) {
         throw new Error(`Error in validation: ${result.error.format()}`);
-    };
+    }
 
     return result.data;
-};
+}
 
 const useRoomTypesConfig = {
     refetchOnWindowFocus: false,

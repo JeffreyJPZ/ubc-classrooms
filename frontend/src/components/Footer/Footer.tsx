@@ -7,4 +7,4 @@ export function Footer() {
             <div className="authors">Made by Jeffrey Z and Eric Y</div>
         </footer>
     );
-};
+}
