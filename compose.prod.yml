@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres
+    image: postgres:16.3
     expose:
       - 5432
     env_file:
@@ -29,11 +29,21 @@ services:
         condition: service_healthy
   
   nginx:
-    build: ./nginx
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
     ports: 
       - 443:443
+    volumes:
+      - ./frontend:/frontend
     depends_on:
       - web
+  
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
 
   scrape-classrooms:
     build: 
