@@ -2,10 +2,8 @@
 Scrapes the classroom schedules from UBC Online Timetable and outputs the raw data in csv format
 """
 
-import json
 import re
 import pandas as pd
-from enum import Enum
 from datetime import datetime, timedelta
 from pathlib import Path
 from bs4 import BeautifulSoup
@@ -510,15 +508,12 @@ def scrape(driver, building_code : BuildingCodeToTimetableName) -> None:
 def main() -> None:
     # Scrapes and writes the classroom booking data to file
 
-    # TODO: remove and replace with all buildings for prod
-    buildings = [BuildingCodeToTimetableName["ALRD"], BuildingCodeToTimetableName["SWNG"]]
-    
     # Navigate to UBC Online Timetable main page
     driver = get_driver()
     driver.get(TimetableSettings.URL)
 
     # Scrape all classrooms in each building
-    for building_code in buildings:
+    for building_code in BuildingCodeToTimetableName:
         scrape(driver, building_code)
 
 
