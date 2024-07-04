@@ -12,6 +12,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
   web:
     build: 
@@ -24,6 +25,7 @@ services:
     volumes:
       - ./backend:/src
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    restart: unless-stopped
     depends_on:
       db:
         condition: service_healthy
@@ -33,17 +35,25 @@ services:
       context: .
       dockerfile: ./nginx/Dockerfile
     ports: 
+      - 80:80
       - 443:443
     volumes:
       - ./frontend:/frontend
+      - ./certbot/www:/var/www/certbot/:ro
+    restart: unless-stopped
     depends_on:
       - web
   
   certbot:
-    image: certbot/certbot:latest
+    image: certbot/certbot
+    ports: 
+      - 80:80
     volumes:
-      - ./certbot/www/:/var/www/certbot/:rw
-      - ./certbot/conf/:/etc/letsencrypt/:rw
+      - ./certbot/www:/var/www/certbot/:rw
+      - ./certbot/certs:/etc/letsencrypt/:rw
+    command: certonly --webroot -w /var/www/certbot --email ${CERTBOT_EMAIL} -d ubcclassrooms.ca -d www.ubcclassrooms.ca --agree-tos
+    depends_on:
+      - nginx
 
   scrape-classrooms:
     build: 

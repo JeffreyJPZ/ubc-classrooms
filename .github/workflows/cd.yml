@@ -9,37 +9,16 @@ on:
       version:
         description: "Image version"
         required: true
-
-env:
-  REGISTRY: "registry-1.docker.io/v2"
-  WEB_SERVICE_NAME: "web"
-  DB_SERVICE_NAME: "db"
-
+  
 jobs:
   build-and-push:
     name: Build Docker image and push to registry
     runs-on: ubuntu-latest
+    environment: production
     
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
-      - name: Create production env file
-        run: |
-          touch prod.env
-          echo SQL_ENGINE=${{ secrets.SQL_ENGINE}} >> prod.env
-          echo SQL_DB=${{ secrets.SQL_DB_PROD }} >> prod.env
-          echo SQL_USER=${{ secrets.SQL_USER }} >> prod.env
-          echo SQL_PASSWORD=${{ secrets.SQL_PASSWORD }} >> prod.env
-          echo SQL_HOST=${{ secrets.SQL_HOST }} >> prod.env
-          echo SQL_PORT=${{ secrets.SQL_PORT }} >> prod.env
-          echo DB=${{ secrets.DB }} >> prod.env
-          echo POSTGRES_DB=${{ secrets.POSTGRES_DB_PROD }} >> prod.env
-          echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> prod.env
-          echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> prod.env
-          echo DEBUG=False >> prod.env
-          echo DJANGO_ALLOWED_HOSTS='localhost,127.0.0.1,[::1]' >> prod.env
-          echo DJANGO_PROD_SECRET_KEY=${{ secrets.DJANGO_PROD_SECRET_KEY}} >> prod.env
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -60,28 +39,63 @@ jobs:
     name: Deploy to production
     needs: build-and-push
     runs-on: ubuntu-latest
+    environment: production
+    env:
+      SQL_ENGINE: ${{ secrets.SQL_ENGINE }}
+      SQL_DB: ${{ secrets.SQL_DB_PROD }}
+      SQL_USER: ${{ secrets.SQL_USER }}
+      SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
+      SQL_HOST: ${{ secrets.SQL_HOST }}
+      SQL_PORT: ${{ secrets.SQL_PORT }}
+      DB: ${{ secrets.DB }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB_PROD }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      DEBUG: ${{ vars.DEBUG }}
+      DJANGO_ALLOWED_HOSTS: ${{ vars.DJANGO_ALLOWED_HOSTS }}
+      DJANGO_PROD_SECRET_KEY: ${{ secrets.DJANGO_PROD_SECRET_KEY}}
+      CERTBOT_EMAIL: ${{ secrets.CERTBOT_EMAIL }}
+      REGISTRY: ${{ vars.REGISTRY }}
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
     steps:
       - name: Deploy to Digital Ocean droplet via SSH action
         uses: appleboy/ssh-action@v1.0.3
         with:
-          # Add secrets
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          envs: REGISTRY,{{ secrets.DOCKERHUB_USERNAME }},{{ secrets.DOCKERHUB_TOKEN }}
-          # Install Docker Compose plugin
+          envs: DOCKERHUB_USERNAME,DOCKERHUB_TOKEN,SQL_ENGINE,SQL_DB,SQL_USER,SQL_PASSWORD,SQL_HOST,SQL_PORT,DB,POSTGRES_DB,POSTGRES_USER,POSTGRES_PASSWORD,DEBUG,DJANGO_ALLOWED_HOSTS,DJANGO_PROD_SECRET_KEY,CERTBOT_EMAIL,REGISTRY
           script: |
-            # Change directory to project
-            cd projects/ubc-classrooms
+            # Change directory to project root
+            cd /
+            cd srv/ubc-classrooms
             # Pull from main branch
             git pull origin main
+            # Create production env file if it doesnt exist already
+            if [ ! -e "prod.env" ]
+            then
+              touch prod.env
+              echo SQL_ENGINE=$SQL_ENGINE >> prod.env
+              echo SQL_DB=$SQL_DB >> prod.env
+              echo SQL_USER=$SQL_USER >> prod.env
+              echo SQL_PASSWORD=$SQL_PASSWORD >> prod.env
+              echo SQL_HOST=SQL_HOST >> prod.env
+              echo SQL_PORT=$SQL_PORT >> prod.env
+              echo DB=$DB >> prod.env
+              echo POSTGRES_DB=$POSTGRES_DB >> prod.env
+              echo POSTGRES_USER=$POSTGRES_USER >> prod.env
+              echo POSTGRES_PASSWORD=$POSTGRES_PASSWORD >> prod.env
+              echo DEBUG=$DEBUG >> prod.env
+              echo DJANGO_ALLOWED_HOSTS=$DJANGO_ALLOWED_HOSTS >> prod.env
+              echo DJANGO_PROD_SECRET_KEY=$DJANGO_PROD_SECRET_KEY >> prod.env
+              echo CERTBOT_EMAIL=$CERTBOT_EMAIL >> prod.env
+            fi
             # Login to registry
-            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} $(echo $REGISTRY)
+            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN $REGISTRY
             # Pull latest images
             docker compose -f compose.prod.yml pull
-            # Build images
-            docker compose -f compose.prod.yml build
             # Recreate and restart services
-            docker compose -f compose.prod.yml up $(echo $DB_SERVICE_NAME) $(echo $WEB_SERVICE_NAME) -d --wait --force-recreate
+            docker compose -f compose.prod.yml up db web -d --wait --force-recreate

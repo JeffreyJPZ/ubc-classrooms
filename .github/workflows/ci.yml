@@ -10,6 +10,7 @@ jobs:
   linting:
     name: Run linters
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -23,10 +24,8 @@ jobs:
   api-tests:
     name: Run API tests
     runs-on: ubuntu-latest
-    env:
-      SQL_DB: ${{ secrets.SQL_DB }}
-      SQL_USER: ${{ secrets.SQL_USER }}
-      SQL_PASSWORD: ${{ secrets.SQL_PASSWORD }}
+    environment: test
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -45,8 +44,8 @@ jobs:
           echo POSTGRES_DB=${{ secrets.POSTGRES_DB }} >> test.env
           echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> test.env
           echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> test.env
-          echo DEBUG=True >> test.env
-          echo DJANGO_ALLOWED_HOSTS=* >> test.env
+          echo DEBUG=${{ vars.DEBUG }} >> test.env
+          echo DJANGO_ALLOWED_HOSTS=${{ vars.DJANGO_ALLOWED_HOSTS }} >> test.env
           echo DJANGO_TEST_SECRET_KEY=${{ secrets.DJANGO_TEST_SECRET_KEY}} >> test.env
 
       - name: Build images
