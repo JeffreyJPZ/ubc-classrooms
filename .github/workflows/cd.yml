@@ -12,7 +12,7 @@ on:
   
 jobs:
   build-and-push:
-    name: Build Docker image and push to registry
+    name: Build Docker images and push to registry
     runs-on: ubuntu-latest
     environment: production
     
