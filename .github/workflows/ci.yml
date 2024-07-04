@@ -10,13 +10,13 @@ jobs:
   linting:
     name: Run linters
     runs-on: ubuntu-latest
-    
+    defaults:
+      run:
+        working-directory: ./frontend
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
-      - name: Change directory to frontend
-        run: cd frontend
       
       - name: Linting
         run: npm run lint
