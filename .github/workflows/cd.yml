@@ -36,7 +36,7 @@ jobs:
           push: true
 
   deploy:
-    name: Deploy to production
+    name: Deploy to production server
     needs: build-and-push
     runs-on: ubuntu-latest
     environment: production
@@ -60,7 +60,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
     steps:
-      - name: Deploy to Digital Ocean droplet via SSH action
+      - name: Deploy to production server via SSH action
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}

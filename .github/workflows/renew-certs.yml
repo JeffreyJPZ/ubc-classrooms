@@ -12,7 +12,7 @@ jobs:
         environment: production
         
         steps:
-            - name: SSH into production server and renew certs
+            - name: Renew certs via SSH action
               uses: appleboy/ssh-action@v1.0.3
               with:
                 host: ${{ secrets.SSH_HOST }}

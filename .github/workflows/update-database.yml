@@ -16,7 +16,7 @@ jobs:
             VPN_PASSWORD: ${{ secrets.VPN_PASSWORD }}
 
         steps:
-            - name: SSH into production server and update database
+            - name: Update database via SSH action
               uses: appleboy/ssh-action@v1.0.3
               with:
                 host: ${{ secrets.SSH_HOST }}
