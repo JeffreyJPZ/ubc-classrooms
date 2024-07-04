@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Linting
-        run: npm run lint
+        run: sudo npm run lint
         
   api-tests:
     name: Run API tests
