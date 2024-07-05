@@ -34,7 +34,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build images
-        run: docker -f compose.prod.yml build
+        run: docker compose -f compose.prod.yml build
       
       - name: Tag and push images
         run: |
