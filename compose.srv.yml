@@ -36,7 +36,7 @@ services:
     volumes:
       - ./nginx/conf:/etc/nginx/conf.d
       - ./certbot/www:/var/www/certbot
-      - ./certbot/certs:/etc/letsencrypt
+      - ./certbot/certs:/etc/nginx/ssl
     restart: unless-stopped
     depends_on:
       - web
