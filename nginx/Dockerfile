@@ -3,9 +3,9 @@ FROM node:22.4 AS builder
 
 WORKDIR /frontend
 COPY /frontend/package*.json .
-RUN npm ci
+RUN sudo npm ci
 COPY /frontend .
-RUN npm run build
+RUN sudo npm run build
 
 # Build reverse proxy
 FROM nginx:1.27
