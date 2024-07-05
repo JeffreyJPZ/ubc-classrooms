@@ -130,6 +130,6 @@ jobs:
             # Login to registry
             docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
             # Pull latest images
-            docker compose -f compose.srv.yml pull db web nginx certbot
+            docker compose -f compose.srv.yml pull db web nginx certbot create-models delete-expired-timeslots
             # Recreate and restart services
             docker compose -f compose.srv.yml up db web nginx -d --wait --force-recreate
