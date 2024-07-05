@@ -24,7 +24,7 @@ jobs:
                     cd /
                     cd srv/ubc-classrooms
                     # Remove and renew certs
-                    docker-compose -f compose.prod.yml run --rm certbot renew
+                    docker-compose -f compose.srv.yml run --rm certbot renew
                     # Reload nginx
-                    docker-compose -f compose.prod.yml exec nginx nginx -s reload
+                    docker-compose -f compose.srv.yml exec nginx nginx -s reload
 

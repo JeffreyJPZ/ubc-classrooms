@@ -29,32 +29,44 @@ jobs:
 
       - name: Build images
         run: docker compose -f compose.prod.yml build
-      
+
+      - name: Pull remaining images
+        run: docker compose -f compose.prod.yml pull db certbot
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          
+
       - name: Tag and push images
         run: |
-          docker tag db ubcclassrooms/db:$VERSION_NUMBER ubcclassrooms/db:latest
+          docker tag postgres:16.3 ubcclassrooms/db:$VERSION_NUMBER
+          docker tag postgres:16.3 ubcclassrooms/db:latest
           docker push ubcclassrooms/db --all-tags
-          docker tag web ubcclassrooms/web:$VERSION_NUMBER ubcclassrooms/web:latest
+          docker tag ubc-classrooms-web ubcclassrooms/web:$VERSION_NUMBER
+          docker tag ubc-classrooms-web ubcclassrooms/web:latest
           docker push ubcclassrooms/web --all-tags
-          docker tag nginx ubcclassrooms/nginx:$VERSION_NUMBER ubcclassrooms/nginx:latest
+          docker tag ubc-classrooms-nginx ubcclassrooms/nginx:$VERSION_NUMBER
+          docker tag ubc-classrooms-nginx ubcclassrooms/nginx:latest
           docker push ubcclassrooms/nginx --all-tags
-          docker tag certbot ubcclassrooms/certbot:$VERSION_NUMBER ubcclassrooms/certbot:latest
+          docker tag certbot/certbot ubcclassrooms/certbot:$VERSION_NUMBER
+          docker tag certbot/certbot ubcclassrooms/certbot:latest
           docker push ubcclassrooms/certbot --all-tags
-          docker tag scrape-classrooms ubcclassrooms/scrape-classrooms:$VERSION_NUMBER ubcclassrooms/scrape-classrooms:latest
+          docker tag ubc-classrooms-scrape-classrooms ubcclassrooms/scrape-classrooms:$VERSION_NUMBER
+          docker tag ubc-classrooms-scrape-classrooms ubcclassrooms/scrape-classrooms:latest
           docker push ubcclassrooms/scrape-classrooms --all-tags
-          docker tag compute-timeslots ubcclassrooms/compute-timeslots:$VERSION_NUMBER ubcclassrooms/compute-timeslots:latest
+          docker tag ubc-classrooms-compute-timeslots compute-timeslots ubcclassrooms/compute-timeslots:$VERSION_NUMBER
+          docker tag ubc-classrooms-compute-timeslots ubcclassrooms/compute-timeslots:latest
           docker push ubcclassrooms/compute-timeslots --all-tags
-          docker tag create-models ubcclassrooms/create-models:$VERSION_NUMBER ubcclassrooms/create-models:latest
+          docker tag ubc-classrooms-create-models ubcclassrooms/create-models:$VERSION_NUMBER
+          docker tag ubc-classrooms-create-models ubcclassrooms/create-models:latest
           docker push ubcclassrooms/create-models --all-tags
-          docker tag delete-expired-timeslots ubcclassrooms/delete-expired-timeslots:$VERSION_NUMBER ubcclassrooms/delete-expired-timeslots:latest
+          docker tag ubc-classrooms-delete-expired-timeslots ubcclassrooms/delete-expired-timeslots:$VERSION_NUMBER
+          docker tag ubc-classrooms-delete-expired-timeslots ubcclassrooms/delete-expired-timeslots:latest
           docker push ubcclassrooms/delete-expired-timeslots --all-tags
-          docker tag api-tests ubcclassrooms/api-tests:$VERSION_NUMBER ubcclassrooms/api-tests:latest
+          docker tag ubc-classrooms-api-tests ubcclassrooms/api-tests:$VERSION_NUMBER
+          docker tag ubc-classrooms-api-tests ubcclassrooms/api-tests:latest
           docker push ubcclassrooms/api-tests --all-tags
 
   deploy:
@@ -115,10 +127,9 @@ jobs:
               echo DJANGO_PROD_SECRET_KEY=$DJANGO_PROD_SECRET_KEY >> prod.env
               echo CERTBOT_EMAIL=$CERTBOT_EMAIL >> prod.env
             fi
-
-# # Login to registry
-# docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN $REGISTRY
-# # Pull latest images
-# docker compose -f compose.prod.yml pull
-# # Recreate and restart services
-# docker compose -f compose.prod.yml up db web -d --wait --force-recreate
+            # Login to registry
+            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN $REGISTRY
+            # Pull latest images
+            docker compose -f compose.srv.yml pull
+            # Recreate and restart services
+            docker compose -f compose.srv.yml up db web -d --wait --force-recreate

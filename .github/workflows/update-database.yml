@@ -33,6 +33,6 @@ jobs:
                     # Pull data from repository
                     git pull origin main
                     # Write timeslots to database
-                    docker-compose -f compose.prod.yml run create-models
+                    docker-compose -f compose.srv.yml run create-models
                     # Cleanup expired timeslots
-                    docker-compose -f compose.prod-yml run delete-expired-timeslots
+                    docker-compose -f compose.srv-yml run delete-expired-timeslots
