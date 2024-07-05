@@ -8,15 +8,12 @@ ENV DJANGO_SETTINGS_MODULE=config.prod_settings
 WORKDIR /src
 
 # Linting
-RUN pip install flake8
-RUN flake8 .
+RUN pip install flake8 && flake8 .
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends netcat-traditional
 COPY requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
-RUN apt-get update && apt-get install -y wget unzip && \
+RUN pip install --upgrade pip && pip install -r requirements.txt && apt-get update && apt-get install -y wget unzip && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
     apt install -y ./google-chrome-stable_current_amd64.deb && \
     rm google-chrome-stable_current_amd64.deb && \
@@ -24,8 +21,7 @@ RUN apt-get update && apt-get install -y wget unzip && \
 
 # Copy entrypoint.prod.sh
 COPY ./entrypoint.prod.sh .
-RUN sed -i 's/\r$//' /src/entrypoint.prod.sh
-RUN chmod +x /src/entrypoint.prod.sh
+RUN sed -i 's/\r$//' /src/entrypoint.prod.sh && chmod +x /src/entrypoint.prod.sh
 
 # Copy project
 COPY . .
