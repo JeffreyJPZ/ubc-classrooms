@@ -38,8 +38,9 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./frontend:/frontend
-      - ./certbot/www:/var/www/certbot/:ro
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/certs:/etc/letsencrypt
     restart: unless-stopped
     depends_on:
       - web
@@ -49,9 +50,9 @@ services:
     ports: 
       - 80:80
     volumes:
-      - ./certbot/www:/var/www/certbot/:rw
-      - ./certbot/certs:/etc/letsencrypt/:rw
-    command: certonly --webroot -w /var/www/certbot --email $${CERTBOT_EMAIL} -d ubcclassrooms.ca -d www.ubcclassrooms.ca --agree-tos
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/certs:/etc/letsencrypt
+    command: certonly --webroot --webroot-path /var/www/certbot --email $${CERTBOT_EMAIL} -d ubcclassrooms.ca -d www.ubcclassrooms.ca --agree-tos
     depends_on:
       - nginx
 

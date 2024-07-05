@@ -12,4 +12,4 @@ FROM nginx:1.27
 
 COPY --from=builder /frontend/dist /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf
-COPY /nginx/nginx.conf /etc/nginx/conf.d
+COPY /nginx/conf /etc/nginx/conf.d
