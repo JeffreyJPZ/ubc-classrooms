@@ -10,11 +10,9 @@
 # - Assumes Docker Desktop is located at default path "C:\Program Files\Docker\Docker\Docker Desktop.exe"
 #
 # This script requires a text file named 'vpnconfig.txt' located in the same directory, in the following format:
-# --BEGIN--
 # connect myvpn.ubc.ca
 # <CWL username>
 # <CWL password>
-# --END--
 
 echo "Beginning setup..."
 
