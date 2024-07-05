@@ -1,0 +1,12 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2023-2024,PHRM,1101,General,2024-07-03,9:00,12:00,LEC,NURS-V,NURS 331-S/LEC/941,NURS 331-S,941,"Adhami, Nassim"
+UBCV,2023-2024,PHRM,1101,General,2024-07-10,9:00,12:00,LEC,NURS-V,NURS 331-S/LEC/941,NURS 331-S,941,"Adhami, Nassim"
+UBCV,2023-2024,PHRM,1101,General,2024-07-11,9:00,10:30,WRB-ACTIVE,WRB_UBC,"CPSC 210 Midterm Thursday (week(s): July 8, 2024-July 29, 2024) 9:00 - PHRM 1101", , , 
+UBCV,2023-2024,PHRM,1201,General,2024-07-08,8:00,17:00,WRB-ACTIVE,WRB_UBC,"GCheng-Evidence bsd Mon, Tue, Wed, Thu, Fri (week(s): July 8, 2024) 8:00 - PHRM 1201", , , 
+UBCV,2023-2024,PHRM,1201,General,2024-07-09,8:00,17:00,WRB-ACTIVE,WRB_UBC,"GCheng-Evidence bsd Mon, Tue, Wed, Thu, Fri (week(s): July 8, 2024) 8:00 - PHRM 1201", , , 
+UBCV,2023-2024,PHRM,1201,General,2024-07-10,8:00,17:00,WRB-ACTIVE,WRB_UBC,"GCheng-Evidence bsd Mon, Tue, Wed, Thu, Fri (week(s): July 8, 2024) 8:00 - PHRM 1201", , , 
+UBCV,2023-2024,PHRM,1201,General,2024-07-11,8:00,17:00,WRB-ACTIVE,WRB_UBC,"GCheng-Evidence bsd Mon, Tue, Wed, Thu, Fri (week(s): July 8, 2024) 8:00 - PHRM 1201", , , 
+UBCV,2023-2024,PHRM,1201,General,2024-07-12,8:00,17:00,WRB-ACTIVE,WRB_UBC,"GCheng-Evidence bsd Mon, Tue, Wed, Thu, Fri (week(s): July 8, 2024) 8:00 - PHRM 1201", , , 
+UBCV,2023-2024,PHRM,3208,General,2024-07-11,12:00,17:30,WRB-ACTIVE,WRB_UBC,LLeung-Uproot prep 11-Jul-2024 12:00 - PHRM 3208, , , 
+UBCV,2023-2024,PHRM,3208,General,2024-07-11,17:30,22:00,WRB-ACTIVE,WRB_UBC,LLeung-Uproot prep 11-Jul-2024 17:30 - PHRM 3208, , , 
+UBCV,2023-2024,PHRM,3208,General,2024-07-12,8:00,17:00,WRB-ACTIVE,WRB_UBC,LLeung-Uproot pharm 12-Jul-2024 8:00 - PHRM 3208, , , 

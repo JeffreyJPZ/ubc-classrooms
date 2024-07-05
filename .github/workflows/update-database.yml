@@ -1,9 +1,11 @@
 name: Update database from UBC Online Timetable
 
 on:
-    schedule:
-        # Run once a week on Monday at 12:30 AM
-        - cron: "30 0 * * 1"
+    push:
+        branches:
+            - main
+        paths:
+            - backend/data/*
 
 jobs:
     update-database:
@@ -28,18 +30,8 @@ jobs:
                     # Change directory to project
                     cd /
                     cd srv/ubc-classrooms
-                    # Connect to UBC VPN
-                    /opt/cisco/anyconnect/bin/vpn -s <<"EOF"
-                    connect $VPN_HOST
-                    $VPN_USERNAME
-                    $VPN_PASSWORD
-                    EOF
-                    # Scrape data from UBC Online Timetable
-                    docker-compose -f compose.prod.yml run scrape-classrooms
-                    # Disconnect from UBC VPN
-                    /opt/cisco/anyconnect/bin/vpn disconnect
-                    # Compute timeslots from scraped data
-                    docker-compose -f compose.prod.yml run compute-timeslots
+                    # Pull data from repository
+                    git pull origin main
                     # Write timeslots to database
                     docker-compose -f compose.prod.yml run create-models
                     # Cleanup expired timeslots

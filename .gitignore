@@ -2,8 +2,12 @@
 *.env
 __pycache__
 
-# Exclude data and other binaries
-/backend/data/*
+# Exclude database files and other binaries
+/backend/data/*db*
 
 # Exclude config files
 *.txt
+
+# Exclude shell scripts and executables for production
+*prod*.bat
+*prod*.sh
