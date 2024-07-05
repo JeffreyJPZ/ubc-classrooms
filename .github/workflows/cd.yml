@@ -128,8 +128,8 @@ jobs:
               echo CERTBOT_EMAIL=$CERTBOT_EMAIL >> prod.env
             fi
             # Login to registry
-            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN $REGISTRY
+            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
             # Pull latest images
-            docker compose -f compose.srv.yml pull
+            docker compose -f compose.srv.yml pull db web nginx certbot
             # Recreate and restart services
-            docker compose -f compose.srv.yml up db web -d --wait --force-recreate
+            docker compose -f compose.srv.yml up db web nginx -d --wait --force-recreate
