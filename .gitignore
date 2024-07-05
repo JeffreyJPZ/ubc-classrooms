@@ -7,7 +7,3 @@ __pycache__
 
 # Exclude config files
 *.txt
-
-# Exclude shell scripts and executables for production
-*prod*.bat
-*prod*.sh
