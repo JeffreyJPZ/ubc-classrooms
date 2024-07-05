@@ -52,20 +52,20 @@ services:
       - nginx
 
   scrape-classrooms:
-    image: ubcclassrooms/scrape_classrooms:latest
+    image: ubcclassrooms/scrape-classrooms:latest
     volumes:
       - ./backend/data/raw_booking_data:/raw_booking_data
     command: python scripts/scrape_classrooms.py
 
   compute-timeslots:
-    image: ubcclassrooms/compute_timeslots:latest
+    image: ubcclassrooms/compute-timeslots:latest
     volumes:
       - ./backend/data/raw_booking_data:/raw_booking_data
       - ./backend/data/timeslot_data:/timeslot_data
     command: python scripts/compute_timeslots.py
 
   create-models:
-    image: ubcclassrooms/create_models:latest
+    image: ubcclassrooms/create-models:latest
     env_file:
       - prod.env
     volumes:
@@ -77,7 +77,7 @@ services:
         condition: service_healthy
 
   delete-expired-timeslots:
-    image: ubcclassrooms/delete_expired_timeslots:latest
+    image: ubcclassrooms/delete-expired-timeslots:latest
     env_file:
       - prod.env
     command: python manage.py delete_expired_timeslots
@@ -86,7 +86,7 @@ services:
         condition: service_healthy
       
   api-tests:
-    image: ubcclassrooms/api_tests:latest
+    image: ubcclassrooms/api-tests:latest
     env_file:
       - prod.env
     command: python manage.py test api.tests
