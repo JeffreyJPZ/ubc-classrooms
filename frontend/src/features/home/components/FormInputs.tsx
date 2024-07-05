@@ -58,4 +58,4 @@ export function FormInputs() {
             {errors?.start?._errors && <div className="errors">{errors.start._errors.map(err => <div key={err} className="error">{err}</div>)}</div>}
         </div>
     );
-};
+}

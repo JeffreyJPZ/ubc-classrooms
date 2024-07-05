@@ -1,0 +1,38 @@
+name: Update database from UBC Online Timetable
+
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - backend/data/*
+
+jobs:
+    update-database:
+        name: Update database
+        runs-on: ubuntu-latest
+        environment: production
+        env:
+            VPN_HOST: ${{ secrets.VPN_HOST }}
+            VPN_USERNAME: ${{ secrets.VPN_USERNAME }}
+            VPN_PASSWORD: ${{ secrets.VPN_PASSWORD }}
+
+        steps:
+            - name: Update database via SSH action
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                host: ${{ secrets.SSH_HOST }}
+                username: ${{ secrets.SSH_USERNAME }}
+                key: ${{ secrets.SSH_KEY }}
+                passphrase: ${{ secrets.SSH_PASSPHRASE }}
+                envs: VPN_HOST,VPN_USERNAME,VPN_PASSWORD
+                script: |
+                    # Change directory to project
+                    cd /
+                    cd srv/ubc-classrooms
+                    # Pull data from repository
+                    git pull origin main
+                    # Write timeslots to database
+                    docker-compose -f compose.prod.yml run create-models
+                    # Cleanup expired timeslots
+                    docker-compose -f compose.prod-yml run delete-expired-timeslots

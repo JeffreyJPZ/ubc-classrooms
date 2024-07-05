@@ -2,7 +2,6 @@
 Uses the raw booking data to calculate available timeslots for classrooms throughout the academic year
 Assumes that the raw booking directory for the academic year in TimetableSettings has already been populated with the buildings specified in the config file
 """
-import json
 import pandas as pd
 from typing import Iterator
 from datetime import datetime, timedelta
@@ -246,10 +245,7 @@ def main() -> None:
     #       - No two timeslots overlap
     # Writes the timeslot data to file
 
-    # TODO: remove and replace with all buildings for prod
-    buildings = [BuildingCodeToFullName["ALRD"], BuildingCodeToFullName["SWNG"]]
-
-    for building_code in buildings:
+    for building_code in BuildingCodeToFullName:
         compute_timeslots(building_code)
         
         

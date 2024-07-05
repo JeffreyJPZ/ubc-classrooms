@@ -20,7 +20,7 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
             <button onClick={resetErrorBoundary}>Retry</button>
         </div>
     );
-};
+}
 
 type AppProviderProps = {
     children: React.ReactNode
@@ -36,4 +36,4 @@ export function AppProvider({ children }: AppProviderProps) {
             </ErrorBoundary>
         </Suspense>
     );
-};
+}

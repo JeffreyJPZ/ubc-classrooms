@@ -1,0 +1,30 @@
+name: Renew SSL certs
+
+on:
+    schedule:
+        # Run twice a day at 6 AM/PM
+        - cron: "0 6,18 * * *"
+
+jobs:
+    renew-certs:
+        name: Renew SSL certs
+        runs-on: ubuntu-latest
+        environment: production
+        
+        steps:
+            - name: Renew certs via SSH action
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                host: ${{ secrets.SSH_HOST }}
+                username: ${{ secrets.SSH_USERNAME }}
+                key: ${{ secrets.SSH_KEY }}
+                passphrase: ${{ secrets.SSH_PASSPHRASE }}
+                script: |
+                    # Change directory to project
+                    cd /
+                    cd srv/ubc-classrooms
+                    # Remove and renew certs
+                    docker-compose -f compose.prod.yml run --rm certbot renew
+                    # Reload nginx
+                    docker-compose -f compose.prod.yml exec nginx nginx -s reload
+

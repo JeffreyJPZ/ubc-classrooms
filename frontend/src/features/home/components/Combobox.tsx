@@ -30,13 +30,13 @@ export function Combobox({required = false, isMulti = false, isClearable = true,
             return (
                 <div>Loading...</div>
             );
-        };
+        }
         
         if (!query.data) {
             return (
                 <div>Nothing to show...</div>
             );
-        };
+        }
     
         if (queryValue === queryLabel) {
             return (
@@ -51,7 +51,7 @@ export function Combobox({required = false, isMulti = false, isClearable = true,
                 })}/>
             );
         }
-    };
+    }
 
     if (required) {
         return (
@@ -68,4 +68,4 @@ export function Combobox({required = false, isMulti = false, isClearable = true,
     );
     
     
-};
+}

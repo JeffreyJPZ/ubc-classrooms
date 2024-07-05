@@ -22,10 +22,10 @@ async function getBuildings(parameters: GetBuildingsParameters): Promise<Buildin
 
     if (!result.success) {
         throw new Error(`Error in validation: ${result.error.format()}`);
-    };
+    }
 
     return result.data;
-};
+}
 
 const useBuildingsConfig = {
     refetchOnWindowFocus: false,

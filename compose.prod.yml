@@ -1,8 +1,8 @@
 services:
   db:
-    image: postgres
-    ports:
-      - "5432:5432"
+    image: postgres:16.3
+    expose:
+      - 5432
     env_file:
       - prod.env
     volumes:
@@ -12,21 +12,48 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
   web:
     build: 
       context: ./backend
       dockerfile: Dockerfile.prod
+    expose:
+      - 8000
     env_file:
       - prod.env
     volumes:
       - ./backend:/src
-    ports:
-    - "8000:8000"
-    command: gunicorn api.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    restart: unless-stopped
     depends_on:
       db:
         condition: service_healthy
+  
+  nginx:
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    ports: 
+      - 80:80
+      - 443:443
+    volumes:
+      - ./frontend:/frontend
+      - ./certbot/www:/var/www/certbot/:ro
+    restart: unless-stopped
+    depends_on:
+      - web
+  
+  certbot:
+    image: certbot/certbot
+    ports: 
+      - 80:80
+    volumes:
+      - ./certbot/www:/var/www/certbot/:rw
+      - ./certbot/certs:/etc/letsencrypt/:rw
+    command: certonly --webroot -w /var/www/certbot --email $${CERTBOT_EMAIL} -d ubcclassrooms.ca -d www.ubcclassrooms.ca --agree-tos
+    depends_on:
+      - nginx
 
   scrape-classrooms:
     build: 

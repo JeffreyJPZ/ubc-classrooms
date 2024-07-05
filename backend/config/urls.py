@@ -16,8 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from config import dev_settings, test_settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('api/', include('api.urls'))
 ]
+
+# Enable admin interface for development/testing environments
+if dev_settings.DEBUG is True or test_settings.DEBUG is True:
+    urlpatterns += [path('admin/', admin.site.urls)]

@@ -48,21 +48,21 @@ Frontend project structure was inspired by [Bulletproof React](https://github.co
    ```
    
 4. Create a config file for UBC VPN
-   - Follow the instructions in `workflowscript.sh`
+   - Follow the instructions in `setup.sh`
       
 5. Run the setup script
-   - You may have to change some dependency paths depending on your OS — instructions are found in `setupscript.sh`
+   - You may have to change some dependency paths depending on your OS — instructions are found in `setup.sh`
 
    Bash:
    
       ```bash
-      $ ./setupscript.sh
+      $ ./setup.sh
       ```
    
    Windows Command Prompt or Powershell:
    
       ```cmd
-      .\setupscript.bat
+      .\setup.bat
       ```
   
 7. Start the required services:

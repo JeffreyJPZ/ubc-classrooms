@@ -8,7 +8,7 @@ export enum FormStateTypes {
     "END",
     "BUILDINGS",
     "ROOM_TYPES",
-};
+}
 
 export type FormActions = {
     type: FormStateTypes,

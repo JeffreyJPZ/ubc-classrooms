@@ -1,8 +1,8 @@
 services:
   db:
-    image: postgres
+    image: postgres:16.3
     ports:
-      - "5432:5432"
+      - 5432:5432
     env_file:
       - dev.env
     volumes:
@@ -22,7 +22,7 @@ services:
     volumes:
       - ./backend:/src
     ports:
-    - "8000:8000"
+      - 8000:8000
     command: python manage.py runserver 0.0.0.0:8000
     depends_on:
       db:

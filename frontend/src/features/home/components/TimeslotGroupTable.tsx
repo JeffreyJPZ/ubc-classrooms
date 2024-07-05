@@ -20,13 +20,13 @@ export function TimeslotGroupTable() {
         return (
             <div>Loading...</div>
         );
-    };
+    }
     
     if (!timeslotsQuery.data) {
         return (
             <div>Nothing to show...</div>
         );
-    };
+    }
 
     return (
         <div className="table">
@@ -35,4 +35,4 @@ export function TimeslotGroupTable() {
             })}
         </div>
     );
-};
+}

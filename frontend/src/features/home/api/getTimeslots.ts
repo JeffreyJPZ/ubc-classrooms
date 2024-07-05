@@ -31,17 +31,17 @@ async function getTimeslots(parameters: GetTimeslotParameters): Promise<Timeslot
 
     if (!response.ok) {
         throw new Error(`Response was not ok, received ${response.status}`);
-    };
+    }
 
     const unvalidatedData = await response.json();
     const result = TimeslotsSchema.safeParse(unvalidatedData);
 
     if (!result.success) {
         throw new Error(`Error in validation: ${result.error.format()}`);
-    };
+    }
 
     return result.data;
-};
+}
 
 function mapTimeslotsToBuildingsAndRooms(data: Timeslots): TransformedData {
     return data.reduce((transformedData, currTimeslot) => {
@@ -59,7 +59,7 @@ function mapTimeslotsToBuildingsAndRooms(data: Timeslots): TransformedData {
         }
         return transformedData;
     }, {} as TransformedData);
-};
+}
 
 export const useTimeslots = (parameters: GetTimeslotParameters, keys: unknown[]) => {
     return useQuery({
