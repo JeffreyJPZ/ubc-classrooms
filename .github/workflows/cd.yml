@@ -2,22 +2,17 @@ name: cd
 
 on:
   push:
-    branches: [ main ]
-    paths-ignore: [ .github/** ]
+    branches:
+      - main
+    paths-ignore:
+      - .github/**
   pull_request:
-    branches: [ main ]
-    types: [ closed ]
-    paths-ignore: [ .github/** ]
-
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "Image version"
-        required: true
-
-# Manual versioning, should replace eventually
-env:
-  VERSION_NUMBER: 0.0.1
+    branches:
+      - main
+    types:
+      - closed
+    paths-ignore:
+      - .github/**
 
 jobs:
   create-tags:
