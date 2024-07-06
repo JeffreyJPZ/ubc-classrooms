@@ -3,9 +3,11 @@ name: cd
 on:
   push:
     branches: [ main ]
+    paths-ignore: [ .github/** ]
   pull_request:
     branches: [ main ]
     types: [ closed ]
+    paths-ignore: [ .github/** ]
 
   workflow_dispatch:
     inputs:
