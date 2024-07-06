@@ -41,6 +41,24 @@ jobs:
           sudo chmod u+x ./frontend/node_modules/.bin/vite
           sudo chmod u+x ./frontend/node_modules/.bin/tsc
 
+      - name: Create production .env file
+        run: |
+          touch prod.env
+          echo SQL_ENGINE=$SQL_ENGINE >> prod.env
+          echo SQL_DB=$SQL_DB >> prod.env
+          echo SQL_USER=$SQL_USER >> prod.env
+          echo SQL_PASSWORD=$SQL_PASSWORD >> prod.env
+          echo SQL_HOST=SQL_HOST >> prod.env
+          echo SQL_PORT=$SQL_PORT >> prod.env
+          echo DB=$DB >> prod.env
+          echo POSTGRES_DB=$POSTGRES_DB >> prod.env
+          echo POSTGRES_USER=$POSTGRES_USER >> prod.env
+          echo POSTGRES_PASSWORD=$POSTGRES_PASSWORD >> prod.env
+          echo DEBUG=$DEBUG >> prod.env
+          echo DJANGO_ALLOWED_HOSTS=$DJANGO_ALLOWED_HOSTS >> prod.env
+          echo DJANGO_PROD_SECRET_KEY=$DJANGO_PROD_SECRET_KEY >> prod.env
+          echo CERTBOT_EMAIL=$CERTBOT_EMAIL >> prod.env
+          
       - name: Build images
         run: docker compose -f compose.prod.yml build
 
@@ -122,7 +140,7 @@ jobs:
             cd srv/ubc-classrooms
             # Pull from main branch
             sudo git pull origin main
-            # Create production env file if it doesnt exist already
+            # Create production .env file if it doesnt exist already
             if [ ! -e "prod.env" ]
             then
               sudo touch prod.env
