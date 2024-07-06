@@ -31,7 +31,9 @@ jobs:
     needs: create-tags
     runs-on: ubuntu-latest
     environment: production
-    
+    env:
+      TAG: ${{ needs.create-tags.outputs.tag }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -58,7 +60,7 @@ jobs:
           echo DJANGO_ALLOWED_HOSTS=$DJANGO_ALLOWED_HOSTS >> prod.env
           echo DJANGO_PROD_SECRET_KEY=$DJANGO_PROD_SECRET_KEY >> prod.env
           echo CERTBOT_EMAIL=$CERTBOT_EMAIL >> prod.env
-          
+
       - name: Build images
         run: docker compose -f compose.prod.yml build
 
@@ -73,31 +75,31 @@ jobs:
 
       - name: Tag and push images
         run: |
-          docker tag postgres:16.3 ubcclassrooms/db:${{ needs.create-tags.outputs.tag }}
+          docker tag postgres:16.3 ubcclassrooms/db:$TAG
           docker tag postgres:16.3 ubcclassrooms/db:latest
           docker push ubcclassrooms/db --all-tags
-          docker tag ubc-classrooms-web ubcclassrooms/web:${{ needs.create-tags.outputs.tag }}
+          docker tag ubc-classrooms-web ubcclassrooms/web:$TAG
           docker tag ubc-classrooms-web ubcclassrooms/web:latest
           docker push ubcclassrooms/web --all-tags
-          docker tag ubc-classrooms-nginx ubcclassrooms/nginx:${{ needs.create-tags.outputs.tag }}
+          docker tag ubc-classrooms-nginx ubcclassrooms/nginx:$TAG
           docker tag ubc-classrooms-nginx ubcclassrooms/nginx:latest
           docker push ubcclassrooms/nginx --all-tags
-          docker tag certbot/certbot ubcclassrooms/certbot:${{ needs.create-tags.outputs.tag }}
+          docker tag certbot/certbot ubcclassrooms/certbot:$TAG
           docker tag certbot/certbot ubcclassrooms/certbot:latest
           docker push ubcclassrooms/certbot --all-tags
-          docker tag ubc-classrooms-scrape-classrooms ubcclassrooms/scrape-classrooms:${{ needs.create-tags.outputs.tag }}
+          docker tag ubc-classrooms-scrape-classrooms ubcclassrooms/scrape-classrooms:$TAG
           docker tag ubc-classrooms-scrape-classrooms ubcclassrooms/scrape-classrooms:latest
           docker push ubcclassrooms/scrape-classrooms --all-tags
-          docker tag ubc-classrooms-compute-timeslots compute-timeslots ubcclassrooms/compute-timeslots:${{ needs.create-tags.outputs.tag }}
+          docker tag ubc-classrooms-compute-timeslots compute-timeslots ubcclassrooms/compute-timeslots:$TAG
           docker tag ubc-classrooms-compute-timeslots ubcclassrooms/compute-timeslots:latest
           docker push ubcclassrooms/compute-timeslots --all-tags
-          docker tag ubc-classrooms-create-models ubcclassrooms/create-models:${{ needs.create-tags.outputs.tag }}
+          docker tag ubc-classrooms-create-models ubcclassrooms/create-models:$TAG
           docker tag ubc-classrooms-create-models ubcclassrooms/create-models:latest
           docker push ubcclassrooms/create-models --all-tags
-          docker tag ubc-classrooms-delete-expired-timeslots ubcclassrooms/delete-expired-timeslots:${{ needs.create-tags.outputs.tag }}
+          docker tag ubc-classrooms-delete-expired-timeslots ubcclassrooms/delete-expired-timeslots:$TAG
           docker tag ubc-classrooms-delete-expired-timeslots ubcclassrooms/delete-expired-timeslots:latest
           docker push ubcclassrooms/delete-expired-timeslots --all-tags
-          docker tag ubc-classrooms-api-tests ubcclassrooms/api-tests:${{ needs.create-tags.outputs.tag }}
+          docker tag ubc-classrooms-api-tests ubcclassrooms/api-tests:$TAG
           docker tag ubc-classrooms-api-tests ubcclassrooms/api-tests:latest
           docker push ubcclassrooms/api-tests --all-tags
 
