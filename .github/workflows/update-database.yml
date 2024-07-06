@@ -27,8 +27,8 @@ jobs:
                     cd /
                     cd srv/ubc-classrooms
                     # Pull data from repository
-                    git pull origin main
+                    sudo git pull origin main
                     # Write timeslots to database
-                    docker-compose -f compose.srv.yml run create-models
+                    sudo docker-compose -f compose.srv.yml run create-models
                     # Cleanup expired timeslots
-                    docker-compose -f compose.srv-yml run delete-expired-timeslots
+                    sudo docker-compose -f compose.srv-yml run delete-expired-timeslots
