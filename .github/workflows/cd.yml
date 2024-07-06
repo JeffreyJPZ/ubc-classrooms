@@ -20,11 +20,11 @@ jobs:
     steps:
       - name: Get datetime
         id: get-datetime
-        run: echo "now=$(date "+%Y%m%dT%H%M%S"))" >> $GITHUB_OUTPUT
+        run: echo "now=$(date "+%Y%m%dT%H%M%S")" >> $GITHUB_OUTPUT
       
       - name: Generate tag name
         id: make-tag
-        run: echo "tag=${{ steps.get-datetime.outputs.now }} >> $GITHUB_OUTPUT"
+        run: echo "tag=${{ steps.get-datetime.outputs.now }}" >> $GITHUB_OUTPUT
 
   build-and-push:
     name: Build Docker images and push to registry
