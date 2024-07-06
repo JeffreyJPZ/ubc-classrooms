@@ -29,6 +29,6 @@ jobs:
                     # Pull data from repository
                     sudo git pull origin main
                     # Write timeslots to database
-                    sudo docker-compose -f compose.srv.yml run create-models
+                    sudo docker compose -f compose.srv.yml run create-models
                     # Cleanup expired timeslots
-                    sudo docker-compose -f compose.srv-yml run delete-expired-timeslots
+                    sudo docker compose -f compose.srv-yml run delete-expired-timeslots
