@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: Get datetime
         id: now
-        run: echo "now=$(date + "%Y-%m-%dT%H%M%S")" >> $GITHUB_OUTPUT
+        run: echo "now=$(date "+%Y-%m-%dT%T")" >> $GITHUB_OUTPUT
       
       - name: Generate tag name
         id: tag
