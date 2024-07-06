@@ -47,9 +47,6 @@ jobs:
       DJANGO_ALLOWED_HOSTS: ${{ vars.DJANGO_ALLOWED_HOSTS }}
       DJANGO_PROD_SECRET_KEY: ${{ secrets.DJANGO_PROD_SECRET_KEY}}
       CERTBOT_EMAIL: ${{ secrets.CERTBOT_EMAIL }}
-      REGISTRY: ${{ vars.REGISTRY }}
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
     steps:
       - name: Checkout repository
