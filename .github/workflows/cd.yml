@@ -90,7 +90,7 @@ jobs:
           docker tag ubc-classrooms-scrape-classrooms ubcclassrooms/scrape-classrooms:$TAG
           docker tag ubc-classrooms-scrape-classrooms ubcclassrooms/scrape-classrooms:latest
           docker push ubcclassrooms/scrape-classrooms --all-tags
-          docker tag ubc-classrooms-compute-timeslots compute-timeslots ubcclassrooms/compute-timeslots:$TAG
+          docker tag ubc-classrooms-compute-timeslots ubcclassrooms/compute-timeslots:$TAG
           docker tag ubc-classrooms-compute-timeslots ubcclassrooms/compute-timeslots:latest
           docker push ubcclassrooms/compute-timeslots --all-tags
           docker tag ubc-classrooms-create-models ubcclassrooms/create-models:$TAG
