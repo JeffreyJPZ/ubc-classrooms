@@ -47,6 +47,8 @@ jobs:
       DJANGO_ALLOWED_HOSTS: ${{ vars.DJANGO_ALLOWED_HOSTS }}
       DJANGO_PROD_SECRET_KEY: ${{ secrets.DJANGO_PROD_SECRET_KEY}}
       CERTBOT_EMAIL: ${{ secrets.CERTBOT_EMAIL }}
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
     steps:
       - name: Checkout repository
@@ -74,6 +76,8 @@ jobs:
           echo DJANGO_ALLOWED_HOSTS=$DJANGO_ALLOWED_HOSTS >> prod.env
           echo DJANGO_PROD_SECRET_KEY=$DJANGO_PROD_SECRET_KEY >> prod.env
           echo CERTBOT_EMAIL=$CERTBOT_EMAIL >> prod.env
+          echo DOCKERHUB_USERNAME=$DOCKERHUB_USERNAME >> prod.env
+          echo DOCKERHUB_TOKEN=$DOCKERHUB_TOKEN >> prod.env
 
       - name: Build images
         run: docker compose -f compose.prod.yml build
