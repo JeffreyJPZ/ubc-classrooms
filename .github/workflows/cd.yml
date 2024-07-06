@@ -167,3 +167,42 @@ jobs:
             sudo docker compose -f compose.srv.yml pull
             # Recreate and restart services
             sudo docker compose -f compose.srv.yml up db web nginx -d --wait --force-recreate
+
+      - name: Deploy to production server via SSH action
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            # Change directory to project root
+            cd /
+            cd srv/ubc-classrooms
+            # Pull from main branch
+            sudo git pull origin main
+            # Create production .env file if it doesnt exist already
+            if [ ! -e "prod.env" ]
+            then
+              sudo touch prod.env
+              sudo echo SQL_ENGINE=${{ env.SQL_ENGINE }} >> prod.env
+              sudo echo SQL_DB=${{ env.SQL_DB }} >> prod.env
+              sudo echo SQL_USER=${{ env.SQL_USER }} >> prod.env
+              sudo echo SQL_PASSWORD=${{ env.SQL_PASSWORD }} >> prod.env
+              sudo echo SQL_HOST=${{ env.SQL_HOST }} >> prod.env
+              sudo echo SQL_PORT=${{ env.SQL_PORT }} >> prod.env
+              sudo echo DB=${{ env.DB }} >> prod.env
+              sudo echo POSTGRES_DB=${{ env.POSTGRES_DB }} >> prod.env
+              sudo echo POSTGRES_USER=${{ env.POSTGRES_USER }} >> prod.env
+              sudo echo POSTGRES_PASSWORD=${{ env.POSTGRES_PASSWORD }} >> prod.env
+              sudo echo DEBUG=${{ env.DEBUG }} >> prod.env
+              sudo echo DJANGO_ALLOWED_HOSTS=${{ env.DJANGO_ALLOWED_HOSTS }} >> prod.env
+              sudo echo DJANGO_PROD_SECRET_KEY=${{ env.DJANGO_PROD_SECRET_KEY }} >> prod.env
+              sudo echo CERTBOT_EMAIL=${{ env.CERTBOT_EMAIL }} >> prod.env
+            fi
+            # Login to registry
+            sudo docker login -u ${{ env.DOCKERHUB_USERNAME }} -p ${{ env.DOCKERHUB_TOKEN }}
+            # Pull latest images
+            sudo docker compose -f compose.srv.yml pull
+            # Recreate and restart services
+            sudo docker compose -f compose.srv.yml up db web nginx -d --force-recreate
+          host: ${{ secrets.SSH_HOST }}
+          user: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          pass: ${{ secrets.SSH_PASSPHRASE }}
