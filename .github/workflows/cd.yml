@@ -4,15 +4,15 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - .github/**
+    # paths-ignore:
+    #   - .github/**
   pull_request:
     branches:
       - main
     types:
       - closed
-    paths-ignore:
-      - .github/**
+    # paths-ignore:
+    #   - .github/**
 
 jobs:
   create-tags:
@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: Get datetime
         id: now
-        run: echo "now=$(date + '%Y-%m-%dT%H%M%S')" >> $GITHUB_OUTPUT
+        run: echo "now=$(date + "%Y-%m-%dT%H%M%S")" >> $GITHUB_OUTPUT
       
       - name: Generate tag name
         id: tag

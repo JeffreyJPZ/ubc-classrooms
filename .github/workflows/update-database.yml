@@ -2,13 +2,12 @@ name: Update database from UBC Online Timetable
 
 on:
     push:
-        branches:
-            - main
         paths:
             - backend/data/*
 
 jobs:
     update-database:
+        if: ${{ github.ref == 'refs/heads/main' }}
         name: Update database
         runs-on: ubuntu-latest
         environment: production
