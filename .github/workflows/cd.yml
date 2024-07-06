@@ -137,6 +137,8 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           envs: DOCKERHUB_USERNAME,DOCKERHUB_TOKEN,SQL_ENGINE,SQL_DB,SQL_USER,SQL_PASSWORD,SQL_HOST,SQL_PORT,DB,POSTGRES_DB,POSTGRES_USER,POSTGRES_PASSWORD,DEBUG,DJANGO_ALLOWED_HOSTS,DJANGO_PROD_SECRET_KEY,CERTBOT_EMAIL,REGISTRY
           script: |
+            eval `ssh-agent -s`
+            ssh-add ~/.ssh/id_rsa
             # Change directory to project root
             cd /
             cd srv/ubc-classrooms
@@ -166,4 +168,4 @@ jobs:
             # Pull latest images
             sudo docker compose -f compose.srv.yml pull
             # Recreate and restart services
-            sudo docker compose -f compose.srv.yml up db web nginx -d --wait --force-recreate
+            sudo docker compose -f compose.srv.yml up db web nginx -d --force-recreate
