@@ -54,4 +54,15 @@ echo "Attempting to calculate timeslots"
 echo "Timeslots successfully calculated" ||
 echo "Error with calculating timeslots"
 
+# Commit and push data
+echo "Attempting to commit data"
+(git commit -m "$(date + '%Y-%m-%d') data bump") &&
+echo "Successfully commited" ||
+echo "Error with commit"
+
+echo "Attempting to push data"
+(git push origin main) &&
+echo "Successfully pushed" ||
+echo "Error with push"
+
 echo "Finished"
