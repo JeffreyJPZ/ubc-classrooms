@@ -18,8 +18,24 @@ env:
   VERSION_NUMBER: 0.0.1
 
 jobs:
+  create-tags:
+    name: Generate tag names using datetime and commit ids
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    
+    steps:
+      - name: Get datetime
+        id: now
+        run: echo "now=$(date + '%Y-%m-%dT%H%M%S')" >> $GITHUB_OUTPUT
+      
+      - name: Generate tag name
+        id: tag
+        run: echo "tag=${{ steps.now.outputs.now }}"
+
   build-and-push:
     name: Build Docker images and push to registry
+    needs: create-tags
     runs-on: ubuntu-latest
     environment: production
     
@@ -30,42 +46,42 @@ jobs:
       - name: Build images
         run: docker compose -f compose.prod.yml build
 
-      - name: Pull remaining images
-        run: docker compose -f compose.prod.yml pull db certbot
-
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Pull remaining images
+        run: docker compose -f compose.prod.yml pull db certbot
+
       - name: Tag and push images
         run: |
-          docker tag postgres:16.3 ubcclassrooms/db:$VERSION_NUMBER
+          docker tag postgres:16.3 ubcclassrooms/db:${{ needs.create-tags.outputs.tag }}
           docker tag postgres:16.3 ubcclassrooms/db:latest
           docker push ubcclassrooms/db --all-tags
-          docker tag ubc-classrooms-web ubcclassrooms/web:$VERSION_NUMBER
+          docker tag ubc-classrooms-web ubcclassrooms/web:${{ needs.create-tags.outputs.tag }}
           docker tag ubc-classrooms-web ubcclassrooms/web:latest
           docker push ubcclassrooms/web --all-tags
-          docker tag ubc-classrooms-nginx ubcclassrooms/nginx:$VERSION_NUMBER
+          docker tag ubc-classrooms-nginx ubcclassrooms/nginx:${{ needs.create-tags.outputs.tag }}
           docker tag ubc-classrooms-nginx ubcclassrooms/nginx:latest
           docker push ubcclassrooms/nginx --all-tags
-          docker tag certbot/certbot ubcclassrooms/certbot:$VERSION_NUMBER
+          docker tag certbot/certbot ubcclassrooms/certbot:${{ needs.create-tags.outputs.tag }}
           docker tag certbot/certbot ubcclassrooms/certbot:latest
           docker push ubcclassrooms/certbot --all-tags
-          docker tag ubc-classrooms-scrape-classrooms ubcclassrooms/scrape-classrooms:$VERSION_NUMBER
+          docker tag ubc-classrooms-scrape-classrooms ubcclassrooms/scrape-classrooms:${{ needs.create-tags.outputs.tag }}
           docker tag ubc-classrooms-scrape-classrooms ubcclassrooms/scrape-classrooms:latest
           docker push ubcclassrooms/scrape-classrooms --all-tags
-          docker tag ubc-classrooms-compute-timeslots compute-timeslots ubcclassrooms/compute-timeslots:$VERSION_NUMBER
+          docker tag ubc-classrooms-compute-timeslots compute-timeslots ubcclassrooms/compute-timeslots:${{ needs.create-tags.outputs.tag }}
           docker tag ubc-classrooms-compute-timeslots ubcclassrooms/compute-timeslots:latest
           docker push ubcclassrooms/compute-timeslots --all-tags
-          docker tag ubc-classrooms-create-models ubcclassrooms/create-models:$VERSION_NUMBER
+          docker tag ubc-classrooms-create-models ubcclassrooms/create-models:${{ needs.create-tags.outputs.tag }}
           docker tag ubc-classrooms-create-models ubcclassrooms/create-models:latest
           docker push ubcclassrooms/create-models --all-tags
-          docker tag ubc-classrooms-delete-expired-timeslots ubcclassrooms/delete-expired-timeslots:$VERSION_NUMBER
+          docker tag ubc-classrooms-delete-expired-timeslots ubcclassrooms/delete-expired-timeslots:${{ needs.create-tags.outputs.tag }}
           docker tag ubc-classrooms-delete-expired-timeslots ubcclassrooms/delete-expired-timeslots:latest
           docker push ubcclassrooms/delete-expired-timeslots --all-tags
-          docker tag ubc-classrooms-api-tests ubcclassrooms/api-tests:$VERSION_NUMBER
+          docker tag ubc-classrooms-api-tests ubcclassrooms/api-tests:${{ needs.create-tags.outputs.tag }}
           docker tag ubc-classrooms-api-tests ubcclassrooms/api-tests:latest
           docker push ubcclassrooms/api-tests --all-tags
 
@@ -130,6 +146,6 @@ jobs:
             # Login to registry
             sudo docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
             # Pull latest images
-            sudo docker compose -f compose.srv.yml pull db web nginx certbot create-models delete-expired-timeslots
+            sudo docker compose -f compose.srv.yml pull
             # Recreate and restart services
             sudo docker compose -f compose.srv.yml up db web nginx -d --wait --force-recreate
