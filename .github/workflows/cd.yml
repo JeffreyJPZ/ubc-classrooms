@@ -38,8 +38,8 @@ jobs:
 
       - name: Give permissions for building dist files
         run: |
-          sudo chmod u+x node_modules/.bin/vite
-          sudo chmod u+x node_modules/.bin/tsc
+          sudo chmod u+x ./frontend/node_modules/.bin/vite
+          sudo chmod u+x ./frontend/node_modules/.bin/tsc
 
       - name: Build images
         run: docker compose -f compose.prod.yml build
