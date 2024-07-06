@@ -4,15 +4,11 @@ on:
   push:
     branches:
       - main
-    # paths-ignore:
-    #   - .github/**
   pull_request:
     branches:
       - main
     types:
       - closed
-    # paths-ignore:
-    #   - .github/**
 
 jobs:
   create-tags:
@@ -39,6 +35,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Give permissions for building dist files
+        run: |
+          sudo chmod u+x node_modules/.bin/vite
+          sudo chmod u+x node_modules/.bin/tsc
 
       - name: Build images
         run: docker compose -f compose.prod.yml build
