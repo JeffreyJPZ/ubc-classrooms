@@ -1,6 +1,6 @@
 # UBC Classrooms
 
-UBC Classrooms is a tool for finding empty classrooms across UBC at specific times. The frontend was written using React, while Django and PostgreSQL were used for the backend.
+UBC Classrooms is a tool for finding empty classrooms across UBC at specific times. The project uses React, Django and PostgreSQL, with nginx as the web server and Cloudflare as the DNS provider.
 
 Frontend project structure was inspired by [Bulletproof React](https://github.com/alan2207/bulletproof-react?tab=readme-ov-file#bulletproof-react-%EF%B8%8F-%EF%B8%8F).
 
