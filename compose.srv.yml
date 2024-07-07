@@ -72,7 +72,10 @@ services:
     volumes:
       - ./backend/data/raw_booking_data:/raw_booking_data
       - ./backend/data/timeslot_data:/timeslot_data
-    command: python manage.py create_models
+    command: >
+      sh -c "python manage.py makemigrations &&
+             python manage.py migrate &&
+             python manage.py create_models"
     depends_on:
       db:
         condition: service_healthy
@@ -81,7 +84,10 @@ services:
     image: ubcclassrooms/delete-expired-timeslots:latest
     env_file:
       - prod.env
-    command: python manage.py delete_expired_timeslots
+    command: >
+      sh -c "python manage.py makemigrations &&
+             python manage.py migrate &&
+             python manage.py delete_expired_timeslots"
     depends_on:
       db:
         condition: service_healthy
@@ -90,7 +96,10 @@ services:
     image: ubcclassrooms/api-tests:latest
     env_file:
       - prod.env
-    command: python manage.py test api.tests
+    command: >
+      sh -c "python manage.py makemigrations &&
+             python manage.py migrate &&
+             python manage.py test api.tests"
     depends_on:
       db:
         condition: service_healthy
