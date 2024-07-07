@@ -54,6 +54,8 @@ h1 {
 }
 
 button {
+  -webkit-text-fill-color: var(--secondary-text-color);
+
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -62,9 +64,6 @@ button {
   font-family: inherit;
   background-image: var(--primary-color);
   background-color: var(--primary-color);
-
-  -webkit-text-fill-color: var(--secondary-background-color);
-  
   cursor: pointer;
   transition: border-color 0.25s, filter 0.25s;
 }
