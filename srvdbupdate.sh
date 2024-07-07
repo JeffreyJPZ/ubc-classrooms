@@ -21,4 +21,9 @@ sudo docker compose -f compose.srv.yml run create-models &&
 echo "Successfully added models" ||
 echo "Error with adding models"
 
+# Recreate and restart services
+sudo docker compose -f compose.srv.yml up db web nginx -d --force-recreate &&
+echo "Successfully restarted services" ||
+echo "Error with restart"
+
 echo "Finished"
