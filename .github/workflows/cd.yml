@@ -4,11 +4,21 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '.github/**'
+      - '**.md'
+      - '**.bat'
+      - '**.sh'
   pull_request:
     branches:
       - main
     types:
       - closed
+    paths-ignore:
+      - '.github/**'
+      - '**.md'
+      - '**.bat'
+      - '**.sh'
 
 jobs:
   make-tags:
