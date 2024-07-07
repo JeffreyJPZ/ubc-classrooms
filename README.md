@@ -1,4 +1,4 @@
-# UBC Classrooms
+# UBC Classrooms - [ubcclassrooms.ca](https://ubcclassrooms.ca)
 
 UBC Classrooms is a tool for finding empty classrooms across UBC at specific times. The project uses React, Django and PostgreSQL, with nginx as the web server and Cloudflare as the DNS provider. Deployments are made through GitHub Actions and Docker Hub.
 
