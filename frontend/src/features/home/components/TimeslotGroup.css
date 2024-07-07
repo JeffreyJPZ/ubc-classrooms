@@ -1,8 +1,9 @@
-details summary {
+details > summary {
     list-style-type: none;
 }
 
-details summary::marker {
+details > summary::marker,
+details > summary::-webkit-details-marker {
     display: none;
 }
 
