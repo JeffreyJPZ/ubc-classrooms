@@ -3,8 +3,18 @@ name: ci
 on:
   push:
     branches: [ "**" ]
+    paths-ignore:
+      - '.github/**'
+      - '**.md'
+      - '**.bat'
+      - '**.sh'
   pull_request:
     branches: [ "**" ]
+    paths-ignore:
+      - '.github/**'
+      - '**.md'
+      - '**.bat'
+      - '**.sh'
 
 jobs:
   linting:
