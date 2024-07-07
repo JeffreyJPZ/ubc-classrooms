@@ -42,7 +42,7 @@ Frontend project structure was inspired by [Bulletproof React](https://github.co
    SQL_HOST=db
    SQL_PORT=5432
    DB=postgres
-   DEBUG=1
+   DEBUG=True
    DJANGO_ALLOWED_HOSTS=*
    DJANGO_DEV_SECRET_KEY='django-insecure-$^pvra=ndps97#a#ei#*8(h%_jbs3#&4inla2!(l^x+ry62dat'
    ```
