@@ -1,0 +1,7 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2023-2024,EOS,135,General,2024-07-15,9:00,16:00,WRB-ACTIVE,WRB_UBC,"MED  JULY Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024-August 5, 2024) 9:00 - EOS 135", , , 
+UBCV,2023-2024,EOS,135,General,2024-07-16,9:00,16:00,WRB-ACTIVE,WRB_UBC,"MED  JULY Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024-August 5, 2024) 9:00 - EOS 135", , , 
+UBCV,2023-2024,EOS,135,General,2024-07-17,9:00,16:00,WRB-ACTIVE,WRB_UBC,"MED  JULY Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024-August 5, 2024) 9:00 - EOS 135", , , 
+UBCV,2023-2024,EOS,135,General,2024-07-18,9:00,16:00,WRB-ACTIVE,WRB_UBC,"MED  JULY Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024-August 5, 2024) 9:00 - EOS 135", , , 
+UBCV,2023-2024,EOS,135,General,2024-07-19,9:00,16:00,WRB-ACTIVE,WRB_UBC,"MED  JULY Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024-August 5, 2024) 9:00 - EOS 135", , , 
+UBCV,2023-2024,EOS,135,General,2024-07-12,9:00,16:00,WRB-ACTIVE,WRB_UBC,"VSP A and B JULY Friday (week(s): July 8, 2024) 9:00 - EOS 135", , , 

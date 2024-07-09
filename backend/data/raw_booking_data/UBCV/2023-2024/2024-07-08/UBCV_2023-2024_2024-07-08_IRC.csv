@@ -1,0 +1,67 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2023-2024,IRC,5,General,2024-07-15,8:00,17:00,WRB-ACTIVE,WRB_UBC,"Geering Up Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:00 - IRC 1, IRC 5", , , 
+UBCV,2023-2024,IRC,1,General,2024-07-15,8:00,17:00,WRB-ACTIVE,WRB_UBC,"Geering Up Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:00 - IRC 1, IRC 5", , , 
+UBCV,2023-2024,IRC,5,General,2024-07-16,8:00,17:00,WRB-ACTIVE,WRB_UBC,"Geering Up Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:00 - IRC 1, IRC 5", , , 
+UBCV,2023-2024,IRC,1,General,2024-07-16,8:00,17:00,WRB-ACTIVE,WRB_UBC,"Geering Up Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:00 - IRC 1, IRC 5", , , 
+UBCV,2023-2024,IRC,5,General,2024-07-17,8:00,17:00,WRB-ACTIVE,WRB_UBC,"Geering Up Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:00 - IRC 1, IRC 5", , , 
+UBCV,2023-2024,IRC,1,General,2024-07-17,8:00,17:00,WRB-ACTIVE,WRB_UBC,"Geering Up Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:00 - IRC 1, IRC 5", , , 
+UBCV,2023-2024,IRC,1,General,2024-07-10,9:00,17:00,WRB-ACTIVE,WRB_UBC,"DENT A July Wed, Thu, Fri (week(s): July 8, 2024) 9:00 - IRC 1", , , 
+UBCV,2023-2024,IRC,5,General,2024-07-18,8:00,17:00,WRB-ACTIVE,WRB_UBC,"Geering Up Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:00 - IRC 1, IRC 5", , , 
+UBCV,2023-2024,IRC,1,General,2024-07-18,8:00,17:00,WRB-ACTIVE,WRB_UBC,"Geering Up Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:00 - IRC 1, IRC 5", , , 
+UBCV,2023-2024,IRC,1,General,2024-07-11,9:00,17:00,WRB-ACTIVE,WRB_UBC,"DENT A July Wed, Thu, Fri (week(s): July 8, 2024) 9:00 - IRC 1", , , 
+UBCV,2023-2024,IRC,5,General,2024-07-19,8:00,17:00,WRB-ACTIVE,WRB_UBC,"Geering Up Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:00 - IRC 1, IRC 5", , , 
+UBCV,2023-2024,IRC,1,General,2024-07-19,8:00,17:00,WRB-ACTIVE,WRB_UBC,"Geering Up Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:00 - IRC 1, IRC 5", , , 
+UBCV,2023-2024,IRC,1,General,2024-07-12,9:00,17:00,WRB-ACTIVE,WRB_UBC,"DENT A July Wed, Thu, Fri (week(s): July 8, 2024) 9:00 - IRC 1", , , 
+UBCV,2023-2024,IRC,2,General,2024-07-15,9:00,16:00,WRB-ACTIVE,WRB_UBC,Med Social Activity 15-Jul-2024 9:00 - IRC 2, , , 
+UBCV,2023-2024,IRC,2,General,2024-07-09,14:00,16:00,LEC,MATH-V,MATH 101-S/LEC/951,MATH 101-S,951,"Yeager, Elyse"
+UBCV,2023-2024,IRC,2,General,2024-07-16,14:00,16:00,LEC,MATH-V,MATH 101-S/LEC/951,MATH 101-S,951,"Yeager, Elyse"
+UBCV,2023-2024,IRC,2,General,2024-07-17,13:00,15:30,WRB-ACTIVE,WRB_UBC,"FGL  Wednesday (week(s): July 15, 2024) 13:00 - IRC 2", , , 
+UBCV,2023-2024,IRC,2,General,2024-07-11,14:00,16:00,LEC,MATH-V,MATH 101-S/LEC/951,MATH 101-S,951,"Yeager, Elyse"
+UBCV,2023-2024,IRC,2,General,2024-07-18,14:00,16:00,LEC,MATH-V,MATH 101-S/LEC/951,MATH 101-S,951,"Yeager, Elyse"
+UBCV,2023-2024,IRC,2,General,2024-07-14,9:00,13:30,WRB-ACTIVE,WRB_UBC,"Worship Gathering Sunday (week(s): July 1, 2024-August 12, 2024) 9:00 - IRC 2", , , 
+UBCV,2023-2024,IRC,2,General,2024-07-21,9:00,13:30,WRB-ACTIVE,WRB_UBC,"Worship Gathering Sunday (week(s): July 1, 2024-August 12, 2024) 9:00 - IRC 2", , , 
+UBCV,2023-2024,IRC,3,General,2024-07-16,8:30,16:30,WRB-ACTIVE,WRB_UBC,"MED July Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:30 - IRC 4, IRC 3", , , 
+UBCV,2023-2024,IRC,4,General,2024-07-16,8:30,16:30,WRB-ACTIVE,WRB_UBC,"MED July Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:30 - IRC 4, IRC 3", , , 
+UBCV,2023-2024,IRC,3,General,2024-07-17,8:30,16:30,WRB-ACTIVE,WRB_UBC,"MED July Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:30 - IRC 4, IRC 3", , , 
+UBCV,2023-2024,IRC,4,General,2024-07-17,8:30,16:30,WRB-ACTIVE,WRB_UBC,"MED July Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:30 - IRC 4, IRC 3", , , 
+UBCV,2023-2024,IRC,3,General,2024-07-18,8:30,16:30,WRB-ACTIVE,WRB_UBC,"MED July Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:30 - IRC 4, IRC 3", , , 
+UBCV,2023-2024,IRC,4,General,2024-07-18,8:30,16:30,WRB-ACTIVE,WRB_UBC,"MED July Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:30 - IRC 4, IRC 3", , , 
+UBCV,2023-2024,IRC,3,General,2024-07-19,8:30,16:30,WRB-ACTIVE,WRB_UBC,"MED July Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:30 - IRC 4, IRC 3", , , 
+UBCV,2023-2024,IRC,4,General,2024-07-19,8:30,16:30,WRB-ACTIVE,WRB_UBC,"MED July Tue, Wed, Thu, Fri (week(s): July 15, 2024) 8:30 - IRC 4, IRC 3", , , 
+UBCV,2023-2024,IRC,3,General,2024-07-13,8:30,18:00,WRB-ACTIVE,WRB_UBC,"Solar Weekly Meeting Saturday (week(s): May 6, 2024-August 5, 2024) 8:30 - IRC 3", , , 
+UBCV,2023-2024,IRC,3,General,2024-07-20,8:30,18:00,WRB-ACTIVE,WRB_UBC,"Solar Weekly Meeting Saturday (week(s): May 6, 2024-August 5, 2024) 8:30 - IRC 3", , , 
+UBCV,2023-2024,IRC,6,General,2024-07-08,12:00,15:00,LEC,MICB-V,MICB 212-S/LEC/1,MICB 212-S,971,"Kion, Tracy"
+UBCV,2023-2024,IRC,6,General,2024-07-15,12:00,15:00,LEC,MICB-V,MICB 212-S/LEC/1,MICB 212-S,971,"Kion, Tracy"
+UBCV,2023-2024,IRC,6,General,2024-07-15,16:00,18:00,WRB-ACTIVE,WRB_UBC,UBC FGL Orientation 15-Jul-2024 16:00 - IRC 6, , , 
+UBCV,2023-2024,IRC,6,General,2024-07-10,12:00,15:00,LEC,MICB-V,MICB 212-S/LEC/1,MICB 212-S,971,"Kion, Tracy"
+UBCV,2023-2024,IRC,6,General,2024-07-17,12:00,15:00,LEC,MICB-V,MICB 212-S/LEC/1,MICB 212-S,971,"Kion, Tracy"
+UBCV,2023-2024,IRC,6,General,2024-07-12,12:00,15:00,LEC,MICB-V,MICB 212-S/LEC/1,MICB 212-S,971,"Kion, Tracy"
+UBCV,2023-2024,IRC,6,General,2024-07-19,12:00,15:00,LEC,MICB-V,MICB 212-S/LEC/1,MICB 212-S,971,"Kion, Tracy"
+UBCV,2023-2024,IRC,G41,General,2024-07-15,9:00,13:00,WRB-ACTIVE,WRB_UBC,"Oxford Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 9:00 - AUDX 157, IRC B75, IRC G41, MATH 203, ORCH 3074", , , 
+UBCV,2023-2024,IRC,B75,General,2024-07-15,9:00,13:00,WRB-ACTIVE,WRB_UBC,"Oxford Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 9:00 - AUDX 157, IRC B75, IRC G41, MATH 203, ORCH 3074", , , 
+UBCV,2023-2024,IRC,G41,General,2024-07-16,9:00,13:00,WRB-ACTIVE,WRB_UBC,"Oxford Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 9:00 - AUDX 157, IRC B75, IRC G41, MATH 203, ORCH 3074", , , 
+UBCV,2023-2024,IRC,B75,General,2024-07-16,9:00,13:00,WRB-ACTIVE,WRB_UBC,"Oxford Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 9:00 - AUDX 157, IRC B75, IRC G41, MATH 203, ORCH 3074", , , 
+UBCV,2023-2024,IRC,G41,General,2024-07-17,9:00,13:00,WRB-ACTIVE,WRB_UBC,"Oxford Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 9:00 - AUDX 157, IRC B75, IRC G41, MATH 203, ORCH 3074", , , 
+UBCV,2023-2024,IRC,B75,General,2024-07-17,9:00,13:00,WRB-ACTIVE,WRB_UBC,"Oxford Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 9:00 - AUDX 157, IRC B75, IRC G41, MATH 203, ORCH 3074", , , 
+UBCV,2023-2024,IRC,G41,General,2024-07-18,9:00,13:00,WRB-ACTIVE,WRB_UBC,"Oxford Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 9:00 - AUDX 157, IRC B75, IRC G41, MATH 203, ORCH 3074", , , 
+UBCV,2023-2024,IRC,B75,General,2024-07-18,9:00,13:00,WRB-ACTIVE,WRB_UBC,"Oxford Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 9:00 - AUDX 157, IRC B75, IRC G41, MATH 203, ORCH 3074", , , 
+UBCV,2023-2024,IRC,G41,General,2024-07-19,9:00,13:00,WRB-ACTIVE,WRB_UBC,"Oxford Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 9:00 - AUDX 157, IRC B75, IRC G41, MATH 203, ORCH 3074", , , 
+UBCV,2023-2024,IRC,B75,General,2024-07-19,9:00,13:00,WRB-ACTIVE,WRB_UBC,"Oxford Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024) 9:00 - AUDX 157, IRC B75, IRC G41, MATH 203, ORCH 3074", , , 
+UBCV,2023-2024,IRC,B79,General,2024-07-08,8:30,16:30,WRB-ACTIVE,WRB_UBC,"Math Camp (MC) Mon, Tue, Wed, Thu, Fri (week(s): July 1, 2024-August 5, 2024) 8:30 - IRC B79", , , 
+UBCV,2023-2024,IRC,B79,General,2024-07-15,8:30,16:30,WRB-ACTIVE,WRB_UBC,"Math Camp (MC) Mon, Tue, Wed, Thu, Fri (week(s): July 1, 2024-August 5, 2024) 8:30 - IRC B79", , , 
+UBCV,2023-2024,IRC,B79,General,2024-07-09,8:30,16:30,WRB-ACTIVE,WRB_UBC,"Math Camp (MC) Mon, Tue, Wed, Thu, Fri (week(s): July 1, 2024-August 5, 2024) 8:30 - IRC B79", , , 
+UBCV,2023-2024,IRC,B79,General,2024-07-16,8:30,16:30,WRB-ACTIVE,WRB_UBC,"Math Camp (MC) Mon, Tue, Wed, Thu, Fri (week(s): July 1, 2024-August 5, 2024) 8:30 - IRC B79", , , 
+UBCV,2023-2024,IRC,B79,General,2024-07-10,8:30,16:30,WRB-ACTIVE,WRB_UBC,"Math Camp (MC) Mon, Tue, Wed, Thu, Fri (week(s): July 1, 2024-August 5, 2024) 8:30 - IRC B79", , , 
+UBCV,2023-2024,IRC,B79,General,2024-07-17,8:30,16:30,WRB-ACTIVE,WRB_UBC,"Math Camp (MC) Mon, Tue, Wed, Thu, Fri (week(s): July 1, 2024-August 5, 2024) 8:30 - IRC B79", , , 
+UBCV,2023-2024,IRC,B79,General,2024-07-11,8:30,16:30,WRB-ACTIVE,WRB_UBC,"Math Camp (MC) Mon, Tue, Wed, Thu, Fri (week(s): July 1, 2024-August 5, 2024) 8:30 - IRC B79", , , 
+UBCV,2023-2024,IRC,B79,General,2024-07-18,8:30,16:30,WRB-ACTIVE,WRB_UBC,"Math Camp (MC) Mon, Tue, Wed, Thu, Fri (week(s): July 1, 2024-August 5, 2024) 8:30 - IRC B79", , , 
+UBCV,2023-2024,IRC,B79,General,2024-07-12,8:30,16:30,WRB-ACTIVE,WRB_UBC,"Math Camp (MC) Mon, Tue, Wed, Thu, Fri (week(s): July 1, 2024-August 5, 2024) 8:30 - IRC B79", , , 
+UBCV,2023-2024,IRC,B79,General,2024-07-19,8:30,16:30,WRB-ACTIVE,WRB_UBC,"Math Camp (MC) Mon, Tue, Wed, Thu, Fri (week(s): July 1, 2024-August 5, 2024) 8:30 - IRC B79", , , 
+UBCV,2023-2024,IRC,G53,General,2024-07-14,9:00,13:00,WRB-ACTIVE,WRB_UBC,"Worship Gathering Sunday (week(s): July 1, 2024-August 12, 2024) 9:00 - IRC G41, IRC G53", , , 
+UBCV,2023-2024,IRC,G53,General,2024-07-21,9:00,13:00,WRB-ACTIVE,WRB_UBC,"Worship Gathering Sunday (week(s): July 1, 2024-August 12, 2024) 9:00 - IRC G41, IRC G53", , , 
+UBCV,2023-2024,IRC,G41,General,2024-07-14,9:00,13:00,WRB-ACTIVE,WRB_UBC,"Worship Gathering Sunday (week(s): July 1, 2024-August 12, 2024) 9:00 - IRC G41, IRC G53", , , 
+UBCV,2023-2024,IRC,G41,General,2024-07-21,9:00,13:00,WRB-ACTIVE,WRB_UBC,"Worship Gathering Sunday (week(s): July 1, 2024-August 12, 2024) 9:00 - IRC G41, IRC G53", , , 
+UBCV,2023-2024,IRC,G53,General,2024-07-09,10:00,14:30,WRB-ACTIVE,WRB_UBC,Legacy Interviews 09-Jul-2024 10:00 - IRC G53, , , 
+UBCV,2023-2024,IRC,G53,General,2024-07-11,11:00,14:00,WRB-ACTIVE,WRB_UBC,Legacy Interviews 11-Jul-2024 11:00 - IRC G53, , , 
+UBCV,2023-2024,IRC,G66,General,2024-07-11,17:30,20:30,LEC,IWME-V,IWME 503-S/LEC/941,IWME 503-S,941,"Kheyrandish, Ataollah"
+UBCV,2023-2024,IRC,G66,General,2024-07-18,17:30,20:30,LEC,IWME-V,IWME 503-S/LEC/941,IWME 503-S,941,"Kheyrandish, Ataollah"
