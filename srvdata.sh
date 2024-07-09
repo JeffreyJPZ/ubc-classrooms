@@ -59,6 +59,12 @@ echo "Attempting to calculate timeslots"
 echo "Timeslots successfully calculated" ||
 echo "Error with calculating timeslots"
 
+# Add all data to staging area
+echo "Attempting to stage data"
+(git add backend/data/raw_booking_data backend/data/timeslot_data) &&
+echo "Data successfully staged" ||
+echo "Error with staging data"
+
 # Commit and push data
 echo "Attempting to commit data"
 (git commit -m "chore: $(date "+%Y-%m-%d") data bump") &&
