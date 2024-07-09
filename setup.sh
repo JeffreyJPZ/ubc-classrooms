@@ -1,18 +1,6 @@
 #!/usr/bin/env bash
 
 # Setup script
-#
-# IMPORTANT:
-# Replace dependency paths as required with the appropriate OS-specific paths (default is Windows)
-# For Windows:
-# - Assumes Git Bash is located at default path "C:\Program Files\Git\bin\sh.exe"
-# - Assumes Cisco AnyConnect VPN Client CLI is located at default path "C:\Program Files (x86)\Cisco\Cisco AnyConnect Secure Mobility Client\vpncli.exe
-# - Assumes Docker Desktop is located at default path "C:\Program Files\Docker\Docker\Docker Desktop.exe"
-#
-# This script requires a text file named 'vpnconfig.txt' located in the same directory, in the following format:
-# connect myvpn.ubc.ca
-# <CWL username>
-# <CWL password>
 
 echo "Beginning setup script"
 
