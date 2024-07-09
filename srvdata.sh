@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# Setup script
+# Automated data script
 
-echo "Beginning setup script"
+echo "Beginning data script..."
 
 # Change directory to project root
 cd $(dirname "$0")
@@ -12,10 +12,10 @@ source prod.env
 
 # Start Docker Desktop if using Windows or macOS
 if [ "$USER_OS" = "WINDOWS" ] || [ "$USER_OS" = "MACOS" ]; then
-    echo "Starting Docker..."
-    "$PATH_TO_DOCKER_DESKTOP_EXECUTABLE" && 
-    echo "Docker started" || 
-    echo "Error with starting Docker"
+    echo "Starting Docker Desktop..."
+    ("$PATH_TO_DOCKER_DESKTOP_EXECUTABLE") && 
+    echo "Docker Desktop started" || 
+    echo "Error with starting Docker Desktop"
 fi
 
 # Start Docker daemon if using Linux and it is not running
@@ -26,21 +26,24 @@ if [ "$USER_OS" = "LINUX" ] && ! docker info > /dev/null 2>&1; then
   echo "Error with starting Docker"
 fi
 
-# Build Docker image
-echo "Building Docker image..."
-(docker compose -f compose.dev.yml build) && 
-echo "Docker image built" || 
-echo "Error with building Docker image"
+# Login to Docker Hub
+echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin
 
-# Connect to UBC VPN, disconnect first
+# Pull images
+echo "Pulling Docker images..."
+(docker compose -f compose.srv.yml pull scrape-classrooms compute-timeslots) && 
+echo "Docker images pulled" || 
+echo "Error with pulling Docker images"
+
+# Connect to UBC VPN
 echo "Attempting to connect to VPN using credentials..."
 (printf "$CWL_USERNAME\n$CWL_PASSWORD\n" | "$PATH_TO_CISCO_ANYCONNECT_EXECUTABLE" -s connect myvpn.ubc.ca) && 
 echo "Connected to VPN" || 
 echo "Error with connecting to VPN"
 
-# Run script to scrape classrooms
+Run script to scrape classrooms
 echo "Attempting to scrape UBC Online Timetable..."
-(docker compose -f compose.dev.yml run scrape-classrooms) &&
+(docker compose -f compose.srv.yml run scrape-classrooms) &&
 echo "Classrooms successfully scraped" ||
 echo "Error with scraping classrooms"
 
@@ -52,20 +55,19 @@ echo "Error with disconnecting from VPN"
 
 # Run script to calculate timeslots
 echo "Attempting to calculate timeslots"
-(docker compose -f compose.dev.yml run compute-timeslots) &&
+(docker compose -f compose.srv.yml run compute-timeslots) &&
 echo "Timeslots successfully calculated" ||
 echo "Error with calculating timeslots"
 
-# Run script to populate db with timeslots
-echo "Attempting to create timeslots in db"
-(docker compose -f compose.dev.yml run create-models) &&
-echo "Timeslots successfully created" ||
-echo "Error with creating timeslots"
+# Commit and push data
+echo "Attempting to commit data"
+(git commit -m "$(date "+%Y-%m-%d") data bump") &&
+echo "Successfully commited" ||
+echo "Error with commit"
 
-# Run script to remove expired timeslots
-echo "Attempting to remove expired timeslots"
-(docker compose -f compose.dev.yml run delete-expired-timeslots) &&
-echo "Expired timeslots successfully deleted" ||
-echo "Error with deleting expired timeslots"
+echo "Attempting to push data"
+(git push origin main) &&
+echo "Successfully pushed" ||
+echo "Error with push"
 
 echo "Finished"

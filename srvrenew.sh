@@ -4,13 +4,19 @@
 
 echo "Beginning renew script"
 
+# Change directory to project root
+cd $(dirname "$0")
+
+# Allow use of environment variables from prod.env
+source prod.env
+
 # Pull from main branch
 sudo git pull origin main && 
 echo "Successfully pulled from origin" ||
 echo "Error with pulling from origin"
 
-# Login to registry
-(cat prod.env | grep DOCKERHUB_TOKEN | sed "s/DOCKERHUB_TOKEN=//") | sudo docker login -u ubcclassrooms --password-stdin
+# Login to Docker Hub
+echo $DOCKERHUB_TOKEN | sudo docker login -u $DOCKERHUB_USERNAME --password-stdin
 
 # Pull latest Certbot image
 sudo docker compose -f compose.srv.yml pull certbot &&
