@@ -43,7 +43,7 @@ echo "Error with connecting to VPN"
 
 Run script to scrape classrooms
 echo "Attempting to scrape UBC Online Timetable..."
-(docker compose -f compose.srv.yml run --rm scrape-classrooms) &&
+(docker compose -f compose.srv.yml run scrape-classrooms) &&
 echo "Classrooms successfully scraped" ||
 echo "Error with scraping classrooms"
 
@@ -55,7 +55,7 @@ echo "Error with disconnecting from VPN"
 
 # Run script to calculate timeslots
 echo "Attempting to calculate timeslots"
-(docker compose -f compose.srv.yml run --rm compute-timeslots) &&
+(docker compose -f compose.srv.yml run compute-timeslots) &&
 echo "Timeslots successfully calculated" ||
 echo "Error with calculating timeslots"
 
@@ -76,10 +76,10 @@ echo "Attempting to push data"
 echo "Successfully pushed" ||
 echo "Error with push"
 
-# Prune dangling images
-echo "Attempting to prune dangling images"
-(docker image prune) && 
-echo "Dangling images successfully pruned" ||
+# Prune dangling images and stopped containers
+echo "Attempting to prune unused images and containers"
+(echo "y" | docker system prune) && 
+echo "Successfully pruned" ||
 echo "Error with pruning"
 
 echo "Finished"
