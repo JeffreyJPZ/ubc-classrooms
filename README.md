@@ -5,10 +5,13 @@ UBC Classrooms is a tool for finding empty classrooms across UBC at specific tim
 Frontend project structure was inspired by [Bulletproof React](https://github.com/alan2207/bulletproof-react?tab=readme-ov-file#bulletproof-react-%EF%B8%8F-%EF%B8%8F).
 
 ## Instructions for running the application locally
+
+For some debugging hints, [refer to the debugging section](#debugging)
+
 1. Ensure that the following dependencies are installed:
    - [Git](https://git-scm.com/downloads)
    - [Node.js v20+](https://nodejs.org/en/download/package-manager)
-   - [Cisco AnyConnect Secure Mobility Client](https://www.cisco.com/c/en/us/support/security/anyconnect-secure-mobility-client-v4-x/model.html#~tab-downloads)
+   - [Cisco AnyConnect Secure Mobility Client](https://it.ubc.ca/services/email-voice-internet/myvpn/setup-documents)
    
    Linux:
    - [Docker Engine and CLI](https://docs.docker.com/engine/install/)
@@ -27,31 +30,43 @@ Frontend project structure was inspired by [Bulletproof React](https://github.co
     $ mkdir -p projects/ubc-classrooms
     $ # Set the working directory (replace "projects/ubc-classrooms" with the path to your desired directory)
     $ cd projects/ubc-classrooms
-    $ # Clone the repo
-    $ git clone https://github.com/JeffreyJPZ/ubc-classrooms.git
+    $ # Clone the repo into the directory (directory must be empty)
+    $ git clone https://github.com/JeffreyJPZ/ubc-classrooms.git .
     ```
     
-3. Create a `dev.env` file in the project's root directory with the following format:
+3. Create a `dev.env` file in the project's root directory with the following variables:
 
    ```
    SQL_ENGINE=django.db.backends.postgresql
-   SQL_DB=ubc_classrooms
+   SQL_DB=ubc_classrooms_dev
    SQL_DB_TEST=ubc_classrooms_test
    SQL_USER=default
    SQL_PASSWORD=default
    SQL_HOST=db
    SQL_PORT=5432
    DB=postgres
-   DEBUG=1
+   DEBUG=True
    DJANGO_ALLOWED_HOSTS=*
    DJANGO_DEV_SECRET_KEY='django-insecure-$^pvra=ndps97#a#ei#*8(h%_jbs3#&4inla2!(l^x+ry62dat'
+   USER_OS=<USER_OS_GOES_HERE>
+   PATH_TO_DOCKER_DESKTOP_EXECUTABLE=<PATH_TO_DOCKER_DESKTOP_EXECUTABLE_GOES_HERE>
+   PATH_TO_CISCO_ANYCONNECT_EXECUTABLE=<PATH_TO_CISCO_ANYCONNECT_EXECUTABLE_GOES_HERE>
+   CWL_USERNAME=<CWL_USERNAME_GOES_HERE>
+   CWL_PASSWORD=<CWL_PASSWORD_GOES_HERE>
    ```
+
+   NOTE:
+   - Replace **<USER_OS_GOES_HERE>** with one of WINDOWS, MACOS, or LINUX
+   - If **<USER_OS_GOES_HERE>** is WINDOWS or MACOS, replace **<PATH_TO_DOCKER_DESKTOP_EXECUTABLE_GOES_HERE>** with the absolute path to your Docker Desktop executable
+      - Windows: '/c/Program Files/Docker/Docker/Docker Desktop.exe' (must use single quotes)
+   - Replace **<PATH_TO_CISCO_ANYCONNECT_EXECUTABLE_GOES_HERE>** with the absolute path to the Cisco AnyConnect executable
+      - Windows Example: '/c/Program Files (x86)/Cisco/Cisco AnyConnect Secure Mobility Client/vpncli.exe' (must use single quotes)
+      - Linux Example: '/opt/cisco/anyconnect/bin/vpn' (must use single quotes)
+   - Replace **<CWL_USERNAME_GOES_HERE>** and **<CWL_PASSWORD_GOES_HERE>** with your CWL username and password
+      - Username Example: 'user' (must use single quotes)
+      - Password Example: 'pass' (must use single quotes)
    
-4. Create a config file for UBC VPN
-   - Follow the instructions in `setup.sh`
-      
-5. Run the setup script
-   - You may have to change some dependency paths depending on your OS — instructions are found in `setup.sh`
+4. Run the setup script from the project's root directory
 
    Bash:
    
@@ -68,17 +83,17 @@ Frontend project structure was inspired by [Bulletproof React](https://github.co
 7. Start the required services:
    
     ```bash
-    $ # Start the web and database services
-    $ docker compose -f compose.dev.yml up db web -d --wait
+    $ # Start the web and database services in detached mode
+    $ docker compose -f compose.dev.yml up db web -d
     ```
 
 8. Run the application
    
     ```bash
-    $ # Navigate to the UBC Classrooms application
+    $ # Navigate to the UBC Classrooms web application
     $ cd frontend
     $ # Install the required dependencies
-    $ npm install
+    $ npm ci
     $ # Run the application in development mode
     $ npm run dev
     ```
@@ -92,7 +107,13 @@ Frontend project structure was inspired by [Bulletproof React](https://github.co
     
       ```bash
       $ # Stops the services
-      $ docker -f compose.dev.yml compose down
-      $ # Removes services and other utilities, frees up disk space
-      $ docker -f compose.dev.yml system prune
+      $ docker compose -f compose.dev.yml down
+      $ # Removes services and other utilities, frees up disk space from dangling images
+      $ # Use the -a flag to remove everything i.e. "docker system prune -a"
+      $ docker system prune
       ```
+
+## Debugging:
+- If you encounter "permission denied" errors especially on Linux, you may want to prefix all commands with "sudo"
+- If you encounter "[file] not executable" errors, try running "chmod u+x [file]"
+- For some Linux distributions, if "systemctl" is not installed, replace the command with "service" in `setup.sh`
