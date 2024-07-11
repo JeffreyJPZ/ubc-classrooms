@@ -2,6 +2,8 @@
 
 UBC Classrooms is a tool for finding empty classrooms across UBC at specific times. The project uses React, Django and PostgreSQL, with nginx as the web server and Cloudflare as the DNS provider. Deployments are made through GitHub Actions and Docker Hub.
 
+![Screenshot 2024-07-06 213245](https://github.com/JeffreyJPZ/ubc-classrooms/assets/72636309/c63dc5a0-2953-4618-9f42-130771ed12a2)
+
 Frontend project structure was inspired by [Bulletproof React](https://github.com/alan2207/bulletproof-react?tab=readme-ov-file#bulletproof-react-%EF%B8%8F-%EF%B8%8F).
 
 ## Instructions for running the application locally
