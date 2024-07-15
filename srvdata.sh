@@ -41,7 +41,7 @@ echo "Attempting to connect to VPN using credentials..."
 echo "Connected to VPN" || 
 echo "Error with connecting to VPN"
 
-Run script to scrape classrooms
+# Run script to scrape classrooms
 echo "Attempting to scrape UBC Online Timetable..."
 (docker compose -f compose.srv.yml run scrape-classrooms) &&
 echo "Classrooms successfully scraped" ||
@@ -49,7 +49,7 @@ echo "Error with scraping classrooms"
 
 # Disconnect from UBC VPN
 echo "Attempting to disconnect from VPN..."
-("$PATH_TO_CISCO_ANYCONNECT_EXECUTABLE" disconnect)
+("$PATH_TO_CISCO_ANYCONNECT_EXECUTABLE" disconnect) &&
 echo "Disconnected from VPN" ||
 echo "Error with disconnecting from VPN"
 
@@ -58,6 +58,12 @@ echo "Attempting to calculate timeslots"
 (docker compose -f compose.srv.yml run compute-timeslots) &&
 echo "Timeslots successfully calculated" ||
 echo "Error with calculating timeslots"
+
+# Pull changes from main branch
+echo "Attempting to pull from origin"
+(git pull origin main) && 
+echo "Successfully pulled from origin" ||
+echo "Error with pulling from origin"
 
 # Add all data to staging area
 echo "Attempting to stage data"
