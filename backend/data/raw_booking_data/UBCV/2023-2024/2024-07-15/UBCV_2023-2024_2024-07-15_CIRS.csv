@@ -1,0 +1,13 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2023-2024,CIRS,1250,General,2024-07-22,13:00,15:30,WRB-ACTIVE,WRB_UBC,"FGL  Mon, Tue, Thu (week(s): July 22, 2024) 13:00 - CIRS 1250, ESB 1013", , , 
+UBCV,2023-2024,CIRS,1250,General,2024-07-15,15:00,18:00,WRB-ACTIVE,WRB_UBC,"UBC FGL Orientation Monday (week(s): July 15, 2024) 15:00 - CIRS 1250", , , 
+UBCV,2023-2024,CIRS,1250,General,2024-07-23,13:00,15:30,WRB-ACTIVE,WRB_UBC,"FGL  Mon, Tue, Thu (week(s): July 22, 2024) 13:00 - CIRS 1250, ESB 1013", , , 
+UBCV,2023-2024,CIRS,1250,General,2024-07-16,13:00,15:30,WRB-ACTIVE,WRB_UBC,"FGL  Tue, Wed, Thu (week(s): July 15, 2024) 13:00 - CIRS 1250, ESB 1013", , , 
+UBCV,2023-2024,CIRS,1250,General,2024-07-17,13:00,15:30,WRB-ACTIVE,WRB_UBC,"FGL  Tue, Wed, Thu (week(s): July 15, 2024) 13:00 - CIRS 1250, ESB 1013", , , 
+UBCV,2023-2024,CIRS,1250,General,2024-07-17,7:00,13:00,WRB-ACTIVE,WRB_UBC,"Facilities Town Hall Wed, Thu (week(s): July 15, 2024) 7:00 - CIRS 1250", , , 
+UBCV,2023-2024,CIRS,1250,General,2024-07-24,12:00,14:00,WRB-ACTIVE,WRB_UBC,Safety Meeting 24-Jul-2024 12:00 - CIRS 1250, , , 
+UBCV,2023-2024,CIRS,1250,General,2024-07-25,13:00,15:30,WRB-ACTIVE,WRB_UBC,"FGL  Mon, Tue, Thu (week(s): July 22, 2024) 13:00 - CIRS 1250, ESB 1013", , , 
+UBCV,2023-2024,CIRS,1250,General,2024-07-18,13:00,15:30,WRB-ACTIVE,WRB_UBC,"FGL  Tue, Wed, Thu (week(s): July 15, 2024) 13:00 - CIRS 1250, ESB 1013", , , 
+UBCV,2023-2024,CIRS,1250,General,2024-07-18,7:00,13:00,WRB-ACTIVE,WRB_UBC,"Facilities Town Hall Wed, Thu (week(s): July 15, 2024) 7:00 - CIRS 1250", , , 
+UBCV,2023-2024,CIRS,1250,General,2024-07-21,8:00,12:00,WRB-ACTIVE,WRB_UBC,"Tenth Church Sunday (week(s): July 1, 2024-August 12, 2024) 8:00 - CIRS 1250", , , 
+UBCV,2023-2024,CIRS,1250,General,2024-07-28,8:00,12:00,WRB-ACTIVE,WRB_UBC,"Tenth Church Sunday (week(s): July 1, 2024-August 12, 2024) 8:00 - CIRS 1250", , , 
