@@ -25,6 +25,8 @@ For some debugging hints, [refer to the debugging section](#debugging)
    macOS:
    - [Docker Desktop for Mac](https://docs.docker.com/desktop/install/mac-install/)
 
+   You will also need [Duo Mobile](https://duo.com/product/multi-factor-authentication-mfa/duo-mobile-app) for MFA to connect to UBC VPN.
+
 2. Clone the repo to your desired directory using the command line (Git Bash for Windows/macOS)
    
     ```bash
@@ -53,7 +55,7 @@ For some debugging hints, [refer to the debugging section](#debugging)
    USER_OS=<USER_OS_GOES_HERE>
    PATH_TO_DOCKER_DESKTOP_EXECUTABLE=<PATH_TO_DOCKER_DESKTOP_EXECUTABLE_GOES_HERE>
    PATH_TO_CISCO_ANYCONNECT_EXECUTABLE=<PATH_TO_CISCO_ANYCONNECT_EXECUTABLE_GOES_HERE>
-   CWL_USERNAME=<CWL_USERNAME_GOES_HERE>
+   CWL_USERNAME=<CWL_USERNAME_GOES_HERE>@app
    CWL_PASSWORD=<CWL_PASSWORD_GOES_HERE>
    ```
 
@@ -68,7 +70,7 @@ For some debugging hints, [refer to the debugging section](#debugging)
       - Username Example: 'user' (must use single quotes)
       - Password Example: 'pass' (must use single quotes)
    
-4. Run the setup script from the project's root directory
+4. Run the setup script from the project's root directory, authenticating as needed.
 
    Bash:
    
