@@ -62,7 +62,7 @@ For some debugging hints, [refer to the debugging section](#debugging)
    NOTE:
    - Replace **<USER_OS_GOES_HERE>** with one of WINDOWS, MACOS, or LINUX
    - If **<USER_OS_GOES_HERE>** is WINDOWS or MACOS, replace **<PATH_TO_DOCKER_DESKTOP_EXECUTABLE_GOES_HERE>** with the absolute path to your Docker Desktop executable
-      - Windows: '/c/Program Files/Docker/Docker/Docker Desktop.exe' (must use single quotes)
+      - Windows Example: '/c/Program Files/Docker/Docker/Docker Desktop.exe' (must use single quotes)
    - Replace **<PATH_TO_CISCO_ANYCONNECT_EXECUTABLE_GOES_HERE>** with the absolute path to the Cisco AnyConnect executable
       - Windows Example: '/c/Program Files (x86)/Cisco/Cisco AnyConnect Secure Mobility Client/vpncli.exe' (must use single quotes)
       - Linux Example: '/opt/cisco/anyconnect/bin/vpn' (must use single quotes)
