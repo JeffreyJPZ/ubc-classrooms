@@ -1,0 +1,10 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2023-2024,FRDM,153,General,2024-07-22,9:00,12:00,WRB-ACTIVE,WRB_UBC,"FGL S2  Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024-July 22, 2024) 9:00 - ANGU 039, CHEM C124, FRDM 153, LASR 104", , , 
+UBCV,2023-2024,FRDM,153,General,2024-07-23,9:00,12:00,WRB-ACTIVE,WRB_UBC,"FGL S2  Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024-July 22, 2024) 9:00 - ANGU 039, CHEM C124, FRDM 153, LASR 104", , , 
+UBCV,2023-2024,FRDM,153,General,2024-07-23,11:00,14:00,WRB-ACTIVE,WRB_UBC,"Geering Up Tue, Thu (week(s): July 15, 2024-August 12, 2024) 11:00 - FRDM 153", , , 
+UBCV,2023-2024,FRDM,153,General,2024-07-30,11:00,14:00,WRB-ACTIVE,WRB_UBC,"Geering Up Tue, Thu (week(s): July 15, 2024-August 12, 2024) 11:00 - FRDM 153", , , 
+UBCV,2023-2024,FRDM,153,General,2024-07-24,9:00,12:00,WRB-ACTIVE,WRB_UBC,"FGL S2  Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024-July 22, 2024) 9:00 - ANGU 039, CHEM C124, FRDM 153, LASR 104", , , 
+UBCV,2023-2024,FRDM,153,General,2024-07-25,9:00,12:00,WRB-ACTIVE,WRB_UBC,"FGL S2  Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024-July 22, 2024) 9:00 - ANGU 039, CHEM C124, FRDM 153, LASR 104", , , 
+UBCV,2023-2024,FRDM,153,General,2024-07-25,11:00,14:00,WRB-ACTIVE,WRB_UBC,"Geering Up Tue, Thu (week(s): July 15, 2024-August 12, 2024) 11:00 - FRDM 153", , , 
+UBCV,2023-2024,FRDM,153,General,2024-08-01,11:00,14:00,WRB-ACTIVE,WRB_UBC,"Geering Up Tue, Thu (week(s): July 15, 2024-August 12, 2024) 11:00 - FRDM 153", , , 
+UBCV,2023-2024,FRDM,153,General,2024-07-26,9:00,12:00,WRB-ACTIVE,WRB_UBC,"FGL S2  Mon, Tue, Wed, Thu, Fri (week(s): July 15, 2024-July 22, 2024) 9:00 - ANGU 039, CHEM C124, FRDM 153, LASR 104", , , 
