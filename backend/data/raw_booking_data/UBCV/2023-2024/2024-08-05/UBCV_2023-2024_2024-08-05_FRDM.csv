@@ -1,0 +1,5 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2023-2024,FRDM,153,General,2024-08-06,11:00,14:00,WRB-ACTIVE,WRB_UBC,"Geering Up Tue, Thu (week(s): July 15, 2024-August 12, 2024) 11:00 - FRDM 153", , , 
+UBCV,2023-2024,FRDM,153,General,2024-08-13,11:00,14:00,WRB-ACTIVE,WRB_UBC,"Geering Up Tue, Thu (week(s): July 15, 2024-August 12, 2024) 11:00 - FRDM 153", , , 
+UBCV,2023-2024,FRDM,153,General,2024-08-08,11:00,14:00,WRB-ACTIVE,WRB_UBC,"Geering Up Tue, Thu (week(s): July 15, 2024-August 12, 2024) 11:00 - FRDM 153", , , 
+UBCV,2023-2024,FRDM,153,General,2024-08-15,11:00,14:00,WRB-ACTIVE,WRB_UBC,"Geering Up Tue, Thu (week(s): July 15, 2024-August 12, 2024) 11:00 - FRDM 153", , , 

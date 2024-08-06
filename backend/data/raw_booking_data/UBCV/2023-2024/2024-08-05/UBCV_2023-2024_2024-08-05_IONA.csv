@@ -1,0 +1,3 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2023-2024,IONA,301,General,2024-08-05,12:00,15:00,LEC,ECON-V,ECON 367-S/LEC/921,ECON 367-S,921,"Norris, Samuel"
+UBCV,2023-2024,IONA,301,General,2024-08-07,12:00,15:00,LEC,ECON-V,ECON 367-S/LEC/921,ECON 367-S,921,"Norris, Samuel"
