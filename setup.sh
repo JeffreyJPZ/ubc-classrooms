@@ -7,8 +7,8 @@ echo "Beginning setup script"
 # Change directory to project root
 cd $(dirname "$0")
 
-# Allow use of environment variables from prod.env
-source prod.env
+# Allow use of environment variables from dev.env
+source dev.env
 
 # Start Docker Desktop if using Windows or macOS
 if [ "$USER_OS" = "WINDOWS" ] || [ "$USER_OS" = "MACOS" ]; then

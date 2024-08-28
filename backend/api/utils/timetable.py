@@ -9,13 +9,13 @@ class TimetableSettings():
     # UBC Online Timetable information
 
     CAMPUS = Campus.UBCV.value                               
-    ACADEMIC_YEAR = "2023-2024"                             # Change academic year for updated timetable
-    URL = 'https://sws-van.as.it.ubc.ca/sws_2023/'          # Change date to get updated timetable
+    ACADEMIC_YEAR = "2024-2025"                             # Change academic year for updated timetable
+    URL = 'https://sws-van.as.it.ubc.ca/sws_2024/'          # Change date to get updated timetable
     START_TIME = "07:00"                                    # Earliest time provided by the timetable in 24-hour format
     END_TIME = "22:00"                                      # Latest time provided by the timetable in 24-hour format
 
     # Reference date for timetable in ISO-8601 format (used in conjunction with week numbers to calculate dates)
-    REFERENCE_DATE = "2023-08-21"
+    REFERENCE_DATE = "2024-08-19"
 
     # Calculate start and end dates for scraping (always current week's Monday)
     _now = datetime.now()
