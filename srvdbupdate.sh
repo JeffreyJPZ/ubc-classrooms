@@ -27,6 +27,11 @@ sudo docker compose -f compose.srv.yml run create-models &&
 echo "Successfully added models" ||
 echo "Error with adding models"
 
+# Clean up database
+sudo docker compose -f compose.srv.yml run delete-expired-timeslots &&
+echo "Successfully deleted expired timeslots" ||
+echo "Error with deleting expired timeslots"
+
 # Recreate and restart services
 sudo docker compose -f compose.srv.yml up db web nginx -d --force-recreate &&
 echo "Successfully restarted services" ||
