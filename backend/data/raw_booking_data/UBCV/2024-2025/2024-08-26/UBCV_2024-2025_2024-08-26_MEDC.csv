@@ -1,0 +1,4 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2024-2025,MEDC,18,Restricted,2024-09-02,12:00,18:00,LAB,PCTH-V,PCTH_V 402-W/LAB/001,PCTH_V 402-W,001,"Karim, Sultan"
+UBCV,2024-2025,MEDC,18A,Restricted,2024-09-04,14:00,17:30,LAB,PCTH-V,PCTH_V 302-W/LAB/001,PCTH_V 302-W,001,"Fedida, David"
+UBCV,2024-2025,MEDC,18A,Restricted,2024-09-06,15:00,16:00,LAB,PCTH-V,PCTH_V 402-W/LAB/001,PCTH_V 402-W,001,"Karim, Sultan"
