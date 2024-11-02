@@ -10,4 +10,7 @@ urlpatterns = [
     path('v1/buildings/<str:campus>/', buildings.buildings_v1),
     path('v1/roomtypes/<str:campus>/', roomtypes.roomtypes_v1),
     path('v1/timeslots/<str:campus>/', timeslots.timeslots_v1),
+
+    # Version 2
+    path('v2/buildings/<str:campus>/', buildings.buildings_v2)
 ]

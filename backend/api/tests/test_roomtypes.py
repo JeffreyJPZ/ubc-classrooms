@@ -19,7 +19,7 @@ class TestRoomtypesV1(APITestCase):
         self.assertEqual(response.status_code, 200)
 
     def testGetEmptyDBStatusOk(self):
-        response = self.client.get('/api/v1/roomtypes/UBCV/')
+        response = self.client.get('/api/v1/roomtypes/UBCO/')
         self.assertEqual(response.status_code, 200)
 
     def testGetStatusNotFound(self):

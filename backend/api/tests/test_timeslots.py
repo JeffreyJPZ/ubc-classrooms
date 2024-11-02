@@ -14,10 +14,10 @@ from api.models.timeslot import *
 class TestTimeslotsV1(APITestCase):
     def setUp(self):
         ubcv_campus = Campus.objects.get_or_create(campus_code="UBCV", campus_name="Vancouver")[0]
-        alrd = Building.objects.get_or_create(campus=ubcv_campus, building_code="ALRD", building_name="Allard Hall")[0]
-        swng = Building.objects.get_or_create(campus=ubcv_campus, building_code="SWNG", building_name="West Mall Swing Space")[0]
-        life = Building.objects.get_or_create(campus=ubcv_campus, building_code="LIFE", building_name="UBC Life Building")[0]
-        esb = Building.objects.get_or_create(campus=ubcv_campus, building_code="ESB", building_name="Earth Sciences Building")[0]
+        alrd = Building.objects.get_or_create(campus=ubcv_campus, building_code="ALRD", building_name="Allard Hall", building_address="1822 East Mall", latitude=49.2699, longitude=-123.25318)[0]
+        swng = Building.objects.get_or_create(campus=ubcv_campus, building_code="SWNG", building_name="West Mall Swing Space", building_address="2175 West Mall", latitude=49.26293, longitude=-123.25431)[0]
+        life = Building.objects.get_or_create(campus=ubcv_campus, building_code="LIFE", building_name="UBC Life Building", building_address="6138 Student Union Blvd", latitude=49.26765, longitude=-123.25006)[0]
+        esb = Building.objects.get_or_create(campus=ubcv_campus, building_code="ESB", building_name="Earth Sciences Building", building_address="2207 Main Mall", latitude=49.26274, longitude=-123.25224)[0]
         general = RoomType.objects.get_or_create(campus=ubcv_campus, room_type="General")[0]
         restricted = RoomType.objects.get_or_create(campus=ubcv_campus, room_type="Restricted")[0]
 
@@ -47,7 +47,7 @@ class TestTimeslotsV1(APITestCase):
         self.assertEqual(response.status_code, 200)
 
     def testGetEmptyDBStatusOk(self):
-        response = self.client.get('/api/v1/timeslots/UBCV/', QUERY_STRING="date=2024-05-03")
+        response = self.client.get('/api/v1/timeslots/UBCO/', QUERY_STRING="date=2024-05-03")
         self.assertEqual(response.status_code, 200)
 
     def testGetNoMatchingBuildingStatusOk(self):

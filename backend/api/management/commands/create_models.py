@@ -18,20 +18,8 @@ class Command(BaseCommand):
     def handle(self) -> None:
         date = TimetableSettings.START_DATE
         
-        # Populate campus table with new campuses, otherwise do nothing
-        for campus in CampusEnum:
-            Campus.objects.get_or_create(campus_code=campus.name, campus_name=campus.value)
-
         # UBCV
         ubcv_campus = Campus.objects.get(pk=CampusEnum.UBCV.name)
-
-        # Populate building table with new buildings, otherwise do nothing
-        for building_code in BuildingCodeToFullName:
-            Building.objects.get_or_create(campus=ubcv_campus, building_code=building_code.name, building_name=building_code.value)
-                
-        # Populate roomtype table with new roomtypes, otherwise do nothing
-        for room in ClassroomType:
-            RoomType.objects.get_or_create(campus=ubcv_campus, room_type=room.value)
                 
         # Populate timeslot table with unique timeslots, otherwise do nothing
         for building_code in BuildingCodeToFullName:

@@ -15,10 +15,6 @@ class TestCampusesV1(APITestCase):
         response = self.client.get('/api/v1/campuses/')
         self.assertEqual(response.status_code, 200)
 
-    def test_GetEmptyDBStatusOk(self):
-        response = self.client.get('/api/v1/campuses/')
-        self.assertEqual(response.status_code, 200)
-
     def test_GetQueryParamsStatusOk(self):
         response = self.client.get('/api/v1/campuses/', QUERY_STRING="campus=UBCV")
         self.assertEqual(response.status_code, 200)

@@ -426,6 +426,12 @@
         "longitude": -123.2466
     },
     {
+        "building_name": "UBC Life Building",
+        "building_address": "6138 Student Union Blvd",
+        "latitude": 49.26765, 
+        "longitude": -123.25006
+    },
+    {
         "building_name": "Wayne and William White Engineering Design Centre",
         "building_address": "2345 East Mall",
         "latitude": 49.26233,
