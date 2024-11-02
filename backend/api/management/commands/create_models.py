@@ -13,34 +13,40 @@ from api.models.roomtype import *
 from api.models.timeslot import *
 
 class Command(BaseCommand):
-    help = "Read timeslot data for a given period from file and create models for tables"
+    help = "Read timeslot data for a given period from file and create models for tables if applicable"
 
-    def handle(self, *args, **options) -> None:
+    def handle(self) -> None:
         date = TimetableSettings.START_DATE
         
+        # Populate campus table with new campuses, otherwise do nothing
+        for campus in CampusEnum:
+            Campus.objects.get_or_create(campus_code=campus.name, campus_name=campus.value)
+
         # UBCV
-        
-        # Populate buildings table with new buildings, otherwise do nothing
+        ubcv_campus = Campus.objects.get(pk=CampusEnum.UBCV.name)
+
+        # Populate building table with new buildings, otherwise do nothing
         for building_code in BuildingCodeToFullName:
-            Building.objects.get_or_create(campus=Campus.UBCV.value, building_code=building_code.name, building_name=building_code.value)
+            Building.objects.get_or_create(campus=ubcv_campus, building_code=building_code.name, building_name=building_code.value)
                 
-        # Populate roomtypes table with new roomtypes, otherwise do nothing
+        # Populate roomtype table with new roomtypes, otherwise do nothing
         for room in ClassroomType:
-            RoomType.objects.get_or_create(campus=Campus.UBCV.value, room_type=room.value)
+            RoomType.objects.get_or_create(campus=ubcv_campus, room_type=room.value)
                 
-        # Populate timeslots table with unique timeslots, otherwise do nothing
+        # Populate timeslot table with unique timeslots, otherwise do nothing
         for building_code in BuildingCodeToFullName:
             path = Path.cwd() / f'{Targets.TIMESLOT_DATA}' / f'{TimetableSettings.CAMPUS}' / f'{TimetableSettings.ACADEMIC_YEAR}' / f'{date}' / f'{TimetableSettings.CAMPUS}_{TimetableSettings.ACADEMIC_YEAR}_{date}_{building_code.name}.csv'
+            building = Building.objects.get(pk=building_code.name)
 
             with open(path, mode="r", newline="") as f:
                 reader = csv.DictReader(f, delimiter=",")
 
                 for timeslot in reader:
-                    Timeslot.objects.get_or_create(campus=timeslot["Campus"],
-                                                    building_code=timeslot["BuildingCode"],
-                                                    building_name=timeslot["BuildingName"],
+                    roomtype = RoomType.objects.get(pk=ClassroomType(timeslot["RoomType"]).value)
+                    Timeslot.objects.get_or_create(campus=ubcv_campus,
+                                                    building=building,
                                                     room=timeslot["Room"],
-                                                    room_type=timeslot["RoomType"],
+                                                    room_type=roomtype,
                                                     start=datetime.strptime(timeslot["Start"], TimetableSettings.FORMAT_DATETIME),
                                                     end=datetime.strptime(timeslot["End"], TimetableSettings.FORMAT_DATETIME))
                         

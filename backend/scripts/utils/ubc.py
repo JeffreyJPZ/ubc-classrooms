@@ -3,8 +3,9 @@ Names for UBC infrastructure used throughout the project
 """
 from enum import Enum
 
-class Campus(Enum):
-    UBCV = "UBCV"
+class CampusEnum(Enum):
+    UBCV = "Vancouver"
+    UBCO = "Okanagan" # Not yet supported
 
 
 

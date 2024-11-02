@@ -40,6 +40,7 @@ def timeslots_v1(request : Request, campus : str) -> Response:
             except KeyError:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
         
+        # Deserialize path params
         query_params_serializer = QueryParametersSerializer(data={
            "date": request.query_params.get("date"),
            "start": request.query_params.get("start"),
@@ -49,12 +50,12 @@ def timeslots_v1(request : Request, campus : str) -> Response:
         })
         query_params_serializer.is_valid(raise_exception=True)
     
-        # Query timeslots table
+        # Query timeslot table
         path_params = path_params_serializer.validated_data
         query_params = query_params_serializer.validated_data
 
-        timeslots = Timeslot.objects.filter(campus=path_params.get("campus"))
-        
+        # Join on building table and include building name
+        timeslots = Timeslot.objects.filter(campus__campus_code=path_params.get("campus"))
         # Check if optional query_params are not null or empty and query
         if query_params.get("date"):
             if query_params.get("start") and query_params.get("end"):
@@ -68,12 +69,28 @@ def timeslots_v1(request : Request, campus : str) -> Response:
                                              end__gte=datetime.combine(query_params.get("date"), query_params.get("end")))
             timeslots = timeslots.filter(start__date=query_params.get("date"))
         if query_params.get("buildings"):
-            timeslots = timeslots.filter(building_code__in=query_params.get("buildings"))
+            timeslots = timeslots.filter(building_code__building_code__in=query_params.get("buildings"))
         if query_params.get("room_types"):
-            timeslots = timeslots.filter(room_type__in=query_params.get("room_types"))
+            timeslots = timeslots.filter(room_type__room_type__in=query_params.get("room_types"))
+
+        # Get building names
+        timeslots = timeslots.select_related("building_code_id")
+
+        timeslots = list(timeslots.values("campus_id", "building_code_id", "building_code_id__building_name", "room", "room_type_id", "start", "end"))
+
+        # Remove id suffixes added by Django
+        for timeslot in timeslots:
+            timeslot["campus"] = timeslot["campus_id"]
+            timeslot["building_code"] = timeslot["building_code_id"]
+            timeslot["building_name"] = timeslot["building_code_id__building_name"]
+            timeslot["room_type"] = timeslot["room_type_id"]
+        
+            del timeslot["campus_id"]
+            del timeslot["building_code_id"]
+            del timeslot["building_code_id__building_name"]
+            del timeslot["room_type_id"]
 
         # Add column for date to all timeslots, and truncate start and end
-        timeslots = list(timeslots.values())
         for t in timeslots:
             t["date"] = t["start"].date()
             t["start"] = t["start"].time()
@@ -85,6 +102,12 @@ def timeslots_v1(request : Request, campus : str) -> Response:
         # Validate result and return HTTP 400 response if result is invalid
         timeslots_serializer.is_valid(raise_exception=True)
         
+        # Stringify datetime objects
+        for t in timeslots_serializer.validated_data:
+            t["date"] = t["date"].strftime("%Y-%m-%d")
+            t["start"] = t["start"].strftime("%H:%M")
+            t["end"] = t["end"].strftime("%H:%M")
+            
         content = timeslots_serializer.validated_data
 
         return Response(content, status=status.HTTP_200_OK)

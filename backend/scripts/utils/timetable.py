@@ -3,12 +3,12 @@ Constants for scraping UBC Online Timetable
 """
 from enum import Enum
 from datetime import datetime, timedelta
-from utils.ubc import Campus
+from utils.ubc import CampusEnum
 
 class TimetableSettings():
     # UBC Online Timetable information
 
-    CAMPUS = Campus.UBCV.value                               
+    CAMPUS = CampusEnum.UBCV.name                               
     ACADEMIC_YEAR = "2024-2025"                             # Change academic year for updated timetable
     URL = 'https://sws-van.as.it.ubc.ca/sws_2024/'          # Change date to get updated timetable
     START_TIME = "07:00"                                    # Earliest time provided by the timetable in 24-hour format

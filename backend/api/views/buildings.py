@@ -23,9 +23,16 @@ def buildings_v1(request : Request, campus : str) -> Response:
         if not path_params_serializer.is_valid():
             return Response(status=status.HTTP_404_NOT_FOUND)
     
-        # Query buildings table and serialize query result
+        # Query joined campus and building table and serialize query result
         path_params = path_params_serializer.validated_data
-        buildings = list(Building.objects.filter(campus=path_params.get("campus")).values())
+        
+        buildings = list(Building.objects.filter(campus__campus_code=path_params.get("campus")).values("campus_id", "building_code", "building_name"))
+
+        # Remove id suffixes added by Django
+        for building in buildings:
+            building["campus"] = building["campus_id"]
+            del building["campus_id"]
+
         buildings_serializer = BuildingSerializer(data=buildings, many=True)
 
         # Validate result and return HTTP 400 response if result is invalid
