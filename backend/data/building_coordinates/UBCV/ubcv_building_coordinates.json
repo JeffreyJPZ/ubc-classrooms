@@ -72,13 +72,13 @@
         "longitude": -123.25341
     },
     {
-        "building_name": "Center for Brain Health",
+        "building_name": "Centre for Brain Health",
         "building_address": "2215 Wesbrook Mall",
         "latitude": 49.26447,
         "longitude": -123.24422
     },
     {
-        "building_name": "C. K. Choi Building for The Institute of Asian Res",
+        "building_name": "C. K. Choi Building",
         "building_address": "1855 West Mall",
         "latitude": 49.26726,
         "longitude": -123.25797
@@ -282,6 +282,18 @@
         "longitude": -123.25505
     },
     {
+        "building_name": "Koerner Pavilion",
+        "building_address": "2211 Wesbrook Mall",
+        "latitude": 49.26436, 
+        "longitude": -123.24629
+    },
+    {
+        "building_name": "Landscape Architecture Annex",
+        "building_address": "2371 Main Mall",
+        "latitude": 49.26081,
+        "longitude": -123.25011
+    },
+    {
         "building_name": "Leonard S. Klinck",
         "building_address": "6356 Agricultural Road",
         "latitude": 49.26545,
@@ -292,6 +304,18 @@
         "building_address": "2350 Health Sciences Mall",
         "latitude": 49.26236,
         "longitude": -123.24494
+    },
+    {
+        "building_name": "Liu Institute for Global Issues",
+        "building_address": "6476 NW Marine Dr",
+        "latitude": 49.26760,
+        "longitude": -123.25928
+    },
+    {
+        "building_name": "Lower Mall Research Station",
+        "building_address": "2259 Lower Mall",
+        "latitude": 49.26078,
+        "longitude": -123.25553
     },
     {
         "building_name": "MacLeod",
@@ -352,6 +376,12 @@
         "building_address": "2405 Wesbrook Mall",
         "latitude": 49.26229,
         "longitude": -123.24342
+    },
+    {
+        "building_name": "Ritsumeikan-UBC House",
+        "building_address": "6460 Agronomy Road",
+        "latitude": 49.26038,
+        "longitude": -123.25316
     },
     {
         "building_name": "Ponderosa Annex E",
@@ -418,6 +448,12 @@
         "building_address": "6358 University Blvd",
         "latitude": 49.26383,
         "longitude": -123.25387
+    },
+    {
+        "building_name": "Totem Field Studios",
+        "building_address": "2613 West Mall",
+        "latitude": 49.25618,
+        "longitude": -123.24897
     },
     {
         "building_name": "UBC War Memorial Gymnasium",

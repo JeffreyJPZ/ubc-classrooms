@@ -18,11 +18,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='building',
             name='latitude',
-            field=models.DecimalField(db_default=0, decimal_places=6, default=0, help_text='Latitude data of a UBC building up to 5 significant figures', max_digits=8),
+            field=models.DecimalField(db_default=0.0, decimal_places=6, default=0.0, help_text='Latitude data of a UBC building up to 5 significant figures', max_digits=8),
         ),
         migrations.AlterField(
             model_name='building',
             name='longitude',
-            field=models.DecimalField(db_default=0, decimal_places=6, default=0, help_text='Longitude data of a UBC building up to 5 significant figures', max_digits=9),
+            field=models.DecimalField(db_default=0.0, decimal_places=6, default=0.0, help_text='Longitude data of a UBC building up to 5 significant figures', max_digits=9),
         ),
     ]

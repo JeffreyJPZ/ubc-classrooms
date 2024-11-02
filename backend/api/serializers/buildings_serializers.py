@@ -24,6 +24,6 @@ class BuildingSerializerV2(serializers.Serializer):
     campus = CampusCodeField(required=True)
     building_code = BuildingCodeField(required=True)
     building_name = BuildingNameField(required=True)
-    building_address = serializers.CharField(required=True)
+    building_address = serializers.CharField(required=True, allow_blank=True)
     latitude = serializers.DecimalField(max_digits=8, decimal_places=6, required=True)
     longitude = serializers.DecimalField(max_digits=9, decimal_places=6, required=True)

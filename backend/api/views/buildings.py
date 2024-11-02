@@ -73,7 +73,12 @@ def buildings_v2(request : Request, campus : str) -> Response:
 
         # Validate result and return HTTP 400 response if result is invalid
         buildings_serializer.is_valid(raise_exception=True)
-        
+            
+        # Convert coordinate decimals to strings
+        for building in buildings_serializer.validated_data:
+            building["latitude"] = str(building["latitude"])
+            building["longitude"] = str(building["longitude"])
+
         content = buildings_serializer.validated_data
 
         return Response(content, status=status.HTTP_200_OK)
