@@ -65,23 +65,11 @@ export function Form() {
     const [formState, formDispatch] = useReducer(formReducer, initialFormState);
     const [formSubmittedToggle, setFormSubmittedToggle]= useState(false);
 
-    const mapRef = useRef<Map | null>(null) as MapRef<Map | null>;
-    const mapContainerRef = useRef<HTMLDivElement | null>(null) as MapRef<HTMLDivElement | null>;
-
-    useEffect(() => {
-        mapboxgl.accessToken = import.meta.env.PROD ? import.meta.env.VITE_MAPBOX_ACCESS_TOKEN : import.meta.env.VITE_MAPBOX_DEV_ACCESS_TOKEN;
-        if (mapContainerRef.current !== null && mapRef.current === null) {
-            mapRef.current = new mapboxgl.Map({
-                container: mapContainerRef.current as HTMLDivElement
-            });
-        }
-    }, [mapRef, mapContainerRef]);
-
     return (
         <FormDataContext.Provider value={formState}>
             <FormSubmittedToggleContext.Provider value={{formSubmittedToggle: formSubmittedToggle, setFormSubmittedToggle: setFormSubmittedToggle}}>
                 <div className='form'>
-                    <MapContainer ref={mapContainerRef}/>
+                    <MapContainer/>
                     <FormDispatchContext.Provider value={formDispatch}>
                         <FormInputs/>
                     </FormDispatchContext.Provider>
