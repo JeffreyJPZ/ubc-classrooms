@@ -2,7 +2,6 @@ import { useQuery } from "react-query";
 import queryString from "query-string";
 
 import { Timeslots, TimeslotsSchema } from "../../../types";
-import { queryClient } from "../../../lib/react-query";
 
 interface GetTimeslotQueryKeys {
     id: string,
