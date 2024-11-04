@@ -14,7 +14,6 @@ const UBCV_CENTER: Coordinates = [-123.24530, 49.26101];
 function transformToGeoJson(buildings: Building[]): MapSource {
     const transformedBuildings: MapFeature[] = buildings.map((building) => {
         const coordinates: Coordinates = [parseFloat(building.longitude), parseFloat(building.latitude)];
-        console.log(coordinates)
         const feature: MapFeature = {
             type: "Feature",
             geometry: {
@@ -52,17 +51,20 @@ export function MapContainer(): JSX.Element {
             });
         }
         
-        if (buildingsQuery.data !== undefined && mapRef.current?.loaded && !mapRef.current?.hasImage('custom-marker')) {
+        if (buildingsQuery.data !== undefined && mapRef.current?.loaded && mapRef.current?.getLayer('points') === undefined) {
             mapRef.current.loadImage(
                 'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
                 (error, image) => {
                     if (error) throw error;
-                    mapRef.current?.addImage('custom-marker', image as ImageData);
 
-                    const geojson: MapSource = transformToGeoJson(buildingsQuery.data.filter((building) => {
-                        formState.buildings === undefined || 
-                        formState.buildings?.includes(building.building_code)
-                    }));
+                    mapRef.current?.addImage('custom-marker', image as ImageData);
+                    
+                    const geojson: MapSource = transformToGeoJson(
+                        formState.buildings === undefined ?
+                        buildingsQuery.data :
+                        buildingsQuery.data.filter((building) => {
+                        formState.buildings?.includes(building.building_code)})
+                    );
                     
                     mapRef.current?.addSource('points', geojson as SourceSpecification);
         
@@ -81,7 +83,7 @@ export function MapContainer(): JSX.Element {
                 }
             );
         }
-    }, [buildingsQuery.data, mapRef.current?.loaded]);
+    }, [buildingsQuery.data, mapRef.current?.loaded, formState.buildings]);
 
     if (buildingsQuery.isLoading) {
         return (
