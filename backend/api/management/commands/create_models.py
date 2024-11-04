@@ -15,7 +15,7 @@ from api.models.timeslot import *
 class Command(BaseCommand):
     help = "Read timeslot data for a given period from file and create models for tables if applicable"
 
-    def handle(self) -> None:
+    def handle(self, *args, **options) -> None:
         date = TimetableSettings.START_DATE
         
         # UBCV
@@ -32,7 +32,7 @@ class Command(BaseCommand):
                 for timeslot in reader:
                     roomtype = RoomType.objects.get(pk=ClassroomType(timeslot["RoomType"]).value)
                     Timeslot.objects.get_or_create(campus=ubcv_campus,
-                                                    building=building,
+                                                    building_code=building,
                                                     room=timeslot["Room"],
                                                     room_type=roomtype,
                                                     start=datetime.strptime(timeslot["Start"], TimetableSettings.FORMAT_DATETIME),
