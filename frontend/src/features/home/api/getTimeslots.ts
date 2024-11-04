@@ -69,10 +69,10 @@ function mapTimeslotsToBuildingsAndRooms(data: Timeslots): TransformedData {
 export const useTimeslots = (parameters: GetTimeslotParameters, keys: GetTimeslotQueryKeys) => {
     return useQuery({
         ...useTimeslotsConfig,
-        // Refetches data only when form is submitted AND either campus or date has changed (most query data will be subset of initial loaded data)
+        // Refetches data only when form is submitted
         queryKey: [keys],
         queryFn: () => getTimeslots(parameters),
-        // Returns data as timeslots mapped to buildings and room names matching query parameters
+        // Returns data as timeslots mapped to buildings and room names
         select: mapTimeslotsToBuildingsAndRooms,
     });
 };
