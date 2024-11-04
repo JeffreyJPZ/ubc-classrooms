@@ -1,5 +1,5 @@
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
-import { LngLatLike } from 'mapbox-gl';
+import { LngLatLike } from 'mapbox-gl'
 import { z } from 'zod';
 
 export const BuildingSchema = z.object({
