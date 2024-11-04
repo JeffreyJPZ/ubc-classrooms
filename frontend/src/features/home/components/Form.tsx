@@ -2,12 +2,9 @@
  * Handles submission of user input
  */
 
-import { useEffect, useReducer, useRef, useState } from 'react';
-import mapboxgl, { Map } from "mapbox-gl";
-import 'mapbox-gl/dist/mapbox-gl.css';
+import {useReducer, useState } from 'react';
 
 import { MapContainer } from './MapContainer';
-import { MapRef } from '../../../types';
 import { FormStateTypes, FormActions, FormDataContext, FormDispatchContext, FormState, FormSubmittedToggleContext } from '../contexts';
 import { getCurrentISODate } from '../../../lib/getCurrentISODate';
 import { FormInputs } from './FormInputs';
