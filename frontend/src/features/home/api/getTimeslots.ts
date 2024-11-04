@@ -2,8 +2,14 @@ import { useQuery } from "react-query";
 import queryString from "query-string";
 
 import { Timeslots, TimeslotsSchema } from "../../../types";
+import { queryClient } from "../../../lib/react-query";
 
-type GetTimeslotParameters = {
+interface GetTimeslotQueryKeys {
+    id: string,
+    formSubmittedToggle: boolean
+}
+
+interface GetTimeslotParameters {
     campus: string,
     date: string,
     start?: string,
@@ -61,13 +67,13 @@ function mapTimeslotsToBuildingsAndRooms(data: Timeslots): TransformedData {
     }, {} as TransformedData);
 }
 
-export const useTimeslots = (parameters: GetTimeslotParameters, keys: unknown[]) => {
+export const useTimeslots = (parameters: GetTimeslotParameters, keys: GetTimeslotQueryKeys) => {
     return useQuery({
         ...useTimeslotsConfig,
-        // Refetches data only when given keys change
-        queryKey: ["timeslots", ...keys],
+        // Refetches data only when form is submitted AND either campus or date has changed (most query data will be subset of initial loaded data)
+        queryKey: [keys],
         queryFn: () => getTimeslots(parameters),
-        // Transforms timeslot data to be mapped to buildings and rooms
+        // Returns data as timeslots mapped to buildings and room names matching query parameters
         select: mapTimeslotsToBuildingsAndRooms,
     });
 };

@@ -10,7 +10,7 @@ export enum FormStateTypes {
     "ROOM_TYPES",
 }
 
-export type FormActions = {
+export interface FormActions {
     type: FormStateTypes,
     value: string | string[] | undefined,
 };
@@ -31,4 +31,4 @@ export type FormState = z.infer<typeof FormStateSchema>;
 
 export const FormDataContext = createContext<FormState>({} as FormState);
 export const FormDispatchContext = createContext<Dispatch<FormActions> | (() => void)>(() => {});
-export const FormSubmittedContext = createContext({formSubmitted: false, setFormSubmitted: (() => {}) as Dispatch<SetStateAction<boolean>>});
+export const FormSubmittedToggleContext = createContext({formSubmittedToggle: false, setFormSubmittedToggle: (() => {}) as Dispatch<SetStateAction<boolean>>});

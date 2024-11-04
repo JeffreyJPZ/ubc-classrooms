@@ -6,6 +6,9 @@ export const BuildingSchema = z.object({
     }),
     building_code: z.string(),
     building_name: z.string(),
+    building_address: z.string(),
+    latitude: z.string(),
+    longitude: z.string()
 });
 export const BuildingsSchema = z.array(BuildingSchema);
 

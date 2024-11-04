@@ -2,10 +2,14 @@
  * Handles submission of user input
  */
 
-import { useReducer, useState } from 'react';
-import { FormStateTypes, FormActions, FormDataContext, FormDispatchContext, FormState, FormSubmittedContext } from '../contexts';
-import { getCurrentISODate } from '../../../lib/getCurrentISODate';
+import { useEffect, useReducer, useRef, useState } from 'react';
+import mapboxgl, { Map } from "mapbox-gl";
+import 'mapbox-gl/dist/mapbox-gl.css';
 
+import { MapContainer } from './MapContainer';
+import { MapRef } from '../../../types';
+import { FormStateTypes, FormActions, FormDataContext, FormDispatchContext, FormState, FormSubmittedToggleContext } from '../contexts';
+import { getCurrentISODate } from '../../../lib/getCurrentISODate';
 import { FormInputs } from './FormInputs';
 import { TimeslotGroupTable } from './TimeslotGroupTable';
 
@@ -59,16 +63,31 @@ const initialFormState: FormState = {
 
 export function Form() {
     const [formState, formDispatch] = useReducer(formReducer, initialFormState);
-    const [formSubmitted, setFormSubmitted]= useState(false);
+    const [formSubmittedToggle, setFormSubmittedToggle]= useState(false);
+
+    const mapRef = useRef<Map | null>(null) as MapRef<Map | null>;
+    const mapContainerRef = useRef<HTMLDivElement | null>(null) as MapRef<HTMLDivElement | null>;
+
+    useEffect(() => {
+        mapboxgl.accessToken = import.meta.env.PROD ? import.meta.env.VITE_MAPBOX_ACCESS_TOKEN : import.meta.env.VITE_MAPBOX_DEV_ACCESS_TOKEN;
+        if (mapContainerRef.current !== null && mapRef.current === null) {
+            mapRef.current = new mapboxgl.Map({
+                container: mapContainerRef.current as HTMLDivElement
+            });
+        }
+    }, [mapRef, mapContainerRef]);
 
     return (
         <FormDataContext.Provider value={formState}>
-            <FormSubmittedContext.Provider value={{formSubmitted, setFormSubmitted}}>
-                <FormDispatchContext.Provider value={formDispatch}>
-                    <FormInputs/>
-                </FormDispatchContext.Provider>
-                <TimeslotGroupTable/>
-            </FormSubmittedContext.Provider>
+            <FormSubmittedToggleContext.Provider value={{formSubmittedToggle: formSubmittedToggle, setFormSubmittedToggle: setFormSubmittedToggle}}>
+                <div className='form'>
+                    <MapContainer ref={mapContainerRef}/>
+                    <FormDispatchContext.Provider value={formDispatch}>
+                        <FormInputs/>
+                    </FormDispatchContext.Provider>
+                    <TimeslotGroupTable/>
+                </div>
+            </FormSubmittedToggleContext.Provider>
         </FormDataContext.Provider>
     );
 }
