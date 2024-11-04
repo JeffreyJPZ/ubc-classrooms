@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { FormDataContext, FormSubmittedToggleContext } from "../contexts";
 import { useTimeslots } from "../api";
 import { TimeslotGroup } from "./TimeslotGroup";
