@@ -66,10 +66,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install dependenies
+        run: |
+          cd frontend && sudo npm ci
+
       - name: Give permissions for building dist files
         run: |
-          sudo chmod u+x ./frontend/node_modules/.bin/vite
-          sudo chmod u+x ./frontend/node_modules/.bin/tsc
+          sudo chmod u+x ./node_modules/.bin/vite
+          sudo chmod u+x ./node_modules/.bin/tsc
+      
+      - name: Return to project root
+        run: |
+          cd ..
 
       - name: Create production .env file
         run: |
