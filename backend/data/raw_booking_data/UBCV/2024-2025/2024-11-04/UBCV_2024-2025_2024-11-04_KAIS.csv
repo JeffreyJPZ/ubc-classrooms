@@ -1,4 +1,0 @@
-Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
-UBCV,2024-2025,KAIS,1160,Restricted,2024-11-06,10:00,12:00,LAB,MECH-V,MECH_V 420-W/LAB/L1A,MECH_V 420-W,L1A,"Stoeber, Boris"
-UBCV,2024-2025,KAIS,1160,Restricted,2024-11-06,16:00,18:00,LAB,MECH-V,MECH_V 420-W/LAB/L1B,MECH_V 420-W,L1B,"Stoeber, Boris"
-UBCV,2024-2025,KAIS,1160,Restricted,2024-11-08,16:00,18:00,LAB,MECH-V,MECH_V 420-W/LAB/L1C,MECH_V 420-W,L1C,"Stoeber, Boris"
