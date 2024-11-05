@@ -61,7 +61,7 @@ jobs:
       CERTBOT_EMAIL: ${{ secrets.CERTBOT_EMAIL }}
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-
+      VITE_MAPBOX_ACCESS_TOKEN: ${{ secrets.VITE_MAPBOX_ACCESS_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -75,7 +75,12 @@ jobs:
           sudo chmod u+x ./frontend/node_modules/.bin/vite
           sudo chmod u+x ./frontend/node_modules/.bin/tsc
 
-      - name: Create production .env file
+      - name: Create production .env file for frontend
+        run: |
+          touch frontend/.env.production
+          echo VITE_MAPBOX_ACCESS_TOKEN=$VITE_MAPBOX_ACCESS_TOKEN >> frontend/.env.production
+
+      - name: Create production .env file for backend
         run: |
           touch prod.env
           echo SQL_ENGINE=$SQL_ENGINE >> prod.env
