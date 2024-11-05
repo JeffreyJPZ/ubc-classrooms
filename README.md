@@ -72,8 +72,9 @@ For some debugging hints, [refer to the debugging section](#debugging)
 
 4. Generate a Mapbox token and copy it to a `.env.development` file in the `frontend` directory as follows:
    ```
-   VITE_MAPBOX_DEV_ACCESS_TOKEN=<USER_TOKEN_GOES_HERE>
+   VITE_MAPBOX_DEV_ACCESS_TOKEN='<USER_TOKEN_GOES_HERE>'
    ```
+   Ensure that the token is surrounded with quotes.
 
 5. Run the setup script from the project's root directory, authenticating as needed.
 
