@@ -25,7 +25,7 @@ For some debugging hints, [refer to the debugging section](#debugging)
    macOS:
    - [Docker Desktop for Mac](https://docs.docker.com/desktop/install/mac-install/)
 
-   You will also need [Duo Mobile](https://duo.com/product/multi-factor-authentication-mfa/duo-mobile-app) for MFA to connect to UBC VPN.
+   You will also need [Duo Mobile](https://duo.com/product/multi-factor-authentication-mfa/duo-mobile-app) for MFA to connect to UBC VPN, and a [Mapbox account](https://www.mapbox.com/) to access the map view.
 
 2. Clone the repo to your desired directory using the command line (Git Bash for Windows/macOS)
    
@@ -69,8 +69,14 @@ For some debugging hints, [refer to the debugging section](#debugging)
    - Replace **<CWL_USERNAME_GOES_HERE>** and **<CWL_PASSWORD_GOES_HERE>** with your CWL username and password
       - Username Example: 'user' (must use single quotes)
       - Password Example: 'pass' (must use single quotes)
-   
-4. Run the setup script from the project's root directory, authenticating as needed.
+
+4. Generate a Mapbox token and copy it to a `.env.development` file in the `frontend` directory as follows:
+   ```
+   VITE_MAPBOX_DEV_ACCESS_TOKEN='<USER_TOKEN_GOES_HERE>'
+   ```
+   Ensure that the token is surrounded with quotes.
+
+5. Run the setup script from the project's root directory, authenticating as needed.
 
    Bash:
    
@@ -83,15 +89,16 @@ For some debugging hints, [refer to the debugging section](#debugging)
       ```cmd
       .\setup.bat
       ```
-  
-7. Start the required services:
+
+
+6. Start the required services:
    
     ```bash
     $ # Start the web and database services in detached mode
     $ docker compose -f compose.dev.yml up db web -d
     ```
 
-8. Run the application
+7. Run the application
    
     ```bash
     $ # Navigate to the UBC Classrooms web application
@@ -102,9 +109,9 @@ For some debugging hints, [refer to the debugging section](#debugging)
     $ npm run dev
     ```
 
-9. Access the application at http://localhost:3000/
+8. Access the application at http://localhost:3000/
 
-10. To stop the application and reclaim disk space, do the following:
+9. To stop the application and reclaim disk space, do the following:
    
     - Press CTRL + C to stop the application and regain control of the command line
     - Run the following commands:

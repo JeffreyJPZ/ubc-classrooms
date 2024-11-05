@@ -1,6 +1,7 @@
 .idea
 .vscode
 *.env
+**/**/*.env.*
 __pycache__
 
 # Exclude database files and other binaries
