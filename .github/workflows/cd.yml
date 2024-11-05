@@ -72,12 +72,8 @@ jobs:
 
       - name: Give permissions for building dist files
         run: |
-          sudo chmod u+x ./node_modules/.bin/vite
-          sudo chmod u+x ./node_modules/.bin/tsc
-      
-      - name: Return to project root
-        run: |
-          cd ..
+          sudo chmod u+x ./frontend/node_modules/.bin/vite
+          sudo chmod u+x ./frontend/node_modules/.bin/tsc
 
       - name: Create production .env file
         run: |
