@@ -4,6 +4,8 @@
     flex-basis: 50%;
     flex-wrap: wrap;
     justify-content: space-between;
+    margin-top: calc(2 * var(--vertical-margin));
+    margin-bottom: var(--vertical-margin);
     padding-top: var(--vertical-margin);
     padding-bottom: var(--vertical-margin);
     background-color: var(--secondary-background-color);

@@ -1,7 +1,5 @@
 .map-container {
-    height: 20rem;
+    height: 30rem;
     width: 100%;
-    margin-top: var(--vertical-margin);
-    margin-bottom: var(--vertical-margin);
     border-radius: var(--border-radius);
 }
