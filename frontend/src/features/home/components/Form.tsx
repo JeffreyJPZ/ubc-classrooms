@@ -5,7 +5,8 @@ import { Combobox, Option} from "./Combobox";
 import { FormState, FormStateTypes, FormStateSchema, FormDispatchContext, FormSubmittedToggleContext, FormDataContext } from "../contexts";
 import { useBuildings, useRoomTypes } from "../api";
 import { getCurrentISODate } from "../../../lib/getCurrentISODate";
-import { createISODates } from "../../../lib/createISODates";
+import { getCurrentFormattedDate } from "../../../lib/getCurrentFormattedDate";
+import { createISOAndFormattedDates } from "../../../lib/createISOAndFormattedDates";
 import { createTimeIntervals } from "../../../lib/createTimeIntervalsAMPM";
 
 import './Form.css';
@@ -37,7 +38,7 @@ export function Form() {
             </div>
             <div className="filter">
                 <div className="filter-name">Date</div>
-                <Combobox required={true} isMulti={false} isClearable={false} defaultValue={getCurrentISODate()} defaultLabel={getCurrentISODate()} options={createISODates(getCurrentISODate(), 7)} optionValue="value" optionLabel="label" onChange={(e) => formDispatch({type: FormStateTypes.DATE, value: e !== null ? (e as Option).value : undefined})} />
+                <Combobox required={true} isMulti={false} isClearable={false} defaultValue={getCurrentISODate()} defaultLabel={getCurrentFormattedDate()} options={createISOAndFormattedDates(getCurrentISODate(), 7)} optionValue="value" optionLabel="label" onChange={(e) => formDispatch({type: FormStateTypes.DATE, value: e !== null ? (e as Option).value : undefined})} />
             </div>
             <div className="filter">
                 <div className="filter-name">Available From</div>

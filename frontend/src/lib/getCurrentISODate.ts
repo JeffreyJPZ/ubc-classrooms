@@ -1,3 +1,3 @@
-export function getCurrentISODate() {
-    return new Date().toLocaleDateString('sv')
+export const getCurrentISODate = () => {
+    return new Date().toLocaleDateString('sv');
 }
