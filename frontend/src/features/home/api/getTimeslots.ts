@@ -15,7 +15,7 @@ interface GetTimeslotParameters {
     end?: string,
     buildings?: string[],
     room_types?: string[],
-};
+}
 
 type TransformedData = Record<string, Record<string, Timeslots>>;
 

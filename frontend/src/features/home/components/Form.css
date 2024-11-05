@@ -1,7 +1,118 @@
-.form {
+.filters {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    flex-shrink: 1;
+    flex-basis: 50%;
+    flex-wrap: wrap;
     justify-content: space-between;
+    padding-top: var(--vertical-margin);
+    padding-bottom: var(--vertical-margin);
+    background-color: var(--secondary-background-color);
+    border-radius: var(--border-radius);
+}
+
+.filter {
+    margin-top: var(--vertical-margin);
+    margin-bottom: var(--vertical-margin);
+    margin-left: var(--horizontal-margin);
+    margin-right: var(--horizontal-margin);
+}
+
+.filter-name {
+    margin: auto;
+}
+
+.filter-button {
+    margin-top: var(--vertical-margin);
+    margin-bottom: var(--vertical-margin);
+    margin-left: var(--horizontal-margin);
+    margin-right: var(--horizontal-margin);
+}
+
+.errors {
+    margin-top: var(--vertical-margin);
+    margin-bottom: var(--vertical-margin);
+    margin-left: var(--horizontal-margin);
+    margin-right: var(--horizontal-margin);
+    text-align: center;
+}
+
+.error {
+    font-size: 0.8em;
+    color: var(--error-text-color);
+}
+
+/* small tablets */
+@media screen and (min-width: 620px) {
+    .filters {
+        flex-direction: row;
+    }
+
+    .filter {
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 30%;
+    }
+
+    .filter-button {
+        flex-grow: 1;
+        flex-shrink: 1;
+        margin-left: calc(10 * var(--horizontal-margin));
+        margin-right: calc(10 * var(--horizontal-margin));
+    }
+
+    .errors {
+        flex-grow: 1;
+        flex-shrink: 1;
+        margin-left: calc(5 * var(--horizontal-margin));
+        margin-right: calc(5 * var(--horizontal-margin));
+    }
+}
+
+/* large tablets and laptops */
+@media screen and (min-width: 960px) {
+    .filters {
+        flex-direction: row;
+    }
+
+    .filter {
+        margin-left: calc(0.8 * var(--horizontal-margin));
+        margin-right: calc(0.8 * var(--horizontal-margin));
+    }
+
+    .filter-button {
+        margin-left: calc(10 * var(--horizontal-margin));
+        margin-right: calc(10 * var(--horizontal-margin));
+    }
+}
+
+/* desktops */
+@media screen and (min-width: 1200px) {
+    .filter {
+        flex-basis: 20%;
+        margin-left: calc(0.5 * var(--horizontal-margin));
+        margin-right: calc(0.5 * var(--horizontal-margin));
+    }
+
+    .filter-button {
+        margin-left: calc(12 * var(--horizontal-margin));
+        margin-right: calc(12 * var(--horizontal-margin));
+    }
+
+    .errors {
+        margin-left: calc(10 * var(--horizontal-margin));
+        margin-right: calc(10 * var(--horizontal-margin));
+    }
+}
+
+/* large desktops */
+@media screen and (min-width: 1920px) {
+    .filter-button {
+        margin-left: calc(13 * var(--horizontal-margin));
+        margin-right: calc(13 * var(--horizontal-margin));
+    }
+
+    .errors {
+        margin-left: calc(12 * var(--horizontal-margin));
+        margin-right: calc(12 * var(--horizontal-margin));
+    }
 }

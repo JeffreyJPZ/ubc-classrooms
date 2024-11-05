@@ -1,78 +1,62 @@
-/**
- * Handles submission of user input
- */
+import { useState, useContext } from "react";
+import { ZodFormattedError } from "zod";
 
-import {useReducer, useState } from 'react';
-
-import { MapContainer } from './MapContainer';
-import { FormStateTypes, FormActions, FormDataContext, FormDispatchContext, FormState, FormSubmittedToggleContext } from '../contexts';
-import { getCurrentISODate } from '../../../lib/getCurrentISODate';
-import { FormInputs } from './FormInputs';
-import { TimeslotGroupTable } from './TimeslotGroupTable';
+import { Combobox, Option} from "./Combobox";
+import { FormState, FormStateTypes, FormStateSchema, FormDispatchContext, FormSubmittedToggleContext, FormDataContext } from "../contexts";
+import { useBuildings, useRoomTypes } from "../api";
+import { getCurrentISODate } from "../../../lib/getCurrentISODate";
+import { createISODates } from "../../../lib/createISODates";
+import { createTimeIntervals } from "../../../lib/createTimeIntervalsAMPM";
 
 import './Form.css';
 
-function formReducer(state: FormState, action: FormActions): FormState {
-    switch (action.type) {
-        case FormStateTypes.CAMPUS:
-            return {
-                ...state,
-                campus: action.value as string,
-            };
-        case FormStateTypes.DATE:
-            return {
-                ...state,
-                date: action.value as string,
-            };
-        case FormStateTypes.START:
-            return {
-                ...state,
-                start: action.value as string,
-            };
-        case FormStateTypes.END:
-            return {
-                ...state,
-                end: action.value as string,
-            };
-        case FormStateTypes.BUILDINGS:
-            return {
-                ...state,
-                buildings: action.value as string[],
-            };
-        case FormStateTypes.ROOM_TYPES:
-            return {
-                ...state,
-                room_types: action.value as string[],
-            };
-        default:
-            return state;
-    }
-}
-
-const initialFormState: FormState = {
-    campus: "UBCV",
-    date: getCurrentISODate(),
-    start: undefined,
-    end: undefined,
-    buildings: undefined,
-    room_types: undefined,
-}
+type FormErrors = ZodFormattedError<FormState>;
 
 export function Form() {
-    const [formState, formDispatch] = useReducer(formReducer, initialFormState);
-    const [formSubmittedToggle, setFormSubmittedToggle]= useState(false);
+    const formState = useContext(FormDataContext);
+    const formDispatch = useContext(FormDispatchContext);
+    const {formSubmittedToggle, setFormSubmittedToggle} = useContext(FormSubmittedToggleContext);
+    const [errors, setErrors] = useState({} as FormErrors);
+
+    function parseForm(formState: FormState) {
+        const result = FormStateSchema.safeParse(formState);
+        if (!result.success) {
+            setErrors(result.error.format());
+        } else {
+            setErrors({} as FormErrors);
+            // Use toggle to prevent rerender instead of resetting value
+            setFormSubmittedToggle(!formSubmittedToggle);
+        }
+    }
 
     return (
-        <FormDataContext.Provider value={formState}>
-            <FormSubmittedToggleContext.Provider value={{formSubmittedToggle: formSubmittedToggle, setFormSubmittedToggle: setFormSubmittedToggle}}>
-                <div className='form'>
-                    <MapContainer/>
-                    <FormDispatchContext.Provider value={formDispatch}>
-                        <FormInputs/>
-                    </FormDispatchContext.Provider>
-                    <TimeslotGroupTable/>
-                </div>
-            </FormSubmittedToggleContext.Provider>
-        </FormDataContext.Provider>
+        <div className="filters">
+            <div className="filter">
+                <div className="filter-name">Campus</div>
+                <Combobox required={true} isMulti={false} isClearable={false} defaultValue="UBCV" defaultLabel="Vancouver" options={[{value: "UBCV", label: "Vancouver"}]} optionValue="value" optionLabel="label" onChange={(e) => formDispatch({type: FormStateTypes.CAMPUS, value: e !== null ? (e as Option).value : undefined})} />
+            </div>
+            <div className="filter">
+                <div className="filter-name">Date</div>
+                <Combobox required={true} isMulti={false} isClearable={false} defaultValue={getCurrentISODate()} defaultLabel={getCurrentISODate()} options={createISODates(getCurrentISODate(), 7)} optionValue="value" optionLabel="label" onChange={(e) => formDispatch({type: FormStateTypes.DATE, value: e !== null ? (e as Option).value : undefined})} />
+            </div>
+            <div className="filter">
+                <div className="filter-name">Available From</div>
+                <Combobox required={false} isMulti={false} isClearable={true} options={createTimeIntervals("07:00", "22:00", 30)} optionValue="value" optionLabel="label" onChange={(e) => formDispatch({type: FormStateTypes.START, value: e !== null ? (e as Option).value : undefined})} />
+            </div>
+            <div className="filter">
+                <div className="filter-name">Available Until</div>
+                <Combobox required={false} isMulti={false} isClearable={true} options={createTimeIntervals("07:00", "22:00", 30)} optionValue="value" optionLabel="label" onChange={(e) => formDispatch({type: FormStateTypes.END, value: e !== null ? (e as Option).value : undefined})} />
+            </div>
+            <div className="filter">
+                <div className="filter-name">Buildings</div>
+                <Combobox required={false} isMulti={true} isClearable={true} query={useBuildings({campus: "UBCV"}, {id: "buildings"})} queryValue="building_code" queryLabel="building_name" onChange={(e) => formDispatch({type: FormStateTypes.BUILDINGS, value: e ? (e as readonly Option[]).map(option => option.value) as string[] : undefined})} />
+            </div>
+            <div className="filter">
+                <div className="filter-name">Room Types</div>
+                <Combobox required={false} isMulti={true} isClearable={true} query={useRoomTypes({campus: "UBCV"}, {id: "roomtypes"})} queryValue="room_type" queryLabel="room_type" onChange={(e) => formDispatch({type: FormStateTypes.ROOM_TYPES, value: e ? (e as readonly Option[]).map(option => option.value) as string[] : undefined})}/>
+            </div>
+            <button className="filter-button" onClick={() => parseForm(formState)}>Search</button>
+            {errors?.start?._errors && <div className="errors">{errors.start._errors.map(err => <div key={err} className="error">{err}</div>)}</div>}
+        </div>
     );
 }

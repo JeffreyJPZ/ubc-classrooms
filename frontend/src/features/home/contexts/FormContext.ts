@@ -13,7 +13,7 @@ export enum FormStateTypes {
 export interface FormActions {
     type: FormStateTypes,
     value: string | string[] | undefined,
-};
+}
 
 export const FormStateSchema = z.object({
     campus: z.string(),

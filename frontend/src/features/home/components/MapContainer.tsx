@@ -1,16 +1,23 @@
 import { useContext, useEffect, useRef } from "react";
-import mapboxgl, { Map, SourceSpecification } from "mapbox-gl";
+import mapboxgl, { Map, MapMouseEvent, SourceSpecification } from "mapbox-gl";
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { Building, Coordinates, MapFeature, MapFeatureCollection, MapRef, MapSource } from "../../../types";
-import { FormDataContext } from "../contexts";
-import { useBuildings } from "../api";
+import { FormDataContext, FormState, FormSubmittedToggleContext } from "../contexts";
+import { useBuildings, useTimeslots } from "../api";
 import "./MapContainer.css"
+
+interface BuildingFeatureProperties {
+    building_name?: string;
+    building_code: string;
+    building_address?: string;
+}
 
 // Initial map coordinates
 const UBCV_CENTER: Coordinates = [-123.24530, 49.26101];
+const BUILDING_LAYER_ID: string = "buildings";
 
-// Convert buildings to GeoJSON standard
+// Convert buildings to GeoJSON standard, with additional properties for each building given by AdditionalBuildingsFeatureProperties
 function transformToGeoJson(buildings: Building[]): MapSource {
     const transformedBuildings: MapFeature[] = buildings.map((building) => {
         const coordinates: Coordinates = [parseFloat(building.longitude), parseFloat(building.latitude)];
@@ -21,9 +28,9 @@ function transformToGeoJson(buildings: Building[]): MapSource {
                 coordinates: coordinates
             },
             properties: {
-                name: building.building_name,
-                code: building.building_code,
-                address: building.building_address
+                building_name: building.building_name,
+                building_code: building.building_code,
+                building_address: building.building_address
             }
         };
         return feature;
@@ -36,12 +43,15 @@ export function MapContainer(): JSX.Element {
     const mapRef = useRef<Map | null>(null) as MapRef<Map | null>;
     const mapContainerRef = useRef<HTMLDivElement | null>(null) as MapRef<HTMLDivElement | null>;
 
-    const formState = useContext(FormDataContext);
+    const formState: FormState = useContext(FormDataContext);
+    const {formSubmittedToggle} = useContext(FormSubmittedToggleContext);
     const buildingsQuery = useBuildings({campus: "UBCV"}, {id: "buildings"});
+    const timeslotsQuery = useTimeslots(formState, {id: "timeslots", formSubmittedToggle: formSubmittedToggle});
 
-    useEffect(() => {
-        mapboxgl.accessToken = import.meta.env.PROD ? import.meta.env.VITE_MAPBOX_ACCESS_TOKEN : import.meta.env.VITE_MAPBOX_DEV_ACCESS_TOKEN;
+    // Creates a new map if not already created
+    function createMap() {
         if (mapContainerRef.current !== null && mapRef.current === null) {
+            mapboxgl.accessToken = import.meta.env.PROD ? import.meta.env.VITE_MAPBOX_ACCESS_TOKEN : import.meta.env.VITE_MAPBOX_DEV_ACCESS_TOKEN;
             mapRef.current = new mapboxgl.Map({
                 container: mapContainerRef.current as HTMLDivElement,
                 center: UBCV_CENTER,
@@ -50,52 +60,79 @@ export function MapContainer(): JSX.Element {
                 zoom: 16
             });
         }
-        
-        if (buildingsQuery.data !== undefined && mapRef.current?.loaded && mapRef.current?.getLayer('points') === undefined) {
-            mapRef.current.loadImage(
-                'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
-                (error, image) => {
-                    if (error) throw error;
+    }
 
-                    mapRef.current?.addImage('custom-marker', image as ImageData);
-                    
-                    const geojson: MapSource = transformToGeoJson(
-                        formState.buildings === undefined ?
-                        buildingsQuery.data :
-                        buildingsQuery.data.filter((building) => {
-                        formState.buildings?.includes(building.building_code)})
-                    );
-                    
-                    mapRef.current?.addSource('points', geojson as SourceSpecification);
-        
-                    mapRef.current?.addLayer({
-                        id: 'points',
-                        type: 'symbol',
-                        source: 'points',
-                        layout: {
-                            'icon-image': 'custom-marker',
-                            'text-field': ['get', 'name'],
-                            'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-                            'text-offset': [0, 1.25],
-                            'text-anchor': 'top'
+    // Updates loaded map with markers
+    function updateMarkers() {
+        if (buildingsQuery.data !== undefined && timeslotsQuery.data !== undefined) {
+            // Keep all buildings that have timeslots initially or when filter list is empty,
+            // otherwise only keep selected buildings that have timeslots
+            let geojson: MapSource = {} as MapSource;
+            if (formState.buildings === undefined || formState.buildings.length === 0) {
+                geojson = transformToGeoJson(buildingsQuery.data.filter((building) => {
+                    return Object.hasOwn(timeslotsQuery.data, building.building_code)
+                }));
+            } else {
+                geojson = transformToGeoJson(buildingsQuery.data.filter((building) => {
+                    return formState.buildings?.includes(building.building_code) &&
+                    Object.hasOwn(timeslotsQuery.data, building.building_code)
+                }));
+            }
+
+            if (mapRef.current?.getLayer(BUILDING_LAYER_ID) === undefined) {
+                // layer has not been set before
+                mapRef.current?.on('load', () => {
+                    mapRef.current?.addSource(BUILDING_LAYER_ID, geojson as SourceSpecification)
+                    .addLayer({
+                        id: BUILDING_LAYER_ID,
+                        type: 'circle',
+                        source: BUILDING_LAYER_ID,
+                        paint: {
+                            "circle-radius": 10,
+                            "circle-color": "#2684ff"
                         }
                     });
-                }
-            );
+                });
+            } else {
+                // reset layer
+                mapRef.current?.removeLayer(BUILDING_LAYER_ID)
+                .removeSource(BUILDING_LAYER_ID)
+                .addSource(BUILDING_LAYER_ID, geojson as SourceSpecification)
+                .addLayer({
+                    id: BUILDING_LAYER_ID,
+                    type: 'circle',
+                    source: BUILDING_LAYER_ID,
+                    paint: {
+                        "circle-radius": 10,
+                        "circle-color": "#2684ff"
+                    }
+                });
+            }
         }
-    }, [buildingsQuery.data, mapRef.current?.loaded, formState.buildings]);
+    }
 
-    if (buildingsQuery.isLoading) {
-        return (
-            <div>Loading...</div>
-        );
-    };
-    
-    if (!buildingsQuery.data) {
-        return (
-            <div>Nothing to show...</div>
-        );
-    };
+    function registerEventHandlers() {
+        mapRef.current?.on('load', () => {
+
+            // Scroll to timeslot grouping when building marker is clicked on
+            mapRef.current?.on('click', BUILDING_LAYER_ID, (e: MapMouseEvent) => {
+                const building: MapFeature = mapRef.current?.queryRenderedFeatures(e.point)[0] as MapFeature;
+                const buildingProperties = building.properties as BuildingFeatureProperties;
+                const timeslotGroup = document.getElementById(buildingProperties.building_code);
+
+                if (timeslotGroup !== null) {
+                    timeslotGroup.focus();
+                    timeslotGroup.scrollIntoView({behavior: "smooth"});
+                }
+            });
+        });
+    }
+
+    useEffect(() => {
+        createMap();
+        updateMarkers();
+        registerEventHandlers();
+    }, [buildingsQuery.data, timeslotsQuery.data]);
 
     return (
         <div className="map-container" ref={mapContainerRef}/>

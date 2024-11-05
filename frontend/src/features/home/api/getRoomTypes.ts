@@ -8,7 +8,7 @@ interface GetRoomTypesQueryKeys {
 
 interface GetRoomTypesParameters {
     campus: "UBCV",
-};
+}
 
 async function getRoomTypes(parameters: GetRoomTypesParameters): Promise<RoomType[]> {
     const response = await fetch(`/api/v1/roomtypes/${parameters.campus}`, {

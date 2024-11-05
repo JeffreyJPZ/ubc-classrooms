@@ -30,7 +30,7 @@ export function TimeslotGroup({name, data}: TimeslotGroupProps) {
         <details className={isContentVisible ? "timeslot-group-visible" : "timeslot-group-hidden"}>
 
             {/* Combine full building name and code */}
-            <summary className="timeslot-group-summary" onClick={() => setContentVisible(isContentVisible => !isContentVisible)}>
+            <summary id={name} className="timeslot-group-summary" onClick={() => setContentVisible(isContentVisible => !isContentVisible)}>
                 <div className="timeslot-group-title">
                     <div className="timeslot-group-name">{`${Object.values(data)[0][0].building_name} (${name})`}</div>
                     <div className="timeslot-group-room-count">{`Rooms: ${Object.keys(data).length}`}</div>

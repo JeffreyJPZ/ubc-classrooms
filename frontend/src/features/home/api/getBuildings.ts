@@ -8,7 +8,7 @@ interface GetBuildingsQueryKeys {
 
 interface GetBuildingsParameters {
     campus: "UBCV",
-};
+}
 
 async function getBuildings(parameters: GetBuildingsParameters): Promise<Building[]> {
     const response = await fetch(`/api/v2/buildings/${parameters.campus}`, {
