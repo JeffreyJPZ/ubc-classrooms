@@ -1,6 +1,6 @@
 import { Header } from "../../../components";
 import { Footer } from "../../../components";
-import { Form } from "../components/Form";
+import { Content } from "../components/Content";
 
 import './Home.css'
 
@@ -9,10 +9,10 @@ export function Home() {
         <div className="app">
             <Header/>
             <div className="introduction">
-                <h1>Looking for a place to study, take meetings, or meet with friends? UBC Classrooms shows you when and where empty classrooms are available.</h1>
+                <h1>Looking for a place on campus to study or hang out? Click on any building marker or use the search fields below to get started.</h1>
             </div>
-            <main className="content">
-                <Form/>
+            <main className="main">
+                <Content/>
             </main>
             <Footer/>
         </div>

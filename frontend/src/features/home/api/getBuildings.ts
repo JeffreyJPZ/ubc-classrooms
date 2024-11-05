@@ -2,12 +2,16 @@ import { useQuery } from "react-query";
 
 import { Building, BuildingsSchema } from "../../../types";
 
-type GetBuildingsParameters = {
+interface GetBuildingsQueryKeys {
+    id: string
+}
+
+interface GetBuildingsParameters {
     campus: "UBCV",
-};
+}
 
 async function getBuildings(parameters: GetBuildingsParameters): Promise<Building[]> {
-    const response = await fetch(`/api/v1/buildings/${parameters.campus}`, {
+    const response = await fetch(`/api/v2/buildings/${parameters.campus}`, {
         headers: {
             "accepts":"application/json"
         }}
@@ -33,10 +37,10 @@ const useBuildingsConfig = {
     useErrorBoundary: true,
 };
 
-export const useBuildings = (parameters: GetBuildingsParameters) => {
+export const useBuildings = (parameters: GetBuildingsParameters, keys: GetBuildingsQueryKeys) => {
     return useQuery({
         ...useBuildingsConfig,
-        queryKey: ["buildings"],
+        queryKey: [keys],
         queryFn: () => getBuildings(parameters),
     });
 };

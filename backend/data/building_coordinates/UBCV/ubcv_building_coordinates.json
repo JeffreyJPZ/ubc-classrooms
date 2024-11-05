@@ -1,0 +1,500 @@
+[
+    {
+        "building_name": "Allard Hall",
+        "building_address": "1822 East Mall",
+        "latitude": 49.2699,
+        "longitude": -123.25318
+    },
+    {
+        "building_name": "Anthropology and Sociology",
+        "building_address": "6303 North West Marine Drive",
+        "latitude": 49.270290,
+        "longitude": -123.257726
+    },
+    {
+        "building_name": "Aquatic Ecosystems Research Laboratory",
+        "building_address": "2202 Main Mall",
+        "latitude": 49.26372,
+        "longitude": -123.25099
+    },
+    {
+        "building_name": "Asian Centre",
+        "building_address": "1871 West Mall",
+        "latitude": 49.26684,
+        "longitude": -123.25858
+    },
+    {
+        "building_name": "Ponderosa Commons East Audain Art",
+        "building_address": "6398 University Boulevard",
+        "latitude": 49.263763,
+        "longitude": -123.254558
+    },
+    {
+        "building_name": "Auditorium",
+        "building_address": "6344 Memorial Road",
+        "latitude": 49.266938,
+        "longitude": -123.255985
+    },
+    {
+        "building_name": "Auditorium Annex",
+        "building_address": "1924 West Mall",
+        "latitude": 49.2666,
+        "longitude": -123.25655
+    },
+    {
+        "building_name": "B.C. Binning Studios",
+        "building_address": "6373 University Boulevard",
+        "latitude": 9.264621,
+        "longitude": -123.254888
+    },
+    {
+        "building_name": "Biological Sciences",
+        "building_address": "6270 University Boulevard",
+        "latitude": 49.264231,
+        "longitude": -123.251756
+    },
+    {
+        "building_name": "Brock Hall Annex",
+        "building_address": "1874 East Mall",
+        "latitude": 49.26862,
+        "longitude": -123.25237
+    },
+    {
+        "building_name": "Buchanan",
+        "building_address": "1866 Main Mall",
+        "latitude": 49.26826,
+        "longitude": -123.25468
+    },
+    {
+        "building_name": "Buchanan Tower",
+        "building_address": "1873 East Mall",
+        "latitude": 49.26859,
+        "longitude": -123.25341
+    },
+    {
+        "building_name": "Centre for Brain Health",
+        "building_address": "2215 Wesbrook Mall",
+        "latitude": 49.264318,
+        "longitude": -123.244465
+    },
+    {
+        "building_name": "C. K. Choi Building",
+        "building_address": "1855 West Mall",
+        "latitude": 49.26726,
+        "longitude": -123.25797
+    },
+    {
+        "building_name": "Centre for Interactive Research on Sustainability",
+        "building_address": "2260 West Mall",
+        "latitude": 49.26207,
+        "longitude": -123.25314
+    },
+    {
+        "building_name": "Chan Centre for the Performing Arts",
+        "building_address": "6265 Crescent Road",
+        "latitude": 49.26973,
+        "longitude": -123.25504
+    },
+    {
+        "building_name": "Chemical and Biological Engineering Building",
+        "building_address": "2360 East Mall",
+        "latitude": 49.26228,
+        "longitude": -123.24718
+    },
+    {
+        "building_name": "Chemistry",
+        "building_address": "2036 Main Mall",
+        "latitude": 49.265908,
+        "longitude": -123.253005
+    },
+    {
+        "building_name": "Civil and Mechanical Engineering",
+        "building_address": "6250 Applied Science Lane",
+        "latitude": 49.26273,
+        "longitude": -123.24894
+    },
+    {
+        "building_name": "Civil and Mechanical Engineering Laboratories",
+        "building_address": "2246 Main Mall",
+        "latitude": 49.263040, 
+        "longitude": -123.249476
+    },
+    {
+        "building_name": "Coal and Mineral Processing Laboratory",
+        "building_address": "2332 West Mall",
+        "latitude": 49.26124, 
+        "longitude": -123.25222
+    },
+    {
+        "building_name": "D.H. Copp",
+        "building_address": "2146 Health Sciences Mall",
+        "latitude": 49.26465,
+        "longitude": -123.24812
+    },
+    {
+        "building_name": "David Lam Building",
+        "building_address": "2033 Main Mall",
+        "latitude": 49.26566,
+        "longitude": -123.25431
+    },
+    {
+        "building_name": "Detwiller Pavilion",
+        "building_address": "2255 Wesbrook Mall",
+        "latitude": 49.263485,
+        "longitude": -123.244320
+    },
+    {
+        "building_name": "Dorothy Somerset Studio",
+        "building_address": "6361 University Blvd",
+        "latitude": 49.26456,
+        "longitude": -123.25455
+    },
+    {
+        "building_name": "Douglas Kenny",
+        "building_address": "2136 West Mall",
+        "latitude": 49.263263,
+        "longitude": -123.253872
+    },
+    {
+        "building_name": "Earth and Ocean Sciences",
+        "building_address": "6339 Stores Road",
+        "latitude": 49.262505,
+        "longitude": -123.252525
+    },
+    {
+        "building_name": "Earth Sciences Building",
+        "building_address": "2207 Main Mall",
+        "latitude": 49.263037,
+        "longitude": -123.252069
+    },
+    {
+        "building_name": "Food, Nutrition and Health",
+        "building_address": "2205 East Mall",
+        "latitude": 49.26414,
+        "longitude": -123.24959
+    },
+    {
+        "building_name": "Forest Sciences Centre",
+        "building_address": "2424 Main Mall",
+        "latitude": 49.260429,
+        "longitude": -123.248478
+    },
+    {
+        "building_name": "Frank Forward",
+        "building_address": "6350 Stores Road",
+        "latitude": 49.26176,
+        "longitude": -123.25179
+    },
+    {
+        "building_name": "Fred Kaiser",
+        "building_address": "2332 Main Mall",
+        "latitude": 49.26239,
+        "longitude": -123.2501
+    },
+    {
+        "building_name": "Frederic Lasserre",
+        "building_address": "6333 Memorial Road",
+        "latitude": 49.26767,
+        "longitude": -123.25583
+    },
+    {
+        "building_name": "Frederic Wood Theatre",
+        "building_address": "6354 Crescent Road",
+        "latitude": 49.26804,
+        "longitude": -123.25702
+    },
+    {
+        "building_name": "Friedman Building",
+        "building_address": "2177 Wesbrook Mall",
+        "latitude": 49.26541,
+        "longitude": -123.24608
+    },
+    {
+        "building_name": "Geography",
+        "building_address": "1984 West Mall",
+        "latitude": 49.26605,
+        "longitude": -123.25623
+    },
+    {
+        "building_name": "George Cunningham",
+        "building_address": "2146 East Mall",
+        "latitude": 49.26472,
+        "longitude": -123.24923
+    },
+    {
+        "building_name": "Hebb",
+        "building_address": "2045 East Mall",
+        "latitude": 49.266079,
+        "longitude": -123.251796
+    },
+    {
+        "building_name": "Hennings",
+        "building_address": "6224 Agricultural Road",
+        "latitude": 49.266422,
+        "longitude": -123.252324
+    },
+    {
+        "building_name": "Henry Angus",
+        "building_address": "2053 Main Mall",
+        "latitude": 49.265141,
+        "longitude": -123.253832
+    },
+    {
+        "building_name": "UBC Botany Teaching Greenhouse",
+        "building_address": "6394 Stores Road",
+        "latitude": 49.26156,
+        "longitude": -123.25291
+    },
+    {
+        "building_name": "Hugh Dempster Pavilion",
+        "building_address": "6245 Agronomy Road",
+        "latitude": 49.26125,
+        "longitude": -123.24807
+    },
+    {
+        "building_name": "Institute for Computing, Information and Cognitive Systems",
+        "building_address": "2366 Main Mall",
+        "latitude": 49.26118,
+        "longitude": -123.2488
+    },
+    {
+        "building_name": "Iona Building",
+        "building_address": "6000 Iona Drive",
+        "latitude": 49.27106,
+        "longitude": -123.25042
+    },
+    {
+        "building_name": "Irving K. Barber Learning Centre",
+        "building_address": "1961 East Mall",
+        "latitude": 49.267460,
+        "longitude": -123.252584
+    },
+    {
+        "building_name": "Macdonald",
+        "building_address": "2199 West Mall",
+        "latitude": 49.265342,
+        "longitude": -123.245305
+    },
+    {
+        "building_name": "Jack Bell Building for the School of Social Work",
+        "building_address": "2080 West Mall",
+        "latitude": 49.2643,
+        "longitude": -123.25505
+    },
+    {
+        "building_name": "Koerner Pavilion",
+        "building_address": "2211 Wesbrook Mall",
+        "latitude": 49.26436, 
+        "longitude": -123.24629
+    },
+    {
+        "building_name": "Landscape Architecture Annex",
+        "building_address": "2371 Main Mall",
+        "latitude": 49.26081,
+        "longitude": -123.25011
+    },
+    {
+        "building_name": "Leonard S. Klinck",
+        "building_address": "6356 Agricultural Road",
+        "latitude": 49.26545,
+        "longitude": -123.25533
+    },
+    {
+        "building_name": "Life Sciences Centre",
+        "building_address": "2350 Health Sciences Mall",
+        "latitude": 49.262575,
+        "longitude": -123.245031
+    },
+    {
+        "building_name": "Liu Institute for Global Issues",
+        "building_address": "6476 NW Marine Dr",
+        "latitude": 49.26760,
+        "longitude": -123.25928
+    },
+    {
+        "building_name": "Lower Mall Research Station",
+        "building_address": "2259 Lower Mall",
+        "latitude": 49.26078,
+        "longitude": -123.25553
+    },
+    {
+        "building_name": "MacLeod",
+        "building_address": "2356 Main Mall",
+        "latitude": 49.261586,
+        "longitude": -123.249409
+    },
+    {
+        "building_name": "MacMillan",
+        "building_address": "2357 Main Mall",
+        "latitude": 49.26114,
+        "longitude": -123.25027
+    },
+    {
+        "building_name": "Mathematics",
+        "building_address": "1984 Mathematics Road",
+        "latitude": 49.266463,
+        "longitude": -123.255534
+    },
+    {
+        "building_name": "Mathematics Annex",
+        "building_address": "1986 Mathematics Road",
+        "latitude": 49.266089,
+        "longitude": -123.254816
+    },
+    {
+        "building_name": "Medical Sciences Block C",
+        "building_address": "2176 Health Sciences Mall",
+        "latitude": 49.264957,
+        "longitude": -123.247858
+    },
+    {
+        "building_name": "Michael Smith Laboratories",
+        "building_address": "2185 East Mall",
+        "latitude": 49.264596,
+        "longitude": -123.250243
+    },
+    {
+        "building_name": "Music Building",
+        "building_address": "6361 Memorial Road",
+        "latitude": 49.267444,
+        "longitude": -123.256787
+    },
+    {
+        "building_name": "Neville Scarfe",
+        "building_address": "2125 Main Mall",
+        "latitude": 49.26398,
+        "longitude": -123.2531
+    },
+    {
+        "building_name": "Orchard Commons",
+        "building_address": "6363 Agronomy Road",
+        "latitude": 49.260307,
+        "longitude": -123.251114
+    },
+    {
+        "building_name": "Pharmaceutical Sciences Building",
+        "building_address": "2405 Wesbrook Mall",
+        "latitude": 49.26229,
+        "longitude": -123.24342
+    },
+    {
+        "building_name": "Ritsumeikan-UBC House",
+        "building_address": "6460 Agronomy Road",
+        "latitude": 49.26038,
+        "longitude": -123.25316
+    },
+    {
+        "building_name": "Ponderosa Annex E",
+        "building_address": "2034 Lower Mall",
+        "latitude": 49.264648,
+        "longitude": -123.256688
+    },
+    {
+        "building_name": "Ponderosa Commons North",
+        "building_address": "6445 University Boulevard",
+        "latitude": 49.264,
+        "longitude": -123.2559
+    },
+    {
+        "building_name": "Ponderosa Office Annex F",
+        "building_address": "2008 Lower Mall",
+        "latitude": 49.26482,
+        "longitude": -123.25729
+    },
+    {
+        "building_name": "Ponderosa Office Annex H",
+        "building_address": "2008 Lower Mall",
+        "latitude": 49.26482,
+        "longitude": -123.25729
+    },
+    {
+        "building_name": "Robert F. Osborne Centre",
+        "building_address": "6108 Thunderbird Boulevard",
+        "latitude": 49.259995,
+        "longitude": -123.244315
+    },
+    {
+        "building_name": "School of Population and Public Health",
+        "building_address": "2206 East Mall",
+        "latitude": 49.2642,
+        "longitude": -123.24842
+    },
+    {
+        "building_name": "Sing Tao School of Journalism",
+        "building_address": "6388 Crescent Road",
+        "latitude": 49.26787,
+        "longitude": -123.25788
+    },
+    {
+        "building_name": "Student Recreation Centre",
+        "building_address": "6000 Student Union Blvd",
+        "latitude": 49.2683,
+        "longitude": -123.24894
+    },
+    {
+        "building_name": "Leon and Thea Koerner University Centre",
+        "building_address": "6331 Crescent Road",
+        "latitude": 49.268865,
+        "longitude": -123.257190
+    },
+    {
+        "building_name": "Theatre-Film Production Building",
+        "building_address": "6358 University Blvd",
+        "latitude": 49.26383,
+        "longitude": -123.25387
+    },
+    {
+        "building_name": "Theatre-Film Production Building Annex",
+        "building_address": "6358 University Blvd",
+        "latitude": 49.26383,
+        "longitude": -123.25387
+    },
+    {
+        "building_name": "Totem Field Studios",
+        "building_address": "2613 West Mall",
+        "latitude": 49.25618,
+        "longitude": -123.24897
+    },
+    {
+        "building_name": "UBC War Memorial Gymnasium",
+        "building_address": "6081 University Blvd",
+        "latitude": 49.266746,
+        "longitude": -123.247740
+    },
+    {
+        "building_name": "UBC Life Building",
+        "building_address": "6138 Student Union Blvd",
+        "latitude": 49.26765, 
+        "longitude": -123.25006
+    },
+    {
+        "building_name": "Wayne and William White Engineering Design Centre",
+        "building_address": "2345 East Mall",
+        "latitude": 49.26233,
+        "longitude": -123.24817
+    },
+    {
+        "building_name": "Wesbrook",
+        "building_address": "6174 University Boulevard",
+        "latitude": 49.26517,
+        "longitude": -123.24937
+    },
+    {
+        "building_name": "West Mall Annex",
+        "building_address": "1933 West Mall",
+        "latitude": 49.26617,
+        "longitude": -123.25711
+    },
+    {
+        "building_name": "West Mall Swing Space",
+        "building_address": "2175 West Mall",
+        "latitude": 49.262781,
+        "longitude": -123.254395
+    },
+    {
+        "building_name": "P.A. Woodward Instructional Resources Centre",
+        "building_address": "2194 Health Sciences Mall",
+        "latitude": 49.26478,
+        "longitude": -123.24673
+    }
+]

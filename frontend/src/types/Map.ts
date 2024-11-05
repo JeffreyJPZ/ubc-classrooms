@@ -1,0 +1,1 @@
+export type MapRef<T> = React.MutableRefObject<T>;

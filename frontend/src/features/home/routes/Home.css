@@ -5,32 +5,14 @@
 }
 
 .introduction {
-    margin-top: calc(2 * var(--vertical-margin));
-    margin-bottom: calc(2 * var(--vertical-margin));
+    margin-top: var(--vertical-margin);
+    margin-bottom: var(--vertical-margin);
     margin-left: var(--horizontal-margin);
     margin-right: var(--horizontal-margin);
 }
 
-.content {
+.main {
     display: flex;
-    flex-direction: column;
-    flex: 1;
-    justify-content: space-between;
     margin-left: var(--horizontal-margin);
     margin-right: var(--horizontal-margin);
-}
-
-/* small tablets */
-@media screen and (min-width: 620px) {
-    
-}
-
-/* large tablets and laptops */
-@media screen and (min-width: 960px) {
-
-}
-
-/* desktops */
-@media screen and (min-width: 1200px) {
-    
 }

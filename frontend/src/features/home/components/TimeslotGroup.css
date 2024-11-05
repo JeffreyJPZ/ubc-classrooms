@@ -8,6 +8,7 @@ details > summary::-webkit-details-marker {
 }
 
 .timeslot-group-visible {
+    display: flex;
     margin-top: var(--vertical-margin);
     margin-bottom: var(--vertical-margin);
     background-color: var(--secondary-background-color);
@@ -15,29 +16,30 @@ details > summary::-webkit-details-marker {
 }
 
 .timeslot-group-hidden {
+    display: flex;
     margin-top: var(--vertical-margin);
     margin-bottom: var(--vertical-margin);
     background-color: var(--secondary-background-color);
     border-radius: var(--border-radius);
 }
 
-.timeslot-group-title {
+.timeslot-group-summary {
     display: flex;
     justify-content: space-between;
     border: 2px solid var(--secondary-background-color);
     border-radius: var(--border-radius);
     padding-top: var(--vertical-margin);
     padding-bottom: var(--vertical-margin);
-    transition: border-color 0.25s, outline 0.25s;
+    transition: border-color 200ms, outline 200ms;
 }
 
-.timeslot-group-title:hover {
+.timeslot-group-summary:hover {
     cursor: pointer;
     border-color: var(--secondary-color);
 }
 
-.timeslot-group-title:focus,
-.timeslot-group-title:focus-visible {
+.timeslot-group-summary:focus,
+.timeslot-group-summary:focus-visible {
   border: 2px solid var(--blue);
 }
 
@@ -50,6 +52,7 @@ details > summary::-webkit-details-marker {
 .timeslot-group-room-count {
     margin-left: var(--horizontal-margin);
     margin-right: var(--horizontal-margin);
+    font-size: 1em;
 }
 
 .timeslot-group-content {
@@ -61,29 +64,39 @@ details > summary::-webkit-details-marker {
 }
 
 .content-visible-indicator {
-    margin-top: calc(2 * var(--vertical-margin));
-    margin-right: var(--horizontal-margin);
-    height: 1.25em;
-    width: 1.25em;
-    transform: rotate(-90deg);
+    padding-top: var(--vertical-margin);
+    padding-bottom: var(--vertical-margin);
+    padding-left: var(--horizontal-margin);
+    padding-right: var(--horizontal-margin);
+    align-self: center;
+    
+    transform: rotate(-180deg);
     transform-box: fill-box;
     transform-origin: center;
+    transition: transform 200ms ease-out;
+
     fill: var(--primary-color);
 }
 
 .content-hidden-indicator {
-    margin-top: calc(2 * var(--vertical-margin));
-    margin-right: var(--horizontal-margin);
-    height: 1.25em;
-    width: 1.25em;
+    padding-top: var(--vertical-margin);
+    padding-bottom: var(--vertical-margin);
+    padding-left: var(--horizontal-margin);
+    padding-right: var(--horizontal-margin);
+    align-self: center;
+    
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 200ms ease-out;
+
     fill: var(--primary-color);
 }
 
 .timeslot {
     margin-top: var(--vertical-margin);
     margin-bottom: var(--vertical-margin);
-    margin-left: var(--horizontal-margin);
-    margin-right: var(--horizontal-margin);
+    padding-left: var(--horizontal-margin);
+    padding-right: var(--horizontal-margin);
 }
 
 .timeslot-room {
@@ -101,70 +114,4 @@ details > summary::-webkit-details-marker {
         flex-grow: 1;
         flex-shrink: 1;
     }
-}
-
-/* large tablets and laptops */
-@media screen and (min-width: 960px) {
-    .timeslot-group-name {
-        margin-left: calc(0.8 * var(--horizontal-margin));
-        margin-right: calc(0.8 * var(--horizontal-margin));
-    }
-
-    .timeslot-group-room-count {
-        margin-left: calc(0.8 * var(--horizontal-margin));
-        margin-right: calc(0.8 * var(--horizontal-margin));
-    }
-
-    .timeslot {
-        margin-top: calc(0.8 * var(--vertical-margin));
-        margin-bottom: calc(0.8 * var(--vertical-margin));
-        margin-left: calc(0.8 * var(--horizontal-margin));
-        margin-right: calc(0.8 * var(--horizontal-margin));
-    }
-
-    .content-visible-indicator {
-        margin-right: calc(0.8 * var(--horizontal-margin));
-    }
-
-    .content-hidden-indicator {
-        margin-right: calc(0.8 * var(--horizontal-margin));
-    }
-}
-
-/* desktops */
-@media screen and (min-width: 1200px) {
-    .timeslot-group-name {
-        margin-left: calc(0.5 * var(--horizontal-margin));
-        margin-right: calc(0.5 * var(--horizontal-margin));
-    }
-
-    .timeslot-group-room-count {
-        margin-left: calc(0.5 * var(--horizontal-margin));
-        margin-right: calc(0.5 * var(--horizontal-margin));
-    }
-
-    .timeslot {
-        margin-top: calc(0.5 * var(--vertical-margin));
-        margin-bottom: calc(0.5 * var(--vertical-margin));
-        margin-left: calc(0.5 * var(--horizontal-margin));
-        margin-right: calc(0.5 * var(--horizontal-margin));
-    }
-
-    .content-visible-indicator {
-        margin-right: calc(0.5 * var(--horizontal-margin));
-    }
-
-    .content-hidden-indicator {
-        margin-right: calc(0.5 * var(--horizontal-margin));
-    }
-}
-
-/* medium desktops */
-@media screen and (min-width: 1600px) {
-
-}
-
-/* large desktops */
-@media screen and (min-width: 1920px) {
-    
 }

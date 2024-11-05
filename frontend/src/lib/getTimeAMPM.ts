@@ -3,5 +3,5 @@
 
 export const getTimeAMPM = (time: string) => {
     const date = new Date(`2024-05-13 ${time}`); // used to take advantage of date operations
-    return date.toLocaleTimeString('us').replace(/(:00\s)|(:30\s)/, " ") // formats the time into 12 hour AM/PM format for display
+    return date.toLocaleTimeString('us').replace(/(:00\s)|(:30\s)/, " "); // formats the time into 12 hour AM/PM format for display
 }

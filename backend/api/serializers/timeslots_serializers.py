@@ -3,11 +3,11 @@ Serializers for timeslots resource
 """
 from rest_framework import serializers
 
-from .custom_serializer_fields import *
+from .custom_serializer_fields import CampusCodeField, BuildingCodeField, BuildingNameField, RoomTypeField
     
 class PathParametersSerializer(serializers.Serializer):
     # Serializer for validating path parameters
-    campus = CampusField(required=True)
+    campus = CampusCodeField(required=True)
 
 class QueryParametersSerializer(serializers.Serializer):
     # Serializer for validating query parameters
@@ -19,7 +19,7 @@ class QueryParametersSerializer(serializers.Serializer):
 
 class TimeslotSerializer(serializers.Serializer):
     # Serializer for a timeslot
-    campus = CampusField(required=True)
+    campus = CampusCodeField(required=True)
     building_code = BuildingCodeField(required=True)
     building_name = BuildingNameField(required=True)
     room = serializers.CharField(required=True)

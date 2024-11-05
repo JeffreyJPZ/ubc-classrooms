@@ -2,9 +2,13 @@ import { useQuery } from "react-query";
 
 import { RoomType, RoomTypesSchema } from "../../../types";
 
-type GetRoomTypesParameters = {
+interface GetRoomTypesQueryKeys {
+    id: string
+}
+
+interface GetRoomTypesParameters {
     campus: "UBCV",
-};
+}
 
 async function getRoomTypes(parameters: GetRoomTypesParameters): Promise<RoomType[]> {
     const response = await fetch(`/api/v1/roomtypes/${parameters.campus}`, {
@@ -33,10 +37,10 @@ const useRoomTypesConfig = {
     useErrorBoundary: true,
 };
 
-export const useRoomTypes = (parameters: GetRoomTypesParameters) => {
+export const useRoomTypes = (parameters: GetRoomTypesParameters, keys: GetRoomTypesQueryKeys) => {
     return useQuery({
         ...useRoomTypesConfig,
-        queryKey: ["roomtypes"],
+        queryKey: [keys],
         queryFn: () => getRoomTypes(parameters),
     });
 };

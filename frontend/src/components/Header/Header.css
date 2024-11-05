@@ -5,7 +5,7 @@
     align-items: center;
     justify-content: space-between;
     top: 0;
-    padding: 2vh;
+    padding: 1vh 3vw;
     background-image: var(--primary-color);
     background-color: var(--primary-color);
     color: var(--secondary-text-color);
@@ -14,14 +14,12 @@
 .logo {
     font-size: 1.5em;
     align-self: center;
-    margin-left: 2.5vw;
     text-wrap: nowrap;
 }
 
 .credits {
     width: 2em;
     height: 2em;
-    margin-right: 2.5vw;
     align-items: stretch;
 }
 
@@ -34,6 +32,7 @@ img {
 @media screen and (min-width: 620px) {
     .header {
         flex-wrap: nowrap;
+        padding: 1vh 3vw;
     }
 
     .logo {
@@ -41,17 +40,7 @@ img {
     }
 
     .credits {
-        width: 3em;
-        height: 3em;
+        width: 2.5em;
+        height: 2.5em;
     }
-}
-
-/* large tablets and laptops */
-@media screen and (min-width: 960px) {
-    
-}
-
-/* desktops */
-@media screen and (min-width: 1200px) {
-    
 }
