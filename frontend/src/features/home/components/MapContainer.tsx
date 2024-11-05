@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useCallback } from "react";
 import mapboxgl, { Map, MapMouseEvent, SourceSpecification } from "mapbox-gl";
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -47,9 +47,9 @@ export function MapContainer(): JSX.Element {
     const {formSubmittedToggle} = useContext(FormSubmittedToggleContext);
     const buildingsQuery = useBuildings({campus: "UBCV"}, {id: "buildings"});
     const timeslotsQuery = useTimeslots(formState, {id: "timeslots", formSubmittedToggle: formSubmittedToggle});
-
-    // Creates a new map if not already created
-    function createMap() {
+    
+    const updateMarkers = useCallback(() => {
+        // Creates a new map if not already created
         if (mapContainerRef.current !== null && mapRef.current === null) {
             mapboxgl.accessToken = import.meta.env.PROD ? import.meta.env.VITE_MAPBOX_ACCESS_TOKEN : import.meta.env.VITE_MAPBOX_DEV_ACCESS_TOKEN;
             mapRef.current = new mapboxgl.Map({
@@ -60,27 +60,16 @@ export function MapContainer(): JSX.Element {
                 zoom: 16
             });
         }
-    }
 
-    // Updates loaded map with markers
-    function updateMarkers() {
         if (buildingsQuery.data !== undefined && timeslotsQuery.data !== undefined) {
             // Keep all buildings that have timeslots initially or when filter list is empty,
             // otherwise only keep selected buildings that have timeslots
-            let geojson: MapSource = {} as MapSource;
-            if (formState.buildings === undefined || formState.buildings.length === 0) {
-                geojson = transformToGeoJson(buildingsQuery.data.filter((building) => {
-                    return Object.hasOwn(timeslotsQuery.data, building.building_code)
-                }));
-            } else {
-                geojson = transformToGeoJson(buildingsQuery.data.filter((building) => {
-                    return formState.buildings?.includes(building.building_code) &&
-                    Object.hasOwn(timeslotsQuery.data, building.building_code)
-                }));
-            }
+            const geojson: MapSource = transformToGeoJson(buildingsQuery.data.filter((building) => {
+                return Object.hasOwn(timeslotsQuery.data, building.building_code)
+            }));
 
+            // Create or reset layer
             if (mapRef.current?.getLayer(BUILDING_LAYER_ID) === undefined) {
-                // layer has not been set before
                 mapRef.current?.on('load', () => {
                     mapRef.current?.addSource(BUILDING_LAYER_ID, geojson as SourceSpecification)
                     .addLayer({
@@ -94,7 +83,6 @@ export function MapContainer(): JSX.Element {
                     });
                 });
             } else {
-                // reset layer
                 mapRef.current?.removeLayer(BUILDING_LAYER_ID)
                 .removeSource(BUILDING_LAYER_ID)
                 .addSource(BUILDING_LAYER_ID, geojson as SourceSpecification)
@@ -109,7 +97,7 @@ export function MapContainer(): JSX.Element {
                 });
             }
         }
-    }
+    }, [buildingsQuery.data, timeslotsQuery.data]);
 
     function registerEventHandlers() {
         mapRef.current?.on('load', () => {
@@ -128,11 +116,11 @@ export function MapContainer(): JSX.Element {
         });
     }
 
+    // Initialization
     useEffect(() => {
-        createMap();
         updateMarkers();
         registerEventHandlers();
-    }, [buildingsQuery.data, timeslotsQuery.data]);
+    });
 
     return (
         <div className="map-container" ref={mapContainerRef}/>
