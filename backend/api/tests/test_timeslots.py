@@ -4,12 +4,27 @@ API tests for timeslots resource
 from rest_framework.test import APITestCase
 from datetime import datetime
 
+from .utils import BytestoString
 from api.models.campus import *
 from api.models.building import *
 from api.models.roomtype import *
 from api.models.timeslot import *
 
 # Version 1
+class TimeslotsResponseV1:
+    __alrd__ = {"campus": "UBCV", "building_code": "ALRD", "building_name": "Allard Hall", "room": "105", "room_type": "General", "date": "2024-05-03", "start": "15:00", "end": "18:00"}
+    __swng__ = {"campus": "UBCV", "building_code": "SWNG", "building_name": "West Mall Swing Space", "room": "200", "room_type": "Restricted", "date": "2024-05-03", "start": "16:00", "end": "17:00"}
+    __life__ = {"campus": "UBCV", "building_code": "LIFE", "building_name": "UBC Life Building", "room": "B101", "room_type": "General", "date": "2024-05-03", "start": "08:00", "end": "11:00"}
+    __esb__ = {"campus": "UBCV", "building_code": "ESB", "building_name": "Earth Sciences Building", "room": "1013", "room_type": "General", "date": "2024-05-04", "start": "12:30", "end": "14:30"}
+
+    ubcv_response_data_matching_date = [__alrd__, __swng__, __life__]
+    ubcv_response_data_matching_date_and_time = [__esb__]
+    ubcv_response_data_matching_room_type = [__swng__]
+    ubcv_response_data_matching_building = [__esb__]
+    ubcv_response_data_matching_multiple_params = [__alrd__, __swng__]
+    ubcv_response_data_no_matches = []
+
+    ubco_response_data = []
 
 class TestTimeslotsV1(APITestCase):
     def setUp(self):
@@ -29,42 +44,51 @@ class TestTimeslotsV1(APITestCase):
     def testGetMatchingDateStatusOk(self):
         response = self.client.get('/api/v1/timeslots/UBCV/', QUERY_STRING="date=2024-05-03")
         self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(BytestoString(response.content), TimeslotsResponseV1.ubcv_response_data_matching_date)
 
     def testGetMatchingDateAndTimeStatusOk(self):
         response = self.client.get('/api/v1/timeslots/UBCV/', QUERY_STRING="date=2024-05-04&start=12:30&end=14:30")
         self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(BytestoString(response.content), TimeslotsResponseV1.ubcv_response_data_matching_date_and_time)
 
     def testGetMatchingRoomTypeStatusOk(self):
         response = self.client.get('/api/v1/timeslots/UBCV/', QUERY_STRING="date=2024-05-03&room_types=Restricted")
         self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(BytestoString(response.content), TimeslotsResponseV1.ubcv_response_data_matching_room_type)
 
     def testGetMatchingBuildingStatusOk(self):
         response = self.client.get('/api/v1/timeslots/UBCV/', QUERY_STRING="date=2024-05-04&buildings=ESB")
         self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(BytestoString(response.content), TimeslotsResponseV1.ubcv_response_data_matching_building)
 
     def testGetMatchingMultipleParamsStatusOk(self):
         response = self.client.get('/api/v1/timeslots/UBCV/', QUERY_STRING="date=2024-05-03&start=16:00&end=17:00&room_types=General&room_types=Restricted&buildings=ALRD&buildings=LIFE&buildings=SWNG")
         self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(BytestoString(response.content), TimeslotsResponseV1.ubcv_response_data_matching_multiple_params)
 
     def testGetEmptyDBStatusOk(self):
         response = self.client.get('/api/v1/timeslots/UBCO/', QUERY_STRING="date=2024-05-03")
         self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(BytestoString(response.content), TimeslotsResponseV1.ubco_response_data)
 
     def testGetNoMatchingBuildingStatusOk(self):
         response = self.client.get('/api/v1/timeslots/UBCV/', QUERY_STRING="date=2024-05-03&buildings=ICCS&buildings=LSK")
-        self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(BytestoString(response.content), TimeslotsResponseV1.ubcv_response_data_no_matches)
     
     def testGetNoMatchingRoomTypeStatusOk(self):
         response = self.client.get('/api/v1/timeslots/UBCV/', QUERY_STRING="date=2024-05-04&room_types=Restricted")
         self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(BytestoString(response.content), TimeslotsResponseV1.ubcv_response_data_no_matches)
     
     def testGetNoMatchingDateStatusOk(self):
         response = self.client.get('/api/v1/timeslots/UBCV/', QUERY_STRING="date=2024-05-05")
         self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(BytestoString(response.content), TimeslotsResponseV1.ubcv_response_data_no_matches)
 
     def testGetNoMatchingDateAndTimeStatusOk(self):
         response = self.client.get('/api/v1/timeslots/UBCV/', QUERY_STRING="date=2024-05-03&start=14:30&end=16:30")
         self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(BytestoString(response.content), TimeslotsResponseV1.ubcv_response_data_no_matches)
 
     def testGetMalformedParametersStatusBadRequest(self):
         response = self.client.get('/api/v1/timeslots/UBCV/', QUERY_STRING="dat=2024-05-03&begin=14:00&stop=15:00&building=ICCS&room_type=General")
