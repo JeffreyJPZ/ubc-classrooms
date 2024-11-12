@@ -14,7 +14,7 @@ interface BuildingFeatureProperties {
 }
 
 // Initial map coordinates
-const UBCV_CENTER: Coordinates = [-123.24530, 49.26101];
+const UBCV_CENTER: Coordinates = [-123.250101, 49.261563];
 const BUILDING_LAYER_ID: string = "buildings";
 
 // Convert buildings to GeoJSON standard, with additional properties for each building given by AdditionalBuildingsFeatureProperties
@@ -57,7 +57,7 @@ export function MapContainer(): JSX.Element {
                 center: UBCV_CENTER,
                 pitch: 60,
                 bearing: 0,
-                zoom: 16
+                zoom: 15.5
             });
         }
 
