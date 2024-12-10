@@ -1,0 +1,10 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2024-2025,HENN,201,General,2024-12-09,14:00,15:00,WRB-ACTIVE,WRB_UBC,"24WT1 Mon, Wed, Fri (week(s): September 2, 2024-December 9, 2024) 14:00 - HENN 201", , , 
+UBCV,2024-2025,HENN,201,General,2024-12-09,16:00,19:00,WRB-ACTIVE,WRB_UBC,"PHYS 106 Homework  Monday (week(s): September 9, 2024-December 9, 2024) 16:00 - HENN 201", , , 
+UBCV,2024-2025,HENN,201,General,2024-12-10,15:30,17:30,WRB-ACTIVE,WRB_UBC,Special Seminar 10-Dec-2024 15:30 - HENN 201, , , 
+UBCV,2024-2025,HENN,201,General,2024-12-11,14:00,15:00,WRB-ACTIVE,WRB_UBC,"24WT1 Mon, Wed, Fri (week(s): September 2, 2024-December 9, 2024) 14:00 - HENN 201", , , 
+UBCV,2024-2025,HENN,201,General,2024-12-13,14:00,15:00,WRB-ACTIVE,WRB_UBC,"24WT1 Mon, Wed, Fri (week(s): September 2, 2024-December 9, 2024) 14:00 - HENN 201", , , 
+UBCV,2024-2025,HENN,301,General,2024-12-10,13:30,15:00,WRB-ACTIVE,WRB_UBC,String Theory Mtg 10-Dec-2024 13:30 - HENN 301, , , 
+UBCV,2024-2025,HENN,302,General,2024-12-20,9:00,17:00,WRB-ACTIVE,WRB_UBC,"PHYS 301 Grading Fri, Sat (week(s): December 16, 2024) 9:00 - HENN 302", , , 
+UBCV,2024-2025,HENN,302,General,2024-12-21,9:00,17:00,WRB-ACTIVE,WRB_UBC,"PHYS 301 Grading Fri, Sat (week(s): December 16, 2024) 9:00 - HENN 302", , , 
+UBCV,2024-2025,HENN,304,General,2024-12-20,9:00,19:00,WRB-ACTIVE,WRB_UBC,"PHYS 100 Grading Sat (week(s): December 16, 2024) 9:00 - HENN 304", , , 

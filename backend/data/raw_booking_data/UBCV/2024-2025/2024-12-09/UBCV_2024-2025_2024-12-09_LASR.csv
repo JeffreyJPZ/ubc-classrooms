@@ -1,0 +1,9 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2024-2025,LASR,104,General,2024-12-09,17:00,19:00,WRB-ACTIVE,WRB_UBC,"Monday 5-7pm Booking Monday (week(s): November 25, 2024-December 30, 2024) 17:00 - LASR 104", , , 
+UBCV,2024-2025,LASR,104,General,2024-12-16,17:00,19:00,WRB-ACTIVE,WRB_UBC,"Monday 5-7pm Booking Monday (week(s): November 25, 2024-December 30, 2024) 17:00 - LASR 104", , , 
+UBCV,2024-2025,LASR,105,General,2024-12-09,7:00,19:00,WRB-ACTIVE,WRB_UBC,End of Term Reviews 09-Dec-2024 7:00 - LASR 105, , , 
+UBCV,2024-2025,LASR,105,General,2024-12-10,7:00,19:00,WRB-ACTIVE,WRB_UBC,SALA Reviews 10-Dec-2024 7:00 - LASR 105, , , 
+UBCV,2024-2025,LASR,105,General,2024-12-11,11:00,15:00,WRB-ACTIVE,WRB_UBC,LARC 316 Exam 11-Dec-2024 11:00 - LASR 105, , , 
+UBCV,2024-2025,LASR,211,General,2024-12-09,7:00,19:00,WRB-ACTIVE,WRB_UBC,End of term reviews 09-Dec-2024 7:00 - LASR 211, , , 
+UBCV,2024-2025,LASR,211,General,2024-12-10,7:00,19:00,WRB-ACTIVE,WRB_UBC,"Design Reviews 10-Dec-2024 7:00 - LASR 211, LASR 5C", , , 
+UBCV,2024-2025,LASR,5C,General,2024-12-10,7:00,19:00,WRB-ACTIVE,WRB_UBC,"Design Reviews 10-Dec-2024 7:00 - LASR 211, LASR 5C", , , 

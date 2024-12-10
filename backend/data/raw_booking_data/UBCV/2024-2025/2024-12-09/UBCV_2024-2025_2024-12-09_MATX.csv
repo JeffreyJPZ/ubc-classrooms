@@ -1,0 +1,4 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2024-2025,MATX,1100,General,2024-12-09,15:30,17:00,WRB-ACTIVE,WRB_UBC,Math 220 RV (Nahid) 09-Dec-2024 15:30 - MATX 1100, , , 
+UBCV,2024-2025,MATX,1100,General,2024-12-09,17:00,20:00,WRB-ACTIVE,WRB_UBC,Math Club 220 Rev 09-Dec-2024 17:00 - MATX 1100, , , 
+UBCV,2024-2025,MATX,1100,General,2024-12-12,11:00,14:00,WRB-ACTIVE,WRB_UBC,math 221 (Mathclub) 12-Dec-2024 11:00 - MATX 1100, , , 
