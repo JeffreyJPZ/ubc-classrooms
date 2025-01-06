@@ -1,0 +1,5 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2024-2025,MINL,100,Restricted,2025-01-09,14:00,16:00,LAB,MINE-V,MINE_V 201-W/L2A,MINE_V 201-W,L2A,"Klein, Bern"
+UBCV,2024-2025,MINL,100,Restricted,2025-01-16,14:00,16:00,LAB,MINE-V,MINE_V 201-W/L2A,MINE_V 201-W,L2A,"Klein, Bern"
+UBCV,2024-2025,MINL,100,Restricted,2025-01-10,15:00,17:00,LAB,MINE-V,MINE_V 434-W/LAB/L2A, ,L2A,"Klein, Bern"
+UBCV,2024-2025,MINL,100,Restricted,2025-01-17,15:00,17:00,LAB,MINE-V,MINE_V 434-W/LAB/L2A, ,L2A,"Klein, Bern"

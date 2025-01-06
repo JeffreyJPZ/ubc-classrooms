@@ -1,0 +1,5 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2024-2025,MGYM,206,Restricted,2025-01-08,13:00,16:00,SEM,KIN-V,KIN_V 586-W/SEM/001,KIN_V 586-W,001,"Collings, Gord"
+UBCV,2024-2025,MGYM,206,Restricted,2025-01-15,13:00,16:00,SEM,KIN-V,KIN_V 586-W/SEM/001,KIN_V 586-W,001,"Collings, Gord"
+UBCV,2024-2025,MGYM,208,Restricted,2025-01-08,13:00,16:00,SEM,KIN-V,KIN_V 586-W/SEM/001,KIN_V 586-W,001,"Collings, Gord"
+UBCV,2024-2025,MGYM,208,Restricted,2025-01-15,13:00,16:00,SEM,KIN-V,KIN_V 586-W/SEM/001,KIN_V 586-W,001,"Collings, Gord"
