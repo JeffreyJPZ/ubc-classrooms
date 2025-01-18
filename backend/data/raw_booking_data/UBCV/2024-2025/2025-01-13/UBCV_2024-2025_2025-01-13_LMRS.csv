@@ -1,0 +1,5 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2024-2025,LMRS,213,Restricted,2025-01-14,10:30,12:00,SEM,KIN-V,KIN_V 500C-W,KIN_V 500C-W,001,"Warburton, Darren"
+UBCV,2024-2025,LMRS,213,Restricted,2025-01-21,10:30,12:00,SEM,KIN-V,KIN_V 500C-W,KIN_V 500C-W,001,"Warburton, Darren"
+UBCV,2024-2025,LMRS,213,Restricted,2025-01-16,10:30,12:00,SEM,KIN-V,KIN_V 500C-W,KIN_V 500C-W,001,"Warburton, Darren"
+UBCV,2024-2025,LMRS,213,Restricted,2025-01-23,10:30,12:00,SEM,KIN-V,KIN_V 500C-W,KIN_V 500C-W,001,"Warburton, Darren"
