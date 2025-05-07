@@ -1,0 +1,71 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2024-2025,HENN,200,General,2025-05-12,8:30,10:30,LEC,PHYS-V,PHYS_V 250-S/LEC/941,PHYS_V 250-S,941,"Mattison, Thomas"
+UBCV,2024-2025,HENN,200,General,2025-05-12,12:00,15:00,LEC,PSYC-V,PSYC_V 325-S/LEC/921,PSYC_V 325-S,921,"May, Lillian"
+UBCV,2024-2025,HENN,200,General,2025-05-12,15:00,16:30,LEC,ENPH-V,ENPH_V 257-S/LEC/941,ENPH_V 257-S,941,"Folk, Joshua"
+UBCV,2024-2025,HENN,200,General,2025-05-13,9:30,11:00,LEC,CPSC-V,CPSC_V 310-S/LEC/921,CPSC_V 310-S,921,"Bradley, Nicholas"
+UBCV,2024-2025,HENN,200,General,2025-05-13,11:00,14:00,LEC,PSYC-V,PSYC_V 314-S/LEC/921,PSYC_V 314-S,921,"King, David"
+UBCV,2024-2025,HENN,200,General,2025-05-13,14:00,18:00,LEC,ENPH-V,ENPH_V 253-S/LEC/941,ENPH_V 253-S,941,"Marziali, Andre"
+UBCV,2024-2025,HENN,200,General,2025-05-14,8:30,10:30,LEC,PHYS-V,PHYS_V 250-S/LEC/941,PHYS_V 250-S,941,"Mattison, Thomas"
+UBCV,2024-2025,HENN,200,General,2025-05-14,12:00,15:00,LEC,PSYC-V,PSYC_V 325-S/LEC/921,PSYC_V 325-S,921,"May, Lillian"
+UBCV,2024-2025,HENN,200,General,2025-05-14,15:00,16:30,LEC,ENPH-V,ENPH_V 257-S/LEC/941,ENPH_V 257-S,941,"Folk, Joshua"
+UBCV,2024-2025,HENN,200,General,2025-05-15,9:30,11:00,LEC,CPSC-V,CPSC_V 310-S/LEC/921,CPSC_V 310-S,921,"Bradley, Nicholas"
+UBCV,2024-2025,HENN,200,General,2025-05-15,11:00,14:00,LEC,PSYC-V,PSYC_V 314-S/LEC/921,PSYC_V 314-S,921,"King, David"
+UBCV,2024-2025,HENN,200,General,2025-05-16,8:30,10:00,DIS,PHYS-V,PHYS_V 250-S/DIS/T91,PHYS_V 250-S,T91,"Mattison, Thomas"
+UBCV,2024-2025,HENN,200,General,2025-05-09,9:00,16:30,WRB-ACTIVE,WRB_UBC,Comprehensive Exam 09-May-2025 9:00 - HENN 200, , , 
+UBCV,2024-2025,HENN,200,General,2025-05-16,12:30,14:00,LEC,ENPH-V,ENPH_V 257-S/LEC/941,ENPH_V 257-S,941,"Folk, Joshua"
+UBCV,2024-2025,HENN,201,General,2025-05-12,13:00,15:00,LEC,ENPH-V,ENPH_V 270-S/LEC/941,ENPH_V 270-S,941,"Hasinoff, Michael"
+UBCV,2024-2025,HENN,201,General,2025-05-14,13:00,15:00,LEC,ENPH-V,ENPH_V 270-S/LEC/941,ENPH_V 270-S,941,"Hasinoff, Michael"
+UBCV,2024-2025,HENN,201,General,2025-05-15,14:00,15:30,WRB-ACTIVE,WRB_UBC,"ENPH 253 Lecture Thursday (week(s): May 12, 2025-June 9, 2025) 14:00 - HENN 201", , , 
+UBCV,2024-2025,HENN,201,General,2025-05-16,14:00,15:30,WRB-ACTIVE,WRB_UBC,Supplemental lecture 16-May-2025 14:00 - HENN 201, , , 
+UBCV,2024-2025,HENN,202,General,2025-05-12,15:00,18:00,LEC,FMST-V,FMST_V 210-S/LEC/801,FMST_V 210-S,801, 
+UBCV,2024-2025,HENN,202,General,2025-05-13,9:30,11:00,LEC,PHYS-V,PHYS_V 117-S/LEC/951,PHYS_V 117-S,951,"Fameli, Nicola"
+UBCV,2024-2025,HENN,202,General,2025-05-13,13:00,15:00,LEC,CRWR-V,CRWR_V 213-S/LEC/S01,CRWR_V 213-S,S01,"Clark, Raymond"
+UBCV,2024-2025,HENN,202,General,2025-05-14,15:00,18:00,LEC,FMST-V,FMST_V 210-S/LEC/801,FMST_V 210-S,801, 
+UBCV,2024-2025,HENN,202,General,2025-05-14,9:30,11:00,LEC,PHYS-V,PHYS_V 117-S/LEC/951,PHYS_V 117-S,951,"Fameli, Nicola"
+UBCV,2024-2025,HENN,202,General,2025-05-14,13:00,15:00,LEC,CRWR-V,CRWR_V 213-S/LEC/S01,CRWR_V 213-S,S01,"Clark, Raymond"
+UBCV,2024-2025,HENN,202,General,2025-05-14,11:30,12:30,DIS,PHYS-V,PHYS_V 117-S/DIS/T01,PHYS_V 117-S,T01,"Fameli, Nicola"
+UBCV,2024-2025,HENN,202,General,2025-05-15,9:30,11:00,LEC,PHYS-V,PHYS_V 117-S/LEC/951,PHYS_V 117-S,951,"Fameli, Nicola"
+UBCV,2024-2025,HENN,202,General,2025-05-15,13:00,15:00,LEC,CRWR-V,CRWR_V 213-S/LEC/S01,CRWR_V 213-S,S01,"Clark, Raymond"
+UBCV,2024-2025,HENN,202,General,2025-05-15,11:30,12:30,DIS,PHYS-V,PHYS_V 117-S/DIS/T01,PHYS_V 117-S,T01,"Fameli, Nicola"
+UBCV,2024-2025,HENN,304,General,2025-05-05,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,304,General,2025-05-12,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,302,General,2025-05-05,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,302,General,2025-05-12,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,301,General,2025-05-05,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,301,General,2025-05-12,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,304,General,2025-05-06,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,304,General,2025-05-13,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,302,General,2025-05-06,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,302,General,2025-05-13,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,301,General,2025-05-06,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,301,General,2025-05-13,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,304,General,2025-05-07,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,304,General,2025-05-14,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,302,General,2025-05-07,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,302,General,2025-05-14,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,301,General,2025-05-07,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,301,General,2025-05-14,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,304,General,2025-05-08,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,304,General,2025-05-15,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,302,General,2025-05-08,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,302,General,2025-05-15,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,301,General,2025-05-08,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,301,General,2025-05-15,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,304,General,2025-05-09,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,304,General,2025-05-16,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,302,General,2025-05-09,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,302,General,2025-05-16,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,301,General,2025-05-09,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,301,General,2025-05-16,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,304,General,2025-05-10,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,304,General,2025-05-17,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,302,General,2025-05-10,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,302,General,2025-05-17,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,301,General,2025-05-10,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,301,General,2025-05-17,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,304,General,2025-05-11,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,304,General,2025-05-18,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,302,General,2025-05-11,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,302,General,2025-05-18,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,301,General,2025-05-11,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 
+UBCV,2024-2025,HENN,301,General,2025-05-18,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): April 28, 2025-August 4, 2025) 7:00 - HENN 301, HENN 302, HENN 304", , , 

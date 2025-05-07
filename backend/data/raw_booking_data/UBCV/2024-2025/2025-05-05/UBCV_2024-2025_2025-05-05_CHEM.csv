@@ -1,0 +1,3 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2024-2025,CHEM,B270,Restricted,2025-05-06,14:00,17:00,LAB,CHEM-V,CHEM_V 123-S/LAB/VL1,CHEM_V 123-S,VL1,"Thomas, Anne"
+UBCV,2024-2025,CHEM,B270,Restricted,2025-05-13,14:00,17:00,LAB,CHEM-V,CHEM_V 123-S/LAB/VL1,CHEM_V 123-S,VL1,"Thomas, Anne"

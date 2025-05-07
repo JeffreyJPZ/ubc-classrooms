@@ -1,0 +1,39 @@
+Campus,Year,BuildingCode,Room,RoomType,Date,Start,End,BookingType,Department,Booking,Module,Section,Staff
+UBCV,2024-2025,CEME,1206,General,2025-05-05,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance  Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1202, CEME 1204, CEME 1206, CEME 1210, CEME 1215", , , 
+UBCV,2024-2025,CEME,1210,General,2025-05-05,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance  Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1202, CEME 1204, CEME 1206, CEME 1210, CEME 1215", , , 
+UBCV,2024-2025,CEME,1206,General,2025-05-06,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance  Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1202, CEME 1204, CEME 1206, CEME 1210, CEME 1215", , , 
+UBCV,2024-2025,CEME,1210,General,2025-05-06,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance  Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1202, CEME 1204, CEME 1206, CEME 1210, CEME 1215", , , 
+UBCV,2024-2025,CEME,1206,General,2025-05-07,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance  Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1202, CEME 1204, CEME 1206, CEME 1210, CEME 1215", , , 
+UBCV,2024-2025,CEME,1210,General,2025-05-07,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance  Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1202, CEME 1204, CEME 1206, CEME 1210, CEME 1215", , , 
+UBCV,2024-2025,CEME,1206,General,2025-05-08,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance  Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1202, CEME 1204, CEME 1206, CEME 1210, CEME 1215", , , 
+UBCV,2024-2025,CEME,1210,General,2025-05-08,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance  Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1202, CEME 1204, CEME 1206, CEME 1210, CEME 1215", , , 
+UBCV,2024-2025,CEME,1206,General,2025-05-09,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance  Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1202, CEME 1204, CEME 1206, CEME 1210, CEME 1215", , , 
+UBCV,2024-2025,CEME,1210,General,2025-05-09,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance  Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1202, CEME 1204, CEME 1206, CEME 1210, CEME 1215", , , 
+UBCV,2024-2025,CEME,1206,General,2025-05-10,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance  Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1202, CEME 1204, CEME 1206, CEME 1210, CEME 1215", , , 
+UBCV,2024-2025,CEME,1210,General,2025-05-10,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance  Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1202, CEME 1204, CEME 1206, CEME 1210, CEME 1215", , , 
+UBCV,2024-2025,CEME,1206,General,2025-05-17,9:00,18:00,WRB-ACTIVE,WRB_UBC,"ELEC Team Meeting Saturday (week(s): May 12, 2025-June 2, 2025, June 16, 2025, June 30, 2025-August 4, 2025) 9:00 - CEME 1206", , , 
+UBCV,2024-2025,CEME,1206,General,2025-05-11,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance  Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1202, CEME 1204, CEME 1206, CEME 1210, CEME 1215", , , 
+UBCV,2024-2025,CEME,1210,General,2025-05-11,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance  Mon, Tue, Wed, Thu, Fri, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1202, CEME 1204, CEME 1206, CEME 1210, CEME 1215", , , 
+UBCV,2024-2025,CEME,1210,General,2025-05-17,11:00,16:00,WRB-ACTIVE,WRB_UBC,"Summer Meetings Saturday (week(s): May 12, 2025-June 2, 2025, June 16, 2025, June 30, 2025-August 4, 2025) 11:00 - CEME 1210", , , 
+UBCV,2024-2025,CEME,1212,General,2025-05-05,7:00,9:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Fri (week(s): May 5, 2025) 7:00 - CEME 1212", , , 
+UBCV,2024-2025,CEME,1212,General,2025-05-05,17:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Fri (week(s): May 5, 2025) 17:00 - CEME 1212", , , 
+UBCV,2024-2025,CEME,1212,General,2025-05-06,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Tue, Wed, Thu, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1212", , , 
+UBCV,2024-2025,CEME,1212,General,2025-05-07,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Tue, Wed, Thu, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1212", , , 
+UBCV,2024-2025,CEME,1212,General,2025-05-08,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Tue, Wed, Thu, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1212", , , 
+UBCV,2024-2025,CEME,1212,General,2025-05-09,7:00,9:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Fri (week(s): May 5, 2025) 7:00 - CEME 1212", , , 
+UBCV,2024-2025,CEME,1212,General,2025-05-09,17:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Mon, Fri (week(s): May 5, 2025) 17:00 - CEME 1212", , , 
+UBCV,2024-2025,CEME,1212,General,2025-05-10,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Tue, Wed, Thu, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1212", , , 
+UBCV,2024-2025,CEME,1212,General,2025-05-11,7:00,22:00,WRB-ACTIVE,WRB_UBC,"Maintenance Tue, Wed, Thu, Sat, Sun (week(s): May 5, 2025) 7:00 - CEME 1212", , , 
+UBCV,2024-2025,CEME,1215,General,2025-05-12,18:00,21:00,WRB-ACTIVE,WRB_UBC,"UBC Solar Gen. Mtgs Mon, Tue, Thu (week(s): April 28, 2025, May 12, 2025-June 16, 2025, June 30, 2025-August 4, 2025) 18:00 - CEME 1215", , , 
+UBCV,2024-2025,CEME,1215,General,2025-05-13,18:00,21:00,WRB-ACTIVE,WRB_UBC,"UBC Solar Gen. Mtgs Mon, Tue, Thu (week(s): April 28, 2025, May 12, 2025-June 16, 2025, June 30, 2025-August 4, 2025) 18:00 - CEME 1215", , , 
+UBCV,2024-2025,CEME,1215,General,2025-05-14,14:00,18:00,LEC,ELEC-V,ELEC_V 291-S/LEC/941, , ,"Motavas, Saloome"
+UBCV,2024-2025,CEME,1215,General,2025-05-15,18:00,21:00,WRB-ACTIVE,WRB_UBC,"UBC Solar Gen. Mtgs Mon, Tue, Thu (week(s): April 28, 2025, May 12, 2025-June 16, 2025, June 30, 2025-August 4, 2025) 18:00 - CEME 1215", , , 
+UBCV,2024-2025,CEME,2212,Restricted,2025-05-12,11:00,13:00,LAB,APSC-V,APSC_V 160-S/LAB/L1A,APSC_V 160-S,L1A,"Agharebparast, Farshid"
+UBCV,2024-2025,CEME,2212,Restricted,2025-05-12,13:00,15:00,LAB,APSC-V,APSC_V 160-S/LAB/L1E,APSC_V 160-S,L1E,"Agharebparast, Farshid"
+UBCV,2024-2025,CEME,2212,Restricted,2025-05-12,15:00,17:00,LAB,APSC-V,APSC_V 160-S/LAB/L1C,APSC_V 160-S,L1C,"Agharebparast, Farshid"
+UBCV,2024-2025,CEME,2212,Restricted,2025-05-13,11:00,13:00,LAB,APSC-V,APSC_V 160-S/LAB/L1B,APSC_V 160-S,L1B,"Agharebparast, Farshid"
+UBCV,2024-2025,CEME,2212,Restricted,2025-05-13,14:00,16:00,LAB,APSC-V,APSC_V 160-S/LAB/L1D,APSC_V 160-S,L1D,"Agharebparast, Farshid"
+UBCV,2024-2025,CEME,2212,Restricted,2025-05-14,11:00,13:00,LAB,APSC-V,APSC_V 160-S/LAB/L1A,APSC_V 160-S,L1A,"Agharebparast, Farshid"
+UBCV,2024-2025,CEME,2212,Restricted,2025-05-14,13:00,15:00,LAB,APSC-V,APSC_V 160-S/LAB/L1E,APSC_V 160-S,L1E,"Agharebparast, Farshid"
+UBCV,2024-2025,CEME,2212,Restricted,2025-05-14,15:00,17:00,LAB,APSC-V,APSC_V 160-S/LAB/L1C,APSC_V 160-S,L1C,"Agharebparast, Farshid"
+UBCV,2024-2025,CEME,2212,Restricted,2025-05-15,11:00,13:00,LAB,APSC-V,APSC_V 160-S/LAB/L1B,APSC_V 160-S,L1B,"Agharebparast, Farshid"
