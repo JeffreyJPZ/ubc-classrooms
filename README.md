@@ -1,4 +1,7 @@
-# UBC Classrooms - [ubcclassrooms.ca](https://ubcclassrooms.ca)
+# UBC Classrooms
+
+[!NOTE]
+The UBC VPN cannot be accessed by remote machines, making automated deployment impossible. Unfortunately, this makes the ubcclassrooms.ca site too difficult to maintain. Local builds will still work, however.
 
 UBC Classrooms is a tool for finding empty classrooms across UBC at specific times. The project uses React, Django and PostgreSQL, with nginx as the web server and Cloudflare as the DNS provider. The map view is provided by the Mapbox GL JS library. Deployments are made through GitHub Actions and Docker Hub.
 
